@@ -8,14 +8,18 @@ import {
 } from "cdbreact";
 import "./sidebar.css";
 import { NavLink } from "react-router-dom";
-
+import UserManagement from "../SidebarPages/UserManagement";
+import BookingsAnalytics from "../SidebarPages/BookingsAnalytics";
+import useToggle from "./usetoggle";
 const Sidebar = () => {
+  const [activePage, setActivePage] = useToggle("usermanagement");
+  // Toggle Active Page
   return (
     <>
       {/* Main Wrapper */}
       <div
         className="d-flex flex-row justify-content-between "
-        style={{ width: "100vw", backgroundColor: "green" }}
+        style={{ width: "100vw" }}
       >
         <div
           style={{
@@ -51,6 +55,24 @@ const Sidebar = () => {
                     Profile page
                   </CDBSidebarMenuItem>
                 </NavLink>
+                <NavLink
+                  exact
+                  activeClassName="activeClicked"
+                  onClick={() => setActivePage("usermanagement")}
+                >
+                  <CDBSidebarMenuItem icon="user">
+                    User Management
+                  </CDBSidebarMenuItem>
+                </NavLink>
+                <NavLink
+                  exact
+                  activeClassName="activeClicked"
+                  onClick={() => setActivePage("bookinganalytics")}
+                >
+                  <CDBSidebarMenuItem icon="user">
+                    Booking Analytics
+                  </CDBSidebarMenuItem>
+                </NavLink>
                 <NavLink exact to="/analytics" activeClassName="activeClicked">
                   <CDBSidebarMenuItem icon="chart-line">
                     Analytics
@@ -76,7 +98,7 @@ const Sidebar = () => {
                   padding: "20px 5px",
                 }}
               >
-                Sidebar Footer
+                <button>Log Out</button>
               </div>
             </CDBSidebarFooter>
           </CDBSidebar>
@@ -86,48 +108,18 @@ const Sidebar = () => {
         <div
           style={{
             width: "100%",
-            height: "auto",
-            backgroundColor: "orange",
+            height: "92.6vh",
             padding: "20px",
+            overflowY: "scroll",
           }}
           className=""
         >
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
-          <button>test</button>
+          {activePage === "usermanagement" && <UserManagement />}
+          {activePage === "bookinganalytics" && <BookingsAnalytics />}
+          {/*          
+          <UserManagement />
+          wew
+          <BookingsAnalytics /> */}
         </div>
         {/* Content End */}
       </div>
