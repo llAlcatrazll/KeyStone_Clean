@@ -53,6 +53,7 @@ app.post("/add_venue", (req, res) => {
 //
 //
 //
+// CREATE BOOKINGS
 app.post("/create_booking", (req, res) => {
   const sql =
     "INSERT INTO venue_bookings (`booker_id`,`eventname`,`event_purpose`,`event_date`,`starting_time`,`ending_time`,`event_facility`,`username`,`designation`,`college_afiliation`,`club`)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -87,6 +88,7 @@ app.get("/booking", (req, res) => {
     return res.json(result);
   });
 });
+
 //
 // UPDATED BOOKINGS
 app.get("/venue_bookings", (req, res) => {
@@ -180,32 +182,6 @@ app.post("/check_user", (req, res) => {
 
 //
 //
-//
-
-//
-// ADMIN STUFF
-//
-// DISPLAY LISTED VENUES
-// app.get("/venues", (req, res) => {
-//   const sql = "SELECT * FROM event_venues WHERE `Deleted`='Active'";
-//   db.query(sql, (err, result) => {
-//     if (err) res.json({ message: "Server error" });
-//     return res.json(result);
-//   });
-// });
-// app.get("/users", (req, res) => {
-//   const sql = "SELECT * FROM user_login WHERE `status`='Active'";
-//   db.query(sql, (err, result) => {
-//     if (err) {
-//       console.error("Error fetching user data:", err);
-//       return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
-//     }
-//     return res.json(result);
-//   });
-// });
-
-//
-//
 // DISPLAY LISTED USERS
 app.get("/users", (req, res) => {
   const sql = "SELECT * FROM user_login WHERE `Deleted`='Active'";
@@ -216,6 +192,16 @@ app.get("/users", (req, res) => {
 });
 app.get("/venues", (req, res) => {
   const sql = "SELECT * FROM event_venues WHERE `deleted`='Active'";
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error("Error fetching venue data:", err);
+      return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
+    }
+    return res.json(result);
+  });
+});
+app.get("/booking_archived", (req, res) => {
+  const sql = "SELECT * FROM event_venues WHERE `deleted`='Deleted'";
   db.query(sql, (err, result) => {
     if (err) {
       console.error("Error fetching venue data:", err);

@@ -10,7 +10,11 @@ import "./sidebar.css";
 import { NavLink } from "react-router-dom";
 import UserManagement from "../SidebarPages/UserManagement";
 import BookingsAnalytics from "../SidebarPages/BookingsAnalytics";
+import Venues from "../SidebarPages/Venues";
+import UserProfiles from "../SidebarPages/UserProfiles";
 import useToggle from "./usetoggle";
+import CreateBooking from "../SidebarPages/CreateBooking";
+import "./customschollbar.css";
 const Sidebar = () => {
   const [activePage, setActivePage] = useToggle("usermanagement");
   // Toggle Active Page
@@ -42,17 +46,26 @@ const Sidebar = () => {
 
             <CDBSidebarContent className="sidebar-content">
               <CDBSidebarMenu>
-                <NavLink exact to="/" activeClassName="activeClicked">
+                <NavLink
+                  activeClassName="activeClicked"
+                  onClick={() => setActivePage("createbooking")}
+                >
                   <CDBSidebarMenuItem icon="columns">
-                    Dashboard
+                    Create Booking
                   </CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink exact to="/tables" activeClassName="activeClicked">
+                <NavLink
+                  activeClassName="activeClicked"
+                  onClick={() => setActivePage("")}
+                >
                   <CDBSidebarMenuItem icon="table">Tables</CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink exact to="/profile" activeClassName="activeClicked">
+                <NavLink
+                  activeClassName="activeClicked"
+                  onClick={() => setActivePage("userprofiles")}
+                >
                   <CDBSidebarMenuItem icon="user">
-                    Profile page
+                    User Profile
                   </CDBSidebarMenuItem>
                 </NavLink>
                 <NavLink
@@ -61,7 +74,7 @@ const Sidebar = () => {
                   onClick={() => setActivePage("usermanagement")}
                 >
                   <CDBSidebarMenuItem icon="user">
-                    User Management
+                    Manage Users
                   </CDBSidebarMenuItem>
                 </NavLink>
                 <NavLink
@@ -73,15 +86,18 @@ const Sidebar = () => {
                     Booking Analytics
                   </CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink exact to="/analytics" activeClassName="activeClicked">
+                <NavLink
+                  activeClassName="activeClicked"
+                  onClick={() => setActivePage("venues")}
+                >
                   <CDBSidebarMenuItem icon="chart-line">
-                    Analytics
+                    Manage Venues
                   </CDBSidebarMenuItem>
                 </NavLink>
 
                 <NavLink
                   exact
-                  to="/hero404"
+                  onClick={() => setActivePage("")}
                   target="_blank"
                   activeClassName="activeClicked"
                 >
@@ -112,14 +128,13 @@ const Sidebar = () => {
             padding: "20px",
             overflowY: "scroll",
           }}
-          className=""
+          className="custom-scrollbar"
         >
           {activePage === "usermanagement" && <UserManagement />}
           {activePage === "bookinganalytics" && <BookingsAnalytics />}
-          {/*          
-          <UserManagement />
-          wew
-          <BookingsAnalytics /> */}
+          {activePage === "venues" && <Venues />}
+          {activePage === "userprofiles" && <UserProfiles />}
+          {activePage === "createbooking" && <CreateBooking />}
         </div>
         {/* Content End */}
       </div>
