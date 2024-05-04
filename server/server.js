@@ -3,28 +3,42 @@ const cors = require("cors");
 const path = require("path");
 const app = express();
 
-// Import the database connection
+//  database connection
 const db = require("./db");
 
-// Import the route handlers
-// const venueBookingsRoutes = require("./routes/bookings");
+//  route handlers
+/*{ VENUE PAGE}*/
 const addVenueRoutes = require("./routes/addVenue");
-const archiveVenueRoutes = require("./routes/deleteVenue");
+const archiveVenueRoutes = require("./routes/archivedVenues");
 const activeVenuesRoutes = require("./routes/activeVenues");
-
+const deleteVenueRoutes = require("./routes/deleteVenues");
+const restoreVenueRoutes = require("./routes/restoreVenues");
+/*{ BOOKINGS PAGE}*/
+const bookingApprovedRoutes = require("./routes/bookingApproved");
+const bookingPendingRoutes = require("./routes/bookingPending");
+const bookingDeniedRoutes = require("./routes/booklingDenied");
+const bookingAllRoutes = require("./routes/bookingAll");
+//
+// handle middleware
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(express.json());
-
 // Use the route handlers
-// app.use("/", venueBookingsRoutes);
+/*{ VENUE PAGE}*/
 app.use("/", addVenueRoutes);
 app.use("/", archiveVenueRoutes);
 app.use("/", activeVenuesRoutes);
+app.use("/", deleteVenueRoutes);
+app.use("/", restoreVenueRoutes);
+//
+/*{ BOOKINGS PAGE}*/
+app.use("/", bookingApprovedRoutes);
+app.use("/", bookingPendingRoutes);
+app.use("/", bookingDeniedRoutes);
+app.use("/", bookingAllRoutes);
+//
 const port = 5000;
 
-//
-//
 //  ADD NEW USER
 app.post("/add_newuser", (req, res) => {
   const sql =
@@ -46,21 +60,7 @@ app.post("/add_newuser", (req, res) => {
     return res.json({ success: "Student added successfully" });
   });
 });
-//
-// //  ADD EVENT VENUES
-// app.post("/add_venue", (req, res) => {
-//   const sql = "INSERT INTO event_venues (`venue_name`)VALUES (?)";
-//   const values = [req.body.venue_name];
-//   console.log(req.body);
-//   db.query(sql, values, (err, result) => {
-//     if (err)
-//       return res.json({ message: "Something unexpected has occured" + err });
-//     return res.json({ success: "Student added successfully" });
-//   });
-// });
-//
-//
-//
+
 // CREATE BOOKINGS
 app.post("/create_booking", (req, res) => {
   const sql =
@@ -148,17 +148,7 @@ app.post("/delete_user/:booking_id", (req, res) => {
     return res.json({ success: "User marked as deleted successfully" });
   });
 });
-app.post("/delete_venu/:booking_id", (req, res) => {
-  const booking_id = req.params.booking_id;
-  const sql = "UPDATE venue_bookings SET `deleted`='Deleted' WHERE venue_id=?";
-  db.query(sql, [booking_id], (err, result) => {
-    if (err) {
-      console.error("Database error:", err);
-      return res.status(500).json({ message: "Database error" });
-    }
-    return res.json({ success: "User marked as deleted successfully" });
-  });
-});
+
 //
 //
 //
@@ -191,61 +181,6 @@ app.get("/users", (req, res) => {
     return res.json(result);
   });
 });
-// ACTIVE VENUES
-// app.get("/venues", (req, res) => {
-//   const sql = "SELECT * FROM event_venues WHERE `deleted`='Active'";
-//   db.query(sql, (err, result) => {
-//     if (err) {
-//       console.error("Error fetching venue data:", err);
-//       return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
-//     }
-//     return res.json(result);
-//   });
-// });
-//
-//
-// app.get("/booking_archived", (req, res) => {
-//   const sql = "SELECT * FROM event_venues WHERE `deleted`='Deleted'";
-//   db.query(sql, (err, result) => {
-//     if (err) {
-//       console.error("Error fetching venue data:", err);
-//       return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
-//     }
-//     return res.json(result);
-//   });
-// });
-//
-//
-// GET IS PENDING
-app.get("/booking_pending", (req, res) => {
-  const sql =
-    "SELECT * FROM venue_bookings WHERE `deleted`='Active' AND `status`='Pending'";
-  db.query(sql, (err, result) => {
-    if (err) res.json({ message: "Server error" });
-    return res.json(result);
-  });
-});
-//
-// GET IS DENIED
-app.get("/booking_denied", (req, res) => {
-  const sql =
-    "SELECT * FROM venue_bookings WHERE `deleted`='Active' AND `status`='Denied'";
-  db.query(sql, (err, result) => {
-    if (err) res.json({ message: "Server error" });
-    return res.json(result);
-  });
-});
-//
-// GET IS APPROVED
-app.get("/booking_approved", (req, res) => {
-  const sql =
-    "SELECT * FROM venue_bookings WHERE `deleted`='Active' AND `status`='Approved'";
-  db.query(sql, (err, result) => {
-    if (err) res.json({ message: "Server error" });
-    return res.json(result);
-  });
-});
-//
 
 // CONNECT TO PORT NUMBER
 app.listen(port, () => {

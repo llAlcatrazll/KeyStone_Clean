@@ -14,6 +14,8 @@ import Venues from "../SidebarPages/Venues";
 import UserProfiles from "../SidebarPages/UserProfiles";
 import useToggle from "./usetoggle";
 import CreateBooking from "../SidebarPages/CreateBooking";
+import BookingsPage from "../SidebarPages/BookingsPage";
+import AllBookings from "../SidebarPages/AllBookings";
 import "./customschollbar.css";
 const Sidebar = () => {
   const [activePage, setActivePage] = useToggle("usermanagement");
@@ -56,9 +58,17 @@ const Sidebar = () => {
                 </NavLink>
                 <NavLink
                   activeClassName="activeClicked"
-                  onClick={() => setActivePage("")}
+                  onClick={() => setActivePage("bookingspage")}
                 >
-                  <CDBSidebarMenuItem icon="table">Tables</CDBSidebarMenuItem>
+                  <CDBSidebarMenuItem icon="table">Bookings</CDBSidebarMenuItem>
+                </NavLink>
+                <NavLink
+                  activeClassName="activeClicked"
+                  onClick={() => setActivePage("allbookings")}
+                >
+                  <CDBSidebarMenuItem icon="table">
+                    All Bookings
+                  </CDBSidebarMenuItem>
                 </NavLink>
                 <NavLink
                   activeClassName="activeClicked"
@@ -135,6 +145,8 @@ const Sidebar = () => {
           {activePage === "venues" && <Venues />}
           {activePage === "userprofiles" && <UserProfiles />}
           {activePage === "createbooking" && <CreateBooking />}
+          {activePage === "bookingspage" && <BookingsPage />}
+          {activePage === "allbookings" && <AllBookings />}
         </div>
         {/* Content End */}
       </div>

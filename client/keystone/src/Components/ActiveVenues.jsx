@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 function ActiveVenues() {
   const [venueData, setVenueData] = useState([]);
+  const [deleted, setDeleted] = useState(true);
   useEffect(() => {
     // ACTIVE VENUES
     axios
@@ -15,7 +16,19 @@ function ActiveVenues() {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [deleted]);
+  function handleDelete(venue_id) {
+    axios
+      .post(`http://localhost:5000/delete_venu/${venue_id}`)
+      .then((res) => {
+        console.log(res.data);
+        // Toggle the 'deleted' state to trigger a re-fetch of the data
+        setDeleted((prevDeleted) => !prevDeleted);
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div
       className=" p-3 w-100 bg-info-subtle d-flex justify-content-evenly align-items-center"
@@ -38,9 +51,10 @@ function ActiveVenues() {
               <td className="w-52">{venue.venue_id}</td>
               <td className="w-52">{venue.venue_name}</td>
               <td className="w-52">
-                <Link to={`/read/${venue.venue_id}`}>Read</Link>
                 <Link to={`/edit/${venue.venue_id}`}>Edit</Link>
-                <button>Delete</button>
+                <button onClick={() => handleDelete(venue.venue_id)}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

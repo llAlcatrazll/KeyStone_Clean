@@ -9,7 +9,7 @@ function Venues() {
   });
   function handleSubmit() {
     // function handleSubmit(e) {
-    // e.preventDefault();
+
     console.log(values);
     axios
       .post("http://localhost:5000/add_venue", values)

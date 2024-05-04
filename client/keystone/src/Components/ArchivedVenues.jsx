@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 function ArchivedVenues() {
   const [archivedVenue, setArchivedVenue] = useState([]);
+
   useEffect(() => {
     // ARCHIVED VENUES
     axios
@@ -15,10 +16,20 @@ function ArchivedVenues() {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  });
+  function handleRestore(venue_id) {
+    axios
+      .post(`http://localhost:5000/restore_venue/${venue_id}`)
+      .then((res) => {
+        console.log(res.data);
+        // Reload the page to refresh the data
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className=" p-3 w-100 h-100 d-inline-block bg-info-subtle d-flex justify-content-evenly align-items-center ">
-      Archive
       <table>
         <thead>
           <tr className="w-52">
@@ -36,9 +47,10 @@ function ArchivedVenues() {
               <td className="w-52">{archived.venue_id}</td>
               <td className="w-52">{archived.venue_name}</td>
               <td className="w-52">
-                <Link to={`/read/${archived.venue_id}`}>Read</Link>
                 <Link to={`/edit/${archived.venue_id}`}>Edit</Link>
-                <button>Delete</button>
+                <button onClick={() => handleRestore(archived.venue_id)}>
+                  Restore
+                </button>
               </td>
             </tr>
           ))}
