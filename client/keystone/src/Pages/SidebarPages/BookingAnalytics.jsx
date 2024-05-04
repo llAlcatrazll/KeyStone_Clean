@@ -1,4 +1,4 @@
-function BookingsAnalytics() {
+function BookingAnalytics() {
   return (
     <div>
       <h1>Booking Analytics</h1>
@@ -6,4 +6,4 @@ function BookingsAnalytics() {
   );
 }
 
-export default BookingsAnalytics;
+export default BookingAnalytics;

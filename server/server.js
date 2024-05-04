@@ -39,6 +39,15 @@ app.use("/", bookingAllRoutes);
 //
 const port = 5000;
 
+// CONNECT TO PORT NUMBER
+app.listen(port, () => {
+  console.log("listening");
+});
+//
+//
+//
+//
+
 //  ADD NEW USER
 app.post("/add_newuser", (req, res) => {
   const sql =
@@ -180,9 +189,4 @@ app.get("/users", (req, res) => {
     if (err) res.json({ message: "Server error" });
     return res.json(result);
   });
-});
-
-// CONNECT TO PORT NUMBER
-app.listen(port, () => {
-  console.log("listening");
 });

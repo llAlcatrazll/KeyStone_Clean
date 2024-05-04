@@ -1,6 +1,6 @@
-import BookingsApproved from "../Components/BookingsApproved";
-import BookingsDenied from "../Components/BookingsDenied";
-import BookingsPending from "../Components/BookingsPending";
+import BookingsApproved from "../../Components/BookingsApproved";
+import BookingsDenied from "../../Components/BookingsDenied";
+import BookingsPending from "../../Components/BookingsPending";
 function BookingsPage() {
   return (
     <div>

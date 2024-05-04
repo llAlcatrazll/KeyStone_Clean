@@ -1,8 +1,9 @@
 // import { useState } from "react";
 import "./landing.css";
-import Logo from "../assets/logo.png";
+import Logo from "../../assets/logo.png";
 // import BookingsPage from "../SidebarPages/BookingsPage";
-import PFP from "../assets/temp_profile.jpg";
+
+import PFP from "../../assets/temp_profile.jpg";
 import Sidebar from "../Sidebar/Sidebar";
 // import { BrowserRouter as Router } from "react-router-dom";
 function Landing() {

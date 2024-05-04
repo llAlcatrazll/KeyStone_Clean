@@ -1,6 +1,6 @@
 // import loginpic from "/loginpic.svg";
-import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import loginpic from "../assets/loginpic.svg";
+import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import loginpic from "../../assets/loginpic.svg";
 import "./login.css";
 import { useState } from "react";
 import axios from "axios";

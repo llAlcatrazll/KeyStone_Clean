@@ -9,13 +9,14 @@ import {
 import "./sidebar.css";
 import { NavLink } from "react-router-dom";
 import UserManagement from "../SidebarPages/UserManagement";
-import BookingsAnalytics from "../SidebarPages/BookingsAnalytics";
+import BookingAnalytics from "../SidebarPages/BookingAnalytics";
 import Venues from "../SidebarPages/Venues";
 import UserProfiles from "../SidebarPages/UserProfiles";
 import useToggle from "./usetoggle";
 import CreateBooking from "../SidebarPages/CreateBooking";
 import BookingsPage from "../SidebarPages/BookingsPage";
 import AllBookings from "../SidebarPages/AllBookings";
+
 import "./customschollbar.css";
 const Sidebar = () => {
   const [activePage, setActivePage] = useToggle("usermanagement");
@@ -141,7 +142,7 @@ const Sidebar = () => {
           className="custom-scrollbar"
         >
           {activePage === "usermanagement" && <UserManagement />}
-          {activePage === "bookinganalytics" && <BookingsAnalytics />}
+          {activePage === "bookinganalytics" && <BookingAnalytics />}
           {activePage === "venues" && <Venues />}
           {activePage === "userprofiles" && <UserProfiles />}
           {activePage === "createbooking" && <CreateBooking />}

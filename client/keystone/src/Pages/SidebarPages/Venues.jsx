@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import ArchivedVenues from "../Components/ArchivedVenues";
-import ActiveVenues from "../Components/ActiveVenues";
+import ArchivedVenues from "../../Components/ArchivedVenues";
+import ActiveVenues from "../../Components/ActiveVenues";
 function Venues() {
   //
   const [values, setValues] = useState({

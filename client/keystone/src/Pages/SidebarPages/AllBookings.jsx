@@ -1,4 +1,4 @@
-import BookingsAll from "../Components/BookingsAll";
+import BookingsAll from "../../Components/BookingsAll";
 function AllBookings() {
   return (
     <div>
