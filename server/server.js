@@ -1,21 +1,29 @@
 const express = require("express");
-const mysql = require("mysql2");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+
+// Import the database connection
+const db = require("./db");
+
+// Import the route handlers
+// const venueBookingsRoutes = require("./routes/bookings");
+const addVenueRoutes = require("./routes/addVenue");
+const archiveVenueRoutes = require("./routes/deleteVenue");
+const activeVenuesRoutes = require("./routes/activeVenues");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(express.json());
 
+// Use the route handlers
+// app.use("/", venueBookingsRoutes);
+app.use("/", addVenueRoutes);
+app.use("/", archiveVenueRoutes);
+app.use("/", activeVenuesRoutes);
 const port = 5000;
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "booking",
-});
 
+//
 //
 //  ADD NEW USER
 app.post("/add_newuser", (req, res) => {
@@ -39,17 +47,17 @@ app.post("/add_newuser", (req, res) => {
   });
 });
 //
-//  ADD EVENT VENUES
-app.post("/add_venue", (req, res) => {
-  const sql = "INSERT INTO event_venues (`venue_name`)VALUES (?)";
-  const values = [req.body.venue_name];
-  console.log(req.body);
-  db.query(sql, values, (err, result) => {
-    if (err)
-      return res.json({ message: "Something unexpected has occured" + err });
-    return res.json({ success: "Student added successfully" });
-  });
-});
+// //  ADD EVENT VENUES
+// app.post("/add_venue", (req, res) => {
+//   const sql = "INSERT INTO event_venues (`venue_name`)VALUES (?)";
+//   const values = [req.body.venue_name];
+//   console.log(req.body);
+//   db.query(sql, values, (err, result) => {
+//     if (err)
+//       return res.json({ message: "Something unexpected has occured" + err });
+//     return res.json({ success: "Student added successfully" });
+//   });
+// });
 //
 //
 //
@@ -90,14 +98,7 @@ app.get("/booking", (req, res) => {
 });
 
 //
-// UPDATED BOOKINGS
-app.get("/venue_bookings", (req, res) => {
-  const sql = "SELECT * FROM venue_bookings WHERE `deleted`='Active'";
-  db.query(sql, (err, result) => {
-    if (err) res.json({ message: "Server error" });
-    return res.json(result);
-  });
-});
+
 //
 //
 //       /get_student
@@ -190,26 +191,29 @@ app.get("/users", (req, res) => {
     return res.json(result);
   });
 });
-app.get("/venues", (req, res) => {
-  const sql = "SELECT * FROM event_venues WHERE `deleted`='Active'";
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error("Error fetching venue data:", err);
-      return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
-    }
-    return res.json(result);
-  });
-});
-app.get("/booking_archived", (req, res) => {
-  const sql = "SELECT * FROM event_venues WHERE `deleted`='Deleted'";
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error("Error fetching venue data:", err);
-      return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
-    }
-    return res.json(result);
-  });
-});
+// ACTIVE VENUES
+// app.get("/venues", (req, res) => {
+//   const sql = "SELECT * FROM event_venues WHERE `deleted`='Active'";
+//   db.query(sql, (err, result) => {
+//     if (err) {
+//       console.error("Error fetching venue data:", err);
+//       return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
+//     }
+//     return res.json(result);
+//   });
+// });
+//
+//
+// app.get("/booking_archived", (req, res) => {
+//   const sql = "SELECT * FROM event_venues WHERE `deleted`='Deleted'";
+//   db.query(sql, (err, result) => {
+//     if (err) {
+//       console.error("Error fetching venue data:", err);
+//       return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
+//     }
+//     return res.json(result);
+//   });
+// });
 //
 //
 // GET IS PENDING
