@@ -18,6 +18,9 @@ const bookingApprovedRoutes = require("./routes/bookingApproved");
 const bookingPendingRoutes = require("./routes/bookingPending");
 const bookingDeniedRoutes = require("./routes/booklingDenied");
 const bookingAllRoutes = require("./routes/bookingAll");
+/*{ USER MANAGAMENT }*/
+const adminUserRoutes = require("./routes/adminUsers");
+const registeredUserRoutes = require("./routes/registeredUsers");
 //
 // handle middleware
 app.use(express.static(path.join(__dirname, "public")));
@@ -37,6 +40,9 @@ app.use("/", bookingPendingRoutes);
 app.use("/", bookingDeniedRoutes);
 app.use("/", bookingAllRoutes);
 //
+/*{ USER MANAGEMENT }*/
+app.use("/", adminUserRoutes);
+app.use("/", registeredUserRoutes);
 const port = 5000;
 
 // CONNECT TO PORT NUMBER
@@ -44,10 +50,16 @@ app.listen(port, () => {
   console.log("listening");
 });
 //
-//
-//
-//
-
+app.get("/all_clubs", (req, res) => {
+  const sql = "SELECT DISTINCT `club` FROM user_login ";
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error("Error fetching venue data:", err);
+      return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
+    }
+    return res.json(result);
+  });
+});
 //  ADD NEW USER
 app.post("/add_newuser", (req, res) => {
   const sql =
