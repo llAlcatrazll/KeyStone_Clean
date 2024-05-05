@@ -1,9 +1,8 @@
 import { useState } from "react";
-
 import axios from "axios";
 
-function AddnewUser() {
-  const [uservalues, setUserValues] = useState({
+function AddNewUserForm() {
+  const [values, setValues] = useState({
     email: "",
     password: "",
     username: "",
@@ -12,98 +11,83 @@ function AddnewUser() {
     position: "",
     account_type: "",
   });
-  function handleUserSubmit(e) {
-    // function handleSubmit(e) {
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(uservalues);
+    console.log(values); // Add this line
     axios
-      .post("http://localhost:5000/add_newuser", uservalues)
+      .post("http://localhost:5000/add_newuser", values)
       .then((res) => {
         console.log(res);
       })
       .catch((err) => console.log(err));
-    //   post to database
-  }
+  };
 
   return (
     <div>
-      <form action="" onSubmit={handleUserSubmit}>
-        <h2>Add new User</h2>
+      <h2>Add New User</h2>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
+          name="email"
           placeholder="Email"
-          onChange={(e) =>
-            setUserValues({
-              ...uservalues,
-              email: e.target.value,
-            })
-          }
+          value={values.email}
+          onChange={handleChange}
         />
         <input
-          type="text"
+          type="password"
+          name="password"
           placeholder="Password"
-          onChange={(e) =>
-            setUserValues({
-              ...uservalues,
-              password: e.target.value,
-            })
-          }
+          value={values.password}
+          onChange={handleChange}
         />
         <input
           type="text"
-          placeholder="UserName"
-          onChange={(e) =>
-            setUserValues({
-              ...uservalues,
-              username: e.target.value,
-            })
-          }
+          name="username"
+          placeholder="Username"
+          value={values.username}
+          onChange={handleChange}
         />
         <input
           type="text"
+          name="college_affiliation"
           placeholder="College Affiliation"
-          onChange={(e) =>
-            setUserValues({
-              ...uservalues,
-              college_affiliation: e.target.value,
-            })
-          }
+          value={values.college_affiliation}
+          onChange={handleChange}
         />
         <input
           type="text"
+          name="club"
           placeholder="Club"
-          onChange={(e) =>
-            setUserValues({
-              ...uservalues,
-              club: e.target.value,
-            })
-          }
+          value={values.club}
+          onChange={handleChange}
         />
         <input
           type="text"
+          name="position"
           placeholder="Position"
-          onChange={(e) =>
-            setUserValues({
-              ...uservalues,
-              position: e.target.value,
-            })
-          }
+          value={values.position}
+          onChange={handleChange}
         />
         <input
           type="text"
+          name="account_type"
           placeholder="Account Type"
-          value={"Officer"}
-          onChange={(e) =>
-            setUserValues({
-              ...uservalues,
-              account_type: e.target.value,
-            })
-          }
+          value={values.account_type}
+          onChange={handleChange}
         />
-        <button type="Submit">Submit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );
 }
 
-export default AddnewUser;
+export default AddNewUserForm;
