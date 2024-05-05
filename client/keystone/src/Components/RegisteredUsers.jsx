@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import UserFormController from "../utils/UserFormController";
 function RegisteredUsers() {
   const [isApproved, setIsApproved] = useState([]);
   const [deleted, setDeleted] = useState(true);
@@ -24,7 +24,7 @@ function RegisteredUsers() {
         console.log(res.data);
         // Toggle the 'deleted' state to trigger a re-fetch of the data
         setDeleted((prevDeleted) => !prevDeleted);
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err) => console.log(err));
   }
@@ -33,7 +33,7 @@ function RegisteredUsers() {
     <div className="bg-info-subtle p-3">
       <form className="d-flex flex-row">
         <h3>Users List</h3>
-        <button className="ms-3 mb-2">Add new User</button>
+        <UserFormController />
       </form>
       <div>
         {" "}

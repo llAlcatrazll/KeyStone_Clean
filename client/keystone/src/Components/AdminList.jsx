@@ -4,6 +4,7 @@ import axios from "axios";
 
 function AdminList() {
   const [isApproved, setIsApproved] = useState([]);
+  const [deleted, setDeleted] = useState(true);
   useEffect(() => {
     axios
       .get("http://localhost:5000/admin_users")
@@ -15,7 +16,19 @@ function AdminList() {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [deleted]);
+  function handleDelete(user_id) {
+    axios
+      .post(`http://localhost:5000/delete_user/${user_id}`)
+      .then((res) => {
+        console.log(res.data);
+        // Toggle the 'deleted' state to trigger a re-fetch of the data
+        setDeleted((prevDeleted) => !prevDeleted);
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div className="bg-info-subtle p-3 justify-content-around ">
       <form className="d-flex flex-row">
@@ -27,10 +40,10 @@ function AdminList() {
         {isApproved.map((admin) => (
           <tr
             className="justify-content-evenly align-content-center bg-body-tertiary d-flex w-100 flex-row"
-            key={admin.id}
+            key={admin.user_id}
           >
             <div className=" h-auto  w-100 ms-2 me-2 align-content-center ">
-              {admin.id}
+              {admin.user_id}
             </div>
             <div className=" w-100 ms-2 me-2 align-content-center">
               {admin.email}
@@ -49,9 +62,11 @@ function AdminList() {
             */}
 
             <div className="justify-content-around align-items-center bg-body-tertiary d-flex w-100 flex-row">
-              <Link to={`/read/${admin.id}`}>Read</Link>
-              <Link to={`/edit/${admin.id}`}>Edit</Link>
-              <button>Delete</button>
+              <Link to={`/read/${admin.user_id}`}>Read</Link>
+              <Link to={`/edit/${admin.user_id}`}>Edit</Link>
+              <button onClick={() => handleDelete(admin.user_id)}>
+                Delete
+              </button>
             </div>
           </tr>
         ))}

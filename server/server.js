@@ -46,6 +46,7 @@ app.use("/", adminUserRoutes);
 app.use("/", registeredUserRoutes);
 app.use("/", deleteUsersRoutes);
 const port = 5000;
+// TRANSER TO INDIVIDUAL JS
 app.get("/all_clubs", (req, res) => {
   const sql = "SELECT DISTINCT `club` FROM user_login ";
   db.query(sql, (err, result) => {
@@ -61,19 +62,12 @@ app.listen(port, () => {
   console.log("listening");
 });
 //
-app.get("/all_admins", (req, res) => {
-  const sql =
-    "SELECT COUNT(*) AS admin_count FROM user_login WHERE `account_type` = 'Admin';";
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error("Error fetching venue data:", err);
-      return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
-    }
-    // Assuming the result is an array with a single object that contains the count
-    return res.json(result[0]);
-  });
-});
-
+//
+//
+//
+//
+//
+//
 //  ADD NEW USER
 app.post("/add_newuser", (req, res) => {
   const sql =
@@ -93,6 +87,20 @@ app.post("/add_newuser", (req, res) => {
       return res.json({ message: "Something unexpected has occured" + err });
     }
     return res.json({ success: "Student added successfully" });
+  });
+});
+//
+//
+app.get("/all_admins", (req, res) => {
+  const sql =
+    "SELECT COUNT(*) AS admin_count FROM user_login WHERE `account_type` = 'Admin';";
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error("Error fetching venue data:", err);
+      return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
+    }
+    // Assuming the result is an array with a single object that contains the count
+    return res.json(result[0]);
   });
 });
 

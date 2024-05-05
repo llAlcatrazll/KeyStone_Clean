@@ -7,7 +7,7 @@ const db = require("../db"); // Adjust the path as necessary
 // ADMIN USERS
 router.get("/registered_user", (req, res) => {
   const sql =
-    "SELECT * FROM user_login WHERE `account_type`='Officer' AND `deleted`='active'";
+    "SELECT * FROM user_login WHERE `account_type`='Officer' AND `deleted`='Active'";
 
   db.query(sql, (err, result) => {
     if (err) {
