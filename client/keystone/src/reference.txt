@@ -6,3 +6,12 @@ https://prium.github.io/phoenix/v1.16.0/apps/crm/analytics.html
 
 SIDEBAR
     https://www.devwares.com/blog/create-responsive-sidebar-in-react/
+
+
+
+Users can no longer book stuff just view things
+all the booking will be handled by the admin and they can just
+select a profile of who booked the venue on a drop down List
+it will then auto fill the forms
+
+the user can only view they profile page of all their bookings and the calendar with a list view of the bookings nothing else

@@ -21,6 +21,7 @@ const bookingAllRoutes = require("./routes/bookingAll");
 /*{ USER MANAGAMENT }*/
 const adminUserRoutes = require("./routes/adminUsers");
 const registeredUserRoutes = require("./routes/registeredUsers");
+const deleteUsersRoutes = require("./routes/deleteUser");
 //
 // handle middleware
 app.use(express.static(path.join(__dirname, "public")));
@@ -43,13 +44,8 @@ app.use("/", bookingAllRoutes);
 /*{ USER MANAGEMENT }*/
 app.use("/", adminUserRoutes);
 app.use("/", registeredUserRoutes);
+app.use("/", deleteUsersRoutes);
 const port = 5000;
-
-// CONNECT TO PORT NUMBER
-app.listen(port, () => {
-  console.log("listening");
-});
-//
 app.get("/all_clubs", (req, res) => {
   const sql = "SELECT DISTINCT `club` FROM user_login ";
   db.query(sql, (err, result) => {
@@ -60,6 +56,24 @@ app.get("/all_clubs", (req, res) => {
     return res.json(result);
   });
 });
+// CONNECT TO PORT NUMBER
+app.listen(port, () => {
+  console.log("listening");
+});
+//
+app.get("/all_admins", (req, res) => {
+  const sql =
+    "SELECT COUNT(*) AS admin_count FROM user_login WHERE `account_type` = 'Admin';";
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.error("Error fetching venue data:", err);
+      return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
+    }
+    // Assuming the result is an array with a single object that contains the count
+    return res.json(result[0]);
+  });
+});
+
 //  ADD NEW USER
 app.post("/add_newuser", (req, res) => {
   const sql =

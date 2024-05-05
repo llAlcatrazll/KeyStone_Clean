@@ -12,9 +12,10 @@ function UserManagement() {
       <hr />
       <AdminList />
       <hr />
-      <RegisteredClubs />
-      <hr />
       <RegisteredUsers />
+
+      <hr />
+      <RegisteredClubs />
     </div>
   );
 }

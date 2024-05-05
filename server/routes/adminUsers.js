@@ -6,7 +6,9 @@ const db = require("../db"); // Adjust the path as necessary
 
 // ADMIN USERS
 router.get("/admin_users", (req, res) => {
-  const sql = "SELECT * FROM user_login WHERE `account_type`='Admin'";
+  const sql =
+    "SELECT * FROM user_login WHERE `account_type`='Admin' AND `deleted`='active'";
+
   db.query(sql, (err, result) => {
     if (err) {
       console.error("Error fetching venue data:", err);

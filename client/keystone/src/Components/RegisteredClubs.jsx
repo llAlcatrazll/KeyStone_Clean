@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
 function RegisteredClubs() {
@@ -19,16 +18,14 @@ function RegisteredClubs() {
   return (
     <div className="bg-info-subtle p-3">
       <h3>Registered Clubs</h3>
-      <div>
+      <div className="justify-content-evenly align-content-center bg-body-tertiary d-flex w-100 flex-row">
         {" "}
         {isApproved.map((club) => (
-          <tr key={club.id}>
-            <td className="w-28 text-xs ">{club.club}</td>
-            <td className="w-28 text-xs ">
-              <Link to={`/edit/${club.id}`}>Edit</Link>
-              <button>Delete</button>
-            </td>
-          </tr>
+          <div key={club.id}>
+            <div className="w-auto text-xs badge badge-pill bg-dark-subtle">
+              {club.club}
+            </div>
+          </div>
         ))}
       </div>
     </div>
