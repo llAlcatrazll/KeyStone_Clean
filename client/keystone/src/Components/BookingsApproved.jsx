@@ -4,6 +4,7 @@ import axios from "axios";
 
 function BookingsApproved() {
   const [isApproved, setIsApproved] = useState([]);
+  const [deleted, setDeleted] = useState(true);
   useEffect(() => {
     axios
       .get("http://localhost:5000/booking_approved")
@@ -15,22 +16,35 @@ function BookingsApproved() {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [deleted]);
+  function handleDelete(booking_id) {
+    axios
+      .post(`http://localhost:5000/delete_booking/${booking_id}`)
+      .then((res) => {
+        console.log(res.data);
+        // Toggle the 'deleted' state to trigger a re-fetch of the data
+        setDeleted((prevDeleted) => !prevDeleted);
+        // window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  }
   return (
     <div className="bg-info-subtle p-3">
       <h2>Bookings Approved</h2>
       <div>
         {" "}
-        {isApproved.map((venue) => (
-          <tr key={venue.venue_id}>
-            <td className="w-28 text-xs ">{venue.eventname}</td>
-            <td className="w-28 text-xs ">{venue.event_date}</td>
-            <td className="w-28 text-xs ">{venue.college_afiliation}</td>
-            <td className="w-28 text-xs ">{venue.event_facility}</td>
+        {isApproved.map((booking) => (
+          <tr key={booking.booking_id}>
+            <td className="w-28 text-xs ">{booking.eventname}</td>
+            <td className="w-28 text-xs ">{booking.event_date}</td>
+            <td className="w-28 text-xs ">{booking.college_afiliation}</td>
+            <td className="w-28 text-xs ">{booking.event_facility}</td>
             <td className="w-28 text-xs ">
-              <Link to={`/read/${venue.venue_id}`}>Read</Link>
-              <Link to={`/edit/${venue.venue_id}`}>Edit</Link>
-              <button>Delete</button>
+              <Link to={`/read/${booking.booking_id}`}>Read</Link>
+              <Link to={`/edit/${booking.booking_id}`}>Edit</Link>
+              <button onClick={() => handleDelete(booking.booking_id)}>
+                Delete
+              </button>
             </td>
           </tr>
         ))}

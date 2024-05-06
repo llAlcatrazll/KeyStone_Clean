@@ -105,7 +105,14 @@ const Sidebar = () => {
                     Manage Venues
                   </CDBSidebarMenuItem>
                 </NavLink>
-
+                <NavLink
+                  activeClassName="activeClicked"
+                  onClick={() => setActivePage("venues")}
+                >
+                  <CDBSidebarMenuItem icon="chart-line">
+                    Archive
+                  </CDBSidebarMenuItem>
+                </NavLink>
                 <NavLink
                   exact
                   onClick={() => setActivePage("")}

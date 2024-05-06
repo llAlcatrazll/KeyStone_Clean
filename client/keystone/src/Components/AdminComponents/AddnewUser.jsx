@@ -1,8 +1,22 @@
 import { useState } from "react";
+// import { Link } from "react-router-dom";
 import axios from "axios";
 
-function AddNewUserForm() {
-  const [values, setValues] = useState({
+function AddNewUser() {
+  /*
+HAVE THE ABILITY TO HIDE USER AND VENUE DATA TO FOCUS ON BOOKINGS
+
+*/
+
+  //
+  //  STORE DATA FOR NEW VENUE
+
+  // ADD A NEW VENUE TO DATABASE
+  //
+
+  //
+  // ADD NEW USER
+  const [uservalues, setUserValues] = useState({
     email: "",
     password: "",
     username: "",
@@ -11,83 +25,140 @@ function AddNewUserForm() {
     position: "",
     account_type: "",
   });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(values); // Add this line
+  function handleuserSubmit() {
+    // function handleSubmit(e) {
+    // e.preventDefault();
+    console.log(uservalues);
     axios
-      .post("http://localhost:5000/add_newuser", values)
+      .post("http://localhost:5000/add_newuser", uservalues)
       .then((res) => {
         console.log(res);
       })
       .catch((err) => console.log(err));
-  };
+    //   post to database
+  }
 
   return (
-    <div>
-      <h2>Add New User</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="email"
-          placeholder="Email"
-          value={values.email}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={values.password}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={values.username}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="college_affiliation"
-          placeholder="College Affiliation"
-          value={values.college_affiliation}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="club"
-          placeholder="Club"
-          value={values.club}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="position"
-          placeholder="Position"
-          value={values.position}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="account_type"
-          placeholder="Account Type"
-          value={values.account_type}
-          onChange={handleChange}
-        />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <>
+      <div className="bg-slate-900 min-w-full ps-8 "></div>
+      <div className="">
+        <h1>Admin Things</h1>
+        <div>
+          <div className="flex flex-row">
+            {/* 
+            // 
+            // 
+            // 
+            //  */}
+            <div className="ml-20 bg-slate-600 h-auto p-10 pt-10">
+              <form action="" onSubmit={handleuserSubmit}>
+                <div>
+                  <label htmlFor="">email</label>
+                  <input
+                    className="mb-2 ml-2 rounded-sm bg-slate-700 "
+                    type="text"
+                    name="email"
+                    onChange={(e) =>
+                      setUserValues({
+                        ...uservalues,
+                        email: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">password</label>
+                  <input
+                    className="mb-2 ml-2 rounded-sm bg-slate-700 "
+                    type="text"
+                    name="password"
+                    onChange={(e) =>
+                      setUserValues({
+                        ...uservalues,
+                        password: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">username</label>
+                  <input
+                    className="mb-2 ml-2 rounded-sm bg-slate-700 "
+                    type="text"
+                    name="username"
+                    onChange={(e) =>
+                      setUserValues({
+                        ...uservalues,
+                        username: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">College Affiliation</label>
+                  <input
+                    className="mb-2 ml-2 rounded-sm bg-slate-700 "
+                    type="text"
+                    name="college_affiliation"
+                    onChange={(e) =>
+                      setUserValues({
+                        ...uservalues,
+                        college_affiliation: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">Club</label>
+                  <input
+                    className="mb-2 ml-2 rounded-sm bg-slate-700 "
+                    type="text"
+                    name="club"
+                    onChange={(e) =>
+                      setUserValues({
+                        ...uservalues,
+                        club: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">Position</label>
+                  <input
+                    className="mb-2 ml-2 rounded-sm bg-slate-700 "
+                    type="text"
+                    name="position"
+                    onChange={(e) =>
+                      setUserValues({
+                        ...uservalues,
+                        position: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div>
+                  <label htmlFor="">Account Type</label>
+                  <input
+                    className="mb-2 ml-2 rounded-sm bg-slate-700 "
+                    type="text"
+                    name="account_type"
+                    onChange={(e) =>
+                      setUserValues({
+                        ...uservalues,
+                        account_type: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <button type="submit">Submit</button>
+              </form>
+              <hr />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
-export default AddNewUserForm;
+export default AddNewUser;

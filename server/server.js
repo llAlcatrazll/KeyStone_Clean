@@ -18,6 +18,7 @@ const bookingApprovedRoutes = require("./routes/bookingApproved");
 const bookingPendingRoutes = require("./routes/bookingPending");
 const bookingDeniedRoutes = require("./routes/booklingDenied");
 const bookingAllRoutes = require("./routes/bookingAll");
+const bookingDeleteRoutes = require("./routes/bookingDelete");
 /*{ USER MANAGAMENT }*/
 const adminUserRoutes = require("./routes/adminUsers");
 const registeredUserRoutes = require("./routes/registeredUsers");
@@ -40,6 +41,7 @@ app.use("/", bookingApprovedRoutes);
 app.use("/", bookingPendingRoutes);
 app.use("/", bookingDeniedRoutes);
 app.use("/", bookingAllRoutes);
+app.use("/", bookingDeleteRoutes);
 //
 /*{ USER MANAGEMENT }*/
 app.use("/", adminUserRoutes);
