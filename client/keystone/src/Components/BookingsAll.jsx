@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 function BookingsAll() {
   const [data, setData] = useState([]);
+  const [deleted, setDeleted] = useState(true);
   useEffect(() => {
     axios
       .get("http://localhost:5000/venue_bookings")
@@ -14,54 +15,73 @@ function BookingsAll() {
         }
       })
       .catch((err) => console.log(err));
-  });
+  }, [deleted]);
+  function handleDelete(booking_id) {
+    axios
+      .post(`http://localhost:5000/delete_booking/${booking_id}`)
+      .then((res) => {
+        console.log(res.data);
+        // Toggle the 'deleted' state to trigger a re-fetch of the data
+        setDeleted((prevDeleted) => !prevDeleted);
+        // window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  }
   return (
-    <div className="bg-info-subtle p-3">
+    <div className="bg-info-subtle p-3 justify-content-evenly ">
       <h2>Bookigns All Componenet</h2>
-      <table>
-        <thead>
-          <tr className="grid grid-flow-col justify-stretch w-screen">
-            <th className="w-20">.</th>
-            <th className="w-20 text-xs">Booking ID</th>
-            <th className="w-20 text-xs">Requested by</th>
-            <th className="w-20 text-xs">College</th>
-            <th className="w-20 text-xs">Event Date</th>
-            <th className="w-20 text-xs">Starting Time</th>
-            <th className="w-20 text-xs">Eding Time</th>
-            <th className="w-20 text-xs">Event Facility</th>
-            <th className="w-20 text-xs">Event Name</th>
-            <th className="w-20 text-xs">Event Purpose</th>
-            <th className="w-20 text-xs">Event Status</th>
-            <th className="w-20 text-xs">Actions</th>
+      <div>
+        <div>
+          <tr className="grid grid-flow-col justify-content-evenly flex-grow-1 bg-dark-subtle d-flex ">
+            <th className=" text-xs">Booking ID</th>
+            <th className=" text-xs">Requested by</th>
+            <th className=" text-xs">College</th>
+            <th className=" text-xs">Event Date</th>
+            <th className=" text-xs">Starting Time</th>
+            <th className=" text-xs">Eding Time</th>
+            <th className=" text-xs">Event Facility</th>
+            <th className=" text-xs">Event Name</th>
+            <th className=" text-xs">Event Purpose</th>
+            <th className=" text-xs">Event Status</th>
+            <th className=" text-xs">Actions</th>
           </tr>
-        </thead>
-      </table>
-      <tbody>
+        </div>
+      </div>
+      <tbody className="grid grid-flow-col justify-content-evenly flex-grow-1 bg-dark-subtle d-flex flex-column">
         {Array.isArray(data) &&
           data.map((venue) => {
             return (
-              <tr key={venue.id}>
-                <td className="w-56">{venue.booking_id}</td>
-                <td className="w-56">{venue.booker_id}</td>
-                <td className="w-56">{venue.username}</td>
-                <td className="w-56">{venue.eventname}</td>
-                <td className="w-56">{venue.event_purpose}</td>
-                <td className="w-56">{venue.event_date}</td>
-                <td className="w-56">{venue.starting_time}</td>
-                <td className="w-56">{venue.ending_time}</td>
-                <td className="w-56">{venue.event_facility}</td>
+              <div key={venue.id} className=" d-flex justify-content-between ">
+                <div className="align-content-center">{venue.booking_id}</div>
+                <div className="align-content-center">{venue.booker_id}</div>
+                <div className="align-content-center">{venue.username}</div>
+                <div className="align-content-center">{venue.eventname}</div>
+                <div className="align-content-center">
+                  {venue.event_purpose}
+                </div>
+                <div className="align-content-center">{venue.event_date}</div>
+                <div className="align-content-center">
+                  {venue.starting_time}
+                </div>
+                <div className="align-content-center">{venue.ending_time}</div>
+                <div className="align-content-center">
+                  {venue.event_facility}
+                </div>
 
-                <td className="w-56">{venue.designation}</td>
-                <td className="w-56">{venue.college_afiliation}</td>
-                <td className="w-56">{venue.status}</td>
-                <td className="w-56">{venue.club}</td>
-                <td className="w-56">
+                <div className="align-content-center">{venue.designation}</div>
+                <div className="align-content-center">
+                  {venue.college_afiliation}
+                </div>
+                <div className="align-content-center">{venue.status}</div>
+                <div className="align-content-center">{venue.club}</div>
+                <div className="bg-danger-subtle">
                   <Link to={`/read/${venue.booking_id}`}>Read</Link>
                   <Link to={`/edit/${venue.booking_id}`}>Edit</Link>
-                  {/* <button onClick={() => handleDelete(venue.booking_id)}> */}
-                  <button>Delete</button>
-                </td>
-              </tr>
+                  <button onClick={() => handleDelete(venue.booking_id)}>
+                    Delete
+                  </button>
+                </div>
+              </div>
             );
           })}
       </tbody>

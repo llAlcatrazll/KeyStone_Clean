@@ -49,6 +49,49 @@ app.use("/", registeredUserRoutes);
 app.use("/", deleteUsersRoutes);
 const port = 5000;
 // TRANSER TO INDIVIDUAL
+//  ADD NEW USER
+app.post("/add_newuser", (req, res) => {
+  const sql =
+    "INSERT INTO user_login (`email`,`password`,`username`,`college_affiliation`,`club`,`position`,`account_type`)VALUES (?, ?, ?, ?, ?, ?, ?)";
+  const values = [
+    req.body.email,
+    req.body.password,
+    req.body.username,
+    req.body.college_affiliation,
+    req.body.club,
+    req.body.position,
+    req.body.account_type,
+  ];
+  console.log(req.body);
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      return res.json({ message: "Something unexpected has occured" + err });
+    }
+    return res.json({ success: "Student added successfully" });
+  });
+}); // CREATE BOOKINGS
+app.post("/create_booking", (req, res) => {
+  const sql =
+    "INSERT INTO venue_bookings (`booker_id`,`eventname`,`event_purpose`,`event_date`,`starting_time`,`ending_time`,`event_facility`,`username`)VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+  const values = [
+    req.body.booker_id,
+    req.body.eventname,
+    req.body.event_purpose,
+    req.body.event_date,
+    req.body.starting_time,
+    req.body.ending_time,
+    req.body.event_facility,
+    req.body.username,
+  ];
+  console.log(req.body);
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      return res.json({ message: "Something unexpected has occured" + err });
+    }
+    return res.json({ success: "Student added successfully" });
+  });
+});
+//
 app.get("/all_clubs", (req, res) => {
   const sql = "SELECT DISTINCT `club` FROM user_login ";
   db.query(sql, (err, result) => {
@@ -70,28 +113,20 @@ app.listen(port, () => {
 //
 //
 //
-//  ADD NEW USER
-app.post("/add_newuser", (req, res) => {
+
+// DELETE BOOKING /UPDATE 1 VALUE I-O
+app.post("/delete_user/:booking_id", (req, res) => {
+  const booking_id = req.params.booking_id;
   const sql =
-    "INSERT INTO user_login (`email`,`password`,`username`,`college_affiliation`,`club`,`position`,`account_type`)VALUES (?, ?, ?, ?, ?, ?, ?)";
-  const values = [
-    req.body.email,
-    req.body.password,
-    req.body.username,
-    req.body.college_affiliation,
-    req.body.club,
-    req.body.position,
-    req.body.account_type,
-  ];
-  console.log(req.body);
-  db.query(sql, values, (err, result) => {
+    "UPDATE venue_bookings SET `deleted`='Deleted' WHERE booking_id=?";
+  db.query(sql, [booking_id], (err, result) => {
     if (err) {
-      return res.json({ message: "Something unexpected has occured" + err });
+      console.error("Database error:", err);
+      return res.status(500).json({ message: "Database error" });
     }
-    return res.json({ success: "Student added successfully" });
+    return res.json({ success: "User marked as deleted successfully" });
   });
 });
-
 // app.post("/add_newuser", (req, res) => {
 //   const sql =
 //     "INSERT INTO user_login (`email`,`password`,`username`,`college_affiliation`,`club`,`position`,`account_type`)VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -124,32 +159,6 @@ app.get("/all_admins", (req, res) => {
     }
     // Assuming the result is an array with a single object that contains the count
     return res.json(result[0]);
-  });
-});
-
-// CREATE BOOKINGS
-app.post("/create_booking", (req, res) => {
-  const sql =
-    "INSERT INTO venue_bookings (`booker_id`,`eventname`,`event_purpose`,`event_date`,`starting_time`,`ending_time`,`event_facility`,`username`,`designation`,`college_afiliation`,`club`)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-  const values = [
-    // 100005,
-    req.body.eventname,
-    req.body.event_purpose,
-    req.body.event_date,
-    req.body.starting_time,
-    req.body.ending_time,
-    req.body.event_facility,
-    req.body.username,
-    req.body.designation,
-    req.body.college_afiliation,
-    req.body.club,
-  ];
-  console.log(req.body);
-  db.query(sql, values, (err, result) => {
-    if (err) {
-      return res.json({ message: "Something unexpected has occured" + err });
-    }
-    return res.json({ success: "Student added successfully" });
   });
 });
 
@@ -201,19 +210,6 @@ app.post("/edit_user/:id", (req, res) => {
 });
 //
 //
-// DELETE BOOKING /UPDATE 1 VALUE I-O
-app.post("/delete_user/:booking_id", (req, res) => {
-  const booking_id = req.params.booking_id;
-  const sql =
-    "UPDATE venue_bookings SET `deleted`='Deleted' WHERE booking_id=?";
-  db.query(sql, [booking_id], (err, result) => {
-    if (err) {
-      console.error("Database error:", err);
-      return res.status(500).json({ message: "Database error" });
-    }
-    return res.json({ success: "User marked as deleted successfully" });
-  });
-});
 
 //
 //
