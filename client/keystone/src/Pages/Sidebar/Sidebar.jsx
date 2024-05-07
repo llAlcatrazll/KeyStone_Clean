@@ -16,6 +16,7 @@ import useToggle from "./usetoggle";
 import CreateBooking from "../SidebarPages/CreateBooking";
 import BookingsPage from "../SidebarPages/BookingsPage";
 import AllBookings from "../SidebarPages/AllBookings";
+import Calendar from "../SidebarPages/Calendar";
 
 import "./customschollbar.css";
 const Sidebar = () => {
@@ -123,6 +124,16 @@ const Sidebar = () => {
                     404 page
                   </CDBSidebarMenuItem>
                 </NavLink>
+                <NavLink
+                  exact
+                  onClick={() => setActivePage("calendar")}
+                  target="_blank"
+                  activeClassName="activeClicked"
+                >
+                  <CDBSidebarMenuItem icon="exclamation-circle">
+                    Calendar
+                  </CDBSidebarMenuItem>
+                </NavLink>
               </CDBSidebarMenu>
             </CDBSidebarContent>
 
@@ -155,6 +166,7 @@ const Sidebar = () => {
           {activePage === "createbooking" && <CreateBooking />}
           {activePage === "bookingspage" && <BookingsPage />}
           {activePage === "allbookings" && <AllBookings />}
+          {activePage === "calendar" && <Calendar />}
         </div>
         {/* Content End */}
       </div>

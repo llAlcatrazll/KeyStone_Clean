@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 // import AddNewUser from "../Components/AdminComponents/AddNewUser";
-function UserFormController() {
+function UserFormControllerAdmin() {
   const [showForm, setShowForm] = useState(false);
   const [uservalues, setUserValues] = useState({
     email: "",
@@ -10,7 +10,7 @@ function UserFormController() {
     college_affiliation: "",
     club: "",
     position: "",
-    account_type: "Officer",
+    account_type: "Admin",
   });
   function handleuserSubmit() {
     // function handleSubmit(e) {
@@ -139,4 +139,4 @@ function UserFormController() {
   );
 }
 
-export default UserFormController;
+export default UserFormControllerAdmin;

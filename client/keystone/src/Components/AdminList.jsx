@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import UserFormControllerAdmin from "../utils/UserFormControllerAdmin";
 function AdminList() {
   const [isApproved, setIsApproved] = useState([]);
   const [deleted, setDeleted] = useState(true);
@@ -31,10 +31,10 @@ function AdminList() {
 
   return (
     <div className="bg-info-subtle p-3 justify-content-around ">
-      <form className="d-flex flex-row">
+      <div className="d-flex flex-row">
         <h3>Admin List</h3>
-        <button className="ms-3 mb-2">Add new Admin</button>
-      </form>
+        <UserFormControllerAdmin />
+      </div>
       <div>
         {" "}
         {isApproved.map((admin) => (
