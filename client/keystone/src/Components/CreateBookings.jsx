@@ -137,13 +137,7 @@ function CreateBookings() {
             </div>
             <div className=" d-flex justify-content-around bg-secondary-subtle -subtle w-100 ">
               <label htmlFor="">Event Facility</label>
-              {/* <input
-                type="text"
-                name="event_facility"
-                onChange={(e) =>
-                  setValues({ ...values, event_facility: e.target.value })
-                }
-              /> */}
+
               <select
                 name="event_facility"
                 onChange={(e) =>
@@ -163,13 +157,7 @@ function CreateBookings() {
               <h2>Select User</h2>
               <div>autofil</div>
               <label htmlFor="">Name</label>
-              {/* <input
-                type="text"
-                name="username"
-                onChange={(e) =>
-                  setValues({ ...values, username: e.target.value })
-                }
-              /> */}
+
               <select
                 value={selectedUser}
                 onChange={(e) => setSelectedUser(e.target.value)}

@@ -31,10 +31,10 @@ function RegisteredUsers() {
 
   return (
     <div className="bg-info-subtle p-3">
-      <form className="d-flex flex-row">
+      <div className="d-flex flex-row">
         <h3>Users List</h3>
         <UserFormController />
-      </form>
+      </div>
       <div>
         {" "}
         {isApproved.map((user) => (

@@ -3,19 +3,6 @@ import { useState } from "react";
 import axios from "axios";
 
 function AddNewUser() {
-  /*
-HAVE THE ABILITY TO HIDE USER AND VENUE DATA TO FOCUS ON BOOKINGS
-
-*/
-
-  //
-  //  STORE DATA FOR NEW VENUE
-
-  // ADD A NEW VENUE TO DATABASE
-  //
-
-  //
-  // ADD NEW USER
   const [uservalues, setUserValues] = useState({
     email: "",
     password: "",

@@ -127,26 +127,9 @@ app.post("/delete_user/:booking_id", (req, res) => {
     return res.json({ success: "User marked as deleted successfully" });
   });
 });
-// app.post("/add_newuser", (req, res) => {
-//   const sql =
-//     "INSERT INTO user_login (`email`,`password`,`username`,`college_affiliation`,`club`,`position`,`account_type`)VALUES (?, ?, ?, ?, ?, ?, ?)";
-//   const values = [
-//     req.body.email,
-//     req.body.password,
-//     req.body.username,
-//     req.body.college_affiliation,
-//     req.body.club,
-//     req.body.position,
-//     req.body.account_type,
-//   ];
-//   console.log(req.body);
-//   db.query(sql, values, (err, result) => {
-//     if (err) {
-//       return res.json({ message: "Something unexpected has occured" + err });
-//     }
-//     return res.json({ success: "Student added successfully" });
-//   });
-// });
+//
+//
+//
 //
 //
 app.get("/all_admins", (req, res) => {
