@@ -8,21 +8,32 @@ const db = require("./db");
 
 //  route handlers
 /*{ VENUE PAGE}*/
-const addVenueRoutes = require("./routes/addVenue");
 const archiveVenueRoutes = require("./routes/archivedVenues");
+const restoreVenueRoutes = require("./routes/restoreVenues");
 const activeVenuesRoutes = require("./routes/activeVenues");
 const deleteVenueRoutes = require("./routes/deleteVenues");
-const restoreVenueRoutes = require("./routes/restoreVenues");
+const addVenueRoutes = require("./routes/addVenue");
 /*{ BOOKINGS PAGE}*/
 const bookingApprovedRoutes = require("./routes/bookingApproved");
 const bookingPendingRoutes = require("./routes/bookingPending");
 const bookingDeniedRoutes = require("./routes/booklingDenied");
-const bookingAllRoutes = require("./routes/bookingAll");
 const bookingDeleteRoutes = require("./routes/bookingDelete");
+const bookingAllRoutes = require("./routes/bookingAll");
 /*{ USER MANAGAMENT }*/
-const adminUserRoutes = require("./routes/adminUsers");
 const registeredUserRoutes = require("./routes/registeredUsers");
 const deleteUsersRoutes = require("./routes/deleteUser");
+const adminUserRoutes = require("./routes/adminUsers");
+const allClubsRoutes = require("./routes/allclubs");
+/*{ ARCHIVE } */
+const deletedAdminsRoutes = require("./routes/Archives/deletedAdmins");
+const deletedBookingRoutes = require("./routes/Archives/deletedBookings");
+const deletedOfficerRoutes = require("./routes/Archives/deletedOfficers");
+const deletedVenuesRoutes = require("./routes/Archives/deletedVenues");
+const restoreUserRoutes = require("./routes/Archives/restoreUser");
+const restoreVenuesRoutes = require("./routes/Archives/restoreVenues");
+const restoreBookingRoutes = require("./routes/Archives/restoreBookings");
+const dropVenuesRoutes = require("./routes/Archives/dropVenues");
+//
 //
 // handle middleware
 app.use(express.static(path.join(__dirname, "public")));
@@ -47,6 +58,18 @@ app.use("/", bookingDeleteRoutes);
 app.use("/", adminUserRoutes);
 app.use("/", registeredUserRoutes);
 app.use("/", deleteUsersRoutes);
+app.use("/", allClubsRoutes);
+/*{ ARCHIVE } */
+app.use("/", deletedAdminsRoutes);
+app.use("/", deletedBookingRoutes);
+app.use("/", deletedOfficerRoutes);
+app.use("/", deletedVenuesRoutes);
+app.use("/", restoreUserRoutes);
+app.use("/", restoreVenuesRoutes);
+app.use("/", restoreBookingRoutes);
+app.use("/", dropVenuesRoutes);
+//
+//
 const port = 5000;
 // TRANSER TO INDIVIDUAL
 //  ADD NEW USER
@@ -92,17 +115,7 @@ app.post("/create_booking", (req, res) => {
   });
 });
 //
-app.get("/all_clubs", (req, res) => {
-  const sql = "SELECT DISTINCT `club` FROM user_login ";
-  db.query(sql, (err, result) => {
-    if (err) {
-      console.error("Error fetching club data:", err);
-      return res.status(500).json({ message: "Server error" }); // Sending 500 status for internal server errors
-    }
-    return res.json(result);
-  });
-});
-// CONNECT TO PORT NUMBER
+// // CONNECT TO PORT NUMBER
 app.listen(port, () => {
   console.log("listening");
 });
@@ -115,18 +128,18 @@ app.listen(port, () => {
 //
 
 // DELETE BOOKING /UPDATE 1 VALUE I-O
-app.post("/delete_user/:booking_id", (req, res) => {
-  const booking_id = req.params.booking_id;
-  const sql =
-    "UPDATE venue_bookings SET `deleted`='Deleted' WHERE booking_id=?";
-  db.query(sql, [booking_id], (err, result) => {
-    if (err) {
-      console.error("Database error:", err);
-      return res.status(500).json({ message: "Database error" });
-    }
-    return res.json({ success: "User marked as deleted successfully" });
-  });
-});
+// app.post("/delete_user/:booking_id", (req, res) => {
+//   const booking_id = req.params.booking_id;
+//   const sql =
+//     "UPDATE venue_bookings SET `deleted`='Deleted' WHERE booking_id=?";
+//   db.query(sql, [booking_id], (err, result) => {
+//     if (err) {
+//       console.error("Database error:", err);
+//       return res.status(500).json({ message: "Database error" });
+//     }
+//     return res.json({ success: "User marked as deleted successfully" });
+//   });
+// });
 //
 //
 //
@@ -154,9 +167,7 @@ app.get("/booking", (req, res) => {
     return res.json(result);
   });
 });
-
 //
-
 //
 //
 //       /get_student

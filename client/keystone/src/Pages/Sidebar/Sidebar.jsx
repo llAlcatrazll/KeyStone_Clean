@@ -17,7 +17,7 @@ import CreateBooking from "../SidebarPages/CreateBooking";
 import BookingsPage from "../SidebarPages/BookingsPage";
 import AllBookings from "../SidebarPages/AllBookings";
 import Calendar from "../SidebarPages/Calendar";
-
+import Archive from "../SidebarPages/Archive";
 import "./customschollbar.css";
 const Sidebar = () => {
   const [activePage, setActivePage] = useToggle("usermanagement");
@@ -108,7 +108,7 @@ const Sidebar = () => {
                 </NavLink>
                 <NavLink
                   activeClassName="activeClicked"
-                  onClick={() => setActivePage("venues")}
+                  onClick={() => setActivePage("archive")}
                 >
                   <CDBSidebarMenuItem icon="chart-line">
                     Archive
@@ -117,7 +117,7 @@ const Sidebar = () => {
                 <NavLink
                   exact
                   onClick={() => setActivePage("")}
-                  target="_blank"
+                  // target="_blank"
                   activeClassName="activeClicked"
                 >
                   <CDBSidebarMenuItem icon="exclamation-circle">
@@ -126,13 +126,10 @@ const Sidebar = () => {
                 </NavLink>
                 <NavLink
                   exact
-                  onClick={() => setActivePage("calendar")}
-                  target="_blank"
                   activeClassName="activeClicked"
+                  onClick={() => setActivePage("calendar")}
                 >
-                  <CDBSidebarMenuItem icon="exclamation-circle">
-                    Calendar
-                  </CDBSidebarMenuItem>
+                  <CDBSidebarMenuItem icon="user">Calendar</CDBSidebarMenuItem>
                 </NavLink>
               </CDBSidebarMenu>
             </CDBSidebarContent>
@@ -167,6 +164,7 @@ const Sidebar = () => {
           {activePage === "bookingspage" && <BookingsPage />}
           {activePage === "allbookings" && <AllBookings />}
           {activePage === "calendar" && <Calendar />}
+          {activePage === "archive" && <Archive />}
         </div>
         {/* Content End */}
       </div>

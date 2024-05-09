@@ -153,6 +153,26 @@ function CreateBookings() {
                 ))}
               </select>
             </div>
+            <div className="dropdown">
+              <button
+                className="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Dropdown button
+              </button>
+              <div
+                className="dropdown-menu"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <a className="dropdown-item">Action</a>
+                <a className="dropdown-item">Another action</a>
+                <a className="dropdown-item">Something else here</a>
+              </div>
+            </div>
             <div className="mt-2 d-flex justify-content-around bg-dark-subtle -subtle w-100 ">
               <h2>Select User</h2>
               <div>autofil</div>
