@@ -21,6 +21,13 @@ import Archive from "../SidebarPages/Archive";
 import "./customschollbar.css";
 const Sidebar = () => {
   const [activePage, setActivePage] = useToggle("usermanagement");
+
+  const handleLogOut = () => {
+    // Clear everything in localStorage
+    // and logout
+    localStorage.clear();
+    window.location.href = "/";
+  };
   // Toggle Active Page
   return (
     <>
@@ -140,7 +147,7 @@ const Sidebar = () => {
                   padding: "20px 5px",
                 }}
               >
-                <button>Log Out</button>
+                <button onClick={handleLogOut}>Log Out</button>
               </div>
             </CDBSidebarFooter>
           </CDBSidebar>

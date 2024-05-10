@@ -19,8 +19,11 @@ function LoginPage() {
         email,
         password,
       });
-      if (response.data.success) {
-        navigate("/landing"); // Redirect to home page or wherever you want after successful login
+      if (response.data.Login) {
+        localStorage.setItem("token", response.data.token);
+        // Optionally, store other user data as well
+        localStorage.setItem("userEmail", email);
+        navigate("/landing");
       } else {
         setErrorMessage("Wrong credentials");
       }
