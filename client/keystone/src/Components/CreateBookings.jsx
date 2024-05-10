@@ -39,6 +39,7 @@ function CreateBookings() {
     ending_time: "",
     event_facility: "",
     username: "",
+    email: "",
   });
 
   function handleSubmit(e) {
@@ -213,14 +214,19 @@ function CreateBookings() {
                 <select
                   onChange={(e) => {
                     const selectedUsername = e.target.value;
+                    // const selectedEmail = e.target.value;
                     // Assuming isOfficer is the list of officer users
                     const selectedOfficer = isOfficer.find(
                       (officer) => officer.username === selectedUsername
                     );
+                    // const selectedUser = isOfficer.find(
+                    //   (User) => User.email === selectedEmail
+                    // );
                     setValues({
                       ...values,
                       username: selectedUsername,
                       booker_id: selectedOfficer ? selectedOfficer.user_id : "", // Set the booker_id based on selected user
+                      email: selectedOfficer ? selectedOfficer.email : "",
                     });
                   }}
                 >

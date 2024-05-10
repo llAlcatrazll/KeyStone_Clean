@@ -150,7 +150,7 @@ app.post("/add_newuser", (req, res) => {
 }); // CREATE BOOKINGS
 app.post("/create_booking", (req, res) => {
   const sql =
-    "INSERT INTO venue_bookings (`booker_id`,`eventname`,`event_purpose`,`event_date`,`starting_time`,`ending_time`,`event_facility`,`username`)VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO venue_bookings (`booker_id`,`eventname`,`event_purpose`,`event_date`,`starting_time`,`ending_time`,`event_facility`,`username`, `email`)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
   const values = [
     req.body.booker_id,
     req.body.eventname,
@@ -160,6 +160,7 @@ app.post("/create_booking", (req, res) => {
     req.body.ending_time,
     req.body.event_facility,
     req.body.username,
+    req.body.email,
   ];
   console.log(req.body);
   db.query(sql, values, (err, result) => {
