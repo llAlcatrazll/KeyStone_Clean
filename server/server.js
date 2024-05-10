@@ -33,6 +33,7 @@ const restoreUserRoutes = require("./routes/Archives/restoreUser");
 const restoreVenuesRoutes = require("./routes/Archives/restoreVenues");
 const restoreBookingRoutes = require("./routes/Archives/restoreBookings");
 const dropVenuesRoutes = require("./routes/Archives/dropVenues");
+const dropUserRoutes = require("./routes/Archives/dropUsers");
 //
 //
 // handle middleware
@@ -68,6 +69,7 @@ app.use("/", restoreUserRoutes);
 app.use("/", restoreVenuesRoutes);
 app.use("/", restoreBookingRoutes);
 app.use("/", dropVenuesRoutes);
+app.use("/", dropUserRoutes);
 //
 //
 const port = 5000;

@@ -5,6 +5,7 @@ import axios from "axios";
 function Admins() {
   const [isPending, setIsPending] = useState([]);
   const [restore, setRestored] = useState(true);
+  const [dropped, setDropped] = useState([]);
   useEffect(() => {
     axios
       .get("http://localhost:5000/deleted_admins")
@@ -16,7 +17,7 @@ function Admins() {
         }
       })
       .catch((err) => console.log(err));
-  }, [restore]);
+  }, [restore, dropped]);
   function handleRestore(user_id) {
     axios
       .post(`http://localhost:5000/restore_user/${user_id}`)
@@ -24,6 +25,16 @@ function Admins() {
         console.log(res.data);
         // Toggle the 'deleted' state to trigger a re-fetch of the data
         setRestored((prevRestored) => !prevRestored);
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  }
+  function handleDrop(user_id) {
+    axios
+      .post(`http://localhost:5000/drop_users/${user_id}`)
+      .then((res) => {
+        console.log(res.data);
+        setDropped((prevDropped) => !prevDropped);
         window.location.reload();
       })
       .catch((err) => console.log(err));
@@ -44,7 +55,7 @@ function Admins() {
                 Restore
               </button>
 
-              <button>Drop</button>
+              <button onClick={() => handleDrop(admin.user_id)}>Drop</button>
             </td>
           </tr>
         ))}
