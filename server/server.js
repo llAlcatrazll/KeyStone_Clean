@@ -35,6 +35,9 @@ const restoreVenuesRoutes = require("./routes/Archives/restoreVenues");
 const restoreBookingRoutes = require("./routes/Archives/restoreBookings");
 const dropVenuesRoutes = require("./routes/Archives/dropVenues");
 const dropUserRoutes = require("./routes/Archives/dropUsers");
+/*{ PROFILE PAGE }*/
+const userFetchAllRoutes = require("./routes/UserProfiles/userFetchAll");
+//
 const { verify } = require("crypto");
 //
 //
@@ -73,6 +76,8 @@ app.use("/", restoreBookingRoutes);
 app.use("/", dropVenuesRoutes);
 app.use("/", dropUserRoutes);
 //
+/*{ PROFILE PAGE }*/
+app.use("/", userFetchAllRoutes);
 //
 const port = 5000;
 //

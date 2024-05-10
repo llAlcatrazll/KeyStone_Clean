@@ -1,8 +1,35 @@
 import PFP from "../../assets/temp_profile.jpg";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 function UserProfile() {
+  const [userDetails, setUserDetails] = useState([]);
+  const userEmail = localStorage.getItem("userEmail");
+
+  useEffect(() => {
+    // Fetch user data based on userEmail
+    axios
+      .get(`http://localhost:5000/user_fetchall?email=${userEmail}`)
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setUserDetails(res.data);
+        } else {
+          console.error("Expected an array but received:", res.data);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, [userEmail]); // Add userEmail as a dependency to useEffect so it re-runs when userEmail changes
+
   return (
     <div className="bg-white container-fluid p-1 ">
+      <div>{userEmail}</div>
       <div className="bg-white d-flex flex-row ">
+        {userDetails.map((User) => (
+          <tr key={User.user_id}>
+            <td className="w-28 text-xs ">{User.user_id}</td>
+          </tr>
+        ))}
+        wew
         <div
           className="col-lg-5 d-flex justify-content-evenly align-items-center rounded-circle"
           style={{ height: "180px", width: "180px" }}

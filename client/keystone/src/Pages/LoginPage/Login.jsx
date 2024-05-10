@@ -23,6 +23,7 @@ function LoginPage() {
         localStorage.setItem("token", response.data.token);
         // Optionally, store other user data as well
         localStorage.setItem("userEmail", email);
+        localStorage.setItem("userPassword", password);
         navigate("/landing");
       } else {
         setErrorMessage("Wrong credentials");
@@ -46,6 +47,7 @@ function LoginPage() {
               </div>
               <form action="" onSubmit={handleSubmit}>
                 {/* <!-- Email input --> */}
+                CONVERT TO CENTER UI WITH LOGO BLACK BG
                 <div data-mdb-input-init className="form-outline mb-4 ">
                   <input
                     type="email"
