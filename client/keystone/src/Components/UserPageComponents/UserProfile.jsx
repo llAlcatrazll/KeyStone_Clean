@@ -22,37 +22,39 @@ function UserProfile() {
 
   return (
     <div className="bg-white container-fluid p-1 ">
-      <div>{userEmail}</div>
       <div className="bg-white d-flex flex-row ">
         {userDetails.map((User) => (
-          <tr key={User.user_id}>
-            <td className="w-28 text-xs ">{User.user_id}</td>
-          </tr>
-        ))}
-        wew
-        <div
-          className="col-lg-5 d-flex justify-content-evenly align-items-center rounded-circle"
-          style={{ height: "180px", width: "180px" }}
-        >
-          <img
-            src={PFP}
-            className="rounded-circle"
-            style={{ height: "180px", width: "180px" }}
-            alt=""
-          />
-        </div>
-        <div className="col d-flex align-items-center p-3 flex-row row justify-content-center">
-          <div>
-            <div className="fw-bold fs-3">Elijah Marquess</div>
-            <div className="fst- fs-5 fw-medium">Admin</div>
-            <div className="fst- fs-6">Joined Last Month</div>
-            {/* Convert to Chips */}
-            <div className="d-flex mb-3 ps-3">
-              <div className="d-flex flex-row row text-center me-3">CCIS</div>
-              <div className="">ACSS</div>
+          <div
+            key={User.user_id}
+            className="flex-grow-1 bg-danger-subtle align-contents-center justify-content-center"
+          >
+            <div
+              className="col-lg-5 d-flex justify-content-evenly align-items-center rounded-circle"
+              style={{ height: "180px", width: "180px" }}
+            >
+              <img
+                src={PFP}
+                className="rounded-circle"
+                style={{ height: "180px", width: "180px" }}
+                alt=""
+              />
+            </div>
+            <div className="col d-flex align-items-center p-3 flex-row row justify-content-center">
+              <div>
+                <div className="fw-bold fs-3">{User.username}</div>
+                <div className="fst- fs-5 fw-medium">{User.account_type}</div>
+                <div className="fst- fs-6">{User.position}</div>
+                {/* Convert to Chips */}
+                <div className="d-flex mb-3 ps-3">
+                  <div className="d-flex flex-row row text-center me-3">
+                    {User.club}
+                  </div>
+                  <div className="">{User.college_affiliation}</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
       <hr />
       <div className="p-4 d-flex flex-row justify-content-between ">

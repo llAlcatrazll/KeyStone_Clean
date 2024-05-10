@@ -37,6 +37,7 @@ const dropVenuesRoutes = require("./routes/Archives/dropVenues");
 const dropUserRoutes = require("./routes/Archives/dropUsers");
 /*{ PROFILE PAGE }*/
 const userFetchAllRoutes = require("./routes/UserProfiles/userFetchAll");
+const userBookingsRoutes = require("./routes/UserProfiles/userBookingsAll");
 //
 const { verify } = require("crypto");
 //
@@ -78,6 +79,7 @@ app.use("/", dropUserRoutes);
 //
 /*{ PROFILE PAGE }*/
 app.use("/", userFetchAllRoutes);
+app.use("/", userBookingsRoutes);
 //
 const port = 5000;
 //
