@@ -1,10 +1,11 @@
 // import loginpic from "/loginpic.svg";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import loginpic from "../../assets/loginpic.svg";
+// import loginpic from "../../assets/loginpic.svg";
 import "./login.css";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Box, Title, Text, Button } from "@mantine/core";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -38,7 +39,12 @@ function LoginPage() {
       <div className="container py-5 p-0  h-100">
         <div className="d-flex flex-row align-items-center  flex-grow-1">
           <div className="">
-            <img src={loginpic} alt="" />
+            {/* <img src={loginpic} alt="" /> */}
+            <Box>
+              <Title>Nice Title</Title>
+              <Text>Hellow world</Text>
+              <Button>Click Here!</Button>
+            </Box>
           </div>
           <div>
             <div className="">

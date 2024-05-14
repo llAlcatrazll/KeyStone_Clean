@@ -7,7 +7,13 @@ https://prium.github.io/phoenix/v1.16.0/apps/crm/analytics.html
 SIDEBAR
     https://www.devwares.com/blog/create-responsive-sidebar-in-react/
 
+ReactBigCalendar For the Calendar
 
+Desgin Imports
+    Bootstrap
+    PrimeReact
+    ShadCN UI
+    Mantine Ui
 
 Users can no longer book stuff just view things
 all the booking will be handled by the admin and they can just

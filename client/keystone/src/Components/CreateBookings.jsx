@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-// import { Link, useNavigate } from "react-router-dom";
-
+// import { Calendar } from "primereact/calendar";
 function CreateBookings() {
   const [venueData, setVenueData] = useState([]);
   const [isApproved, setIsApproved] = useState([]);
@@ -71,20 +70,63 @@ function CreateBookings() {
 
   return (
     <div>
-      <h2>Create Bookings</h2>
+      {/* <h2>Create Bookings</h2> */}
       <div
-        className="justify-content-start bg-dark-subtle p-2 d-flex flex-row "
+        className="justify-content-start  p-2 d-flex rounded shadow p-3 mb-5 bg-white rounded"
         style={{ height: "83vh" }}
       >
-        <div className="bg-danger-subtle me-3">User Profiles</div>
+        {/* <div className="bg-danger-subtle me-3">User Profiles</div> */}
         <form
           action=""
           onSubmit={handleSubmit}
-          className="bg-danger-subtle p-3 flex-grow-1"
+          className=" p-3 flex-grow-1 flex-column "
         >
-          <div>
-            <div className="flex-row d-flex justify-content-around bg-dark-subtle w-100 mb-3 p-2">
-              <label htmlFor="">Event Date</label>
+          <div
+            className=" flex-grow-1 d-flex flex-column rounded justify-content-between p-2 "
+            style={{ height: "77vh" }}
+          >
+            <div className="flex-row d-flex justify-content-between w-100 mb-3 p-2 rounded ">
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Date of Event</span>
+                </div>
+                <input
+                  type="date"
+                  aria-label="First name"
+                  className="form-control"
+                  name="event_date"
+                  onChange={(e) =>
+                    setValues({ ...values, event_date: e.target.value })
+                  }
+                />
+              </div>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Starting Time</span>
+                </div>
+                <input
+                  type="time"
+                  aria-label="Starting Time"
+                  className="form-control"
+                  name="starting_time"
+                  onChange={(e) =>
+                    setValues({ ...values, starting_time: e.target.value })
+                  }
+                />
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Ending Time</span>
+                </div>
+                <input
+                  type="time"
+                  aria-label="Ending Time"
+                  className="form-control"
+                  name="ending_time"
+                  onChange={(e) =>
+                    setValues({ ...values, ending_time: e.target.value })
+                  }
+                />
+              </div>
+              {/* <label htmlFor="">Event Date</label>
               <input
                 // event_date
                 type="date"
@@ -110,10 +152,24 @@ function CreateBookings() {
                 onChange={(e) =>
                   setValues({ ...values, ending_time: e.target.value })
                 }
-              />
+              /> */}
             </div>
             <div className=" d-flex justify-content-around bg-secondary-subtle -subtle w-100 ">
-              <label htmlFor="">Event Name</label>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Event Name</span>
+                </div>
+                <input
+                  type="text"
+                  aria-label="First name"
+                  name="eventname"
+                  className="form-control"
+                  onChange={(e) =>
+                    setValues({ ...values, eventname: e.target.value })
+                  }
+                />
+              </div>
+              {/* <label htmlFor="">Event Name</label>
               <input
                 type="text"
                 name="eventname"
@@ -122,10 +178,24 @@ function CreateBookings() {
                 onChange={(e) =>
                   setValues({ ...values, eventname: e.target.value })
                 }
-              />
+              /> */}
             </div>
             <div className=" d-flex justify-content-around bg-secondary-subtle -subtle w-100 ">
-              <label htmlFor="">Event Purpose</label>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Event Purpose</span>
+                </div>
+                <input
+                  type="text"
+                  aria-label="First name"
+                  name="event_purpose"
+                  className="form-control"
+                  onChange={(e) =>
+                    setValues({ ...values, event_purpose: e.target.value })
+                  }
+                />
+              </div>
+              {/* <label htmlFor="">Event Purpose</label>
               <input
                 type="text"
                 name="event_purpose"
@@ -134,10 +204,32 @@ function CreateBookings() {
                 onChange={(e) =>
                   setValues({ ...values, event_purpose: e.target.value })
                 }
-              />
+              /> */}
             </div>
-            <div className=" d-flex justify-content-around bg-secondary-subtle -subtle w-100 ">
-              <label htmlFor="">Event Facility</label>
+            <div className=" d-flex justify-content-around bg-secondary-subtle -subtle">
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Event Facility</span>
+                </div>
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  name="event_facility"
+                  onChange={(e) =>
+                    setValues({ ...values, event_facility: e.target.value })
+                  }
+                >
+                  {venueData.map((venue) => (
+                    <option key={venue.venue_id}>
+                      <option value={venue.venue_name} className="w-52">
+                        {venue.venue_name}
+                      </option>
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* <label htmlFor="">Event Facility</label>
 
               <select
                 name="event_facility"
@@ -152,34 +244,25 @@ function CreateBookings() {
                     </option>
                   </option>
                 ))}
-              </select>
+              </select> */}
             </div>
-            <div className="dropdown">
-              <button
-                className="btn btn-secondary dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Dropdown button
-              </button>
-              <div
-                className="dropdown-menu"
-                aria-labelledby="dropdownMenuButton"
-              >
-                <a className="dropdown-item">Action</a>
-                <a className="dropdown-item">Another action</a>
-                <a className="dropdown-item">Something else here</a>
-              </div>
-            </div>
-            <div className="mt-2 d-flex justify-content-around bg-dark-subtle -subtle w-100 ">
-              <h2>Select User</h2>
-              <div>autofil</div>
-              <label htmlFor="">Name</label>
 
+            <div className="mt-2 d-flex justify-content-around bg-dark-subtle -subtle w-100 ">
+              {/* <h2>Select User</h2>
+              <div>autofil</div>
+              <label htmlFor="">Name</label> */}
+
+              {/* <select
+                value={selectedUser}
+                onChange={(e) => setSelectedUser(e.target.value)}
+              >
+                <option value="">Select User</option>
+                <option value="admin">Admin</option>
+                <option value="officer">Officer</option>
+              </select> */}
               <select
+                className="form-select"
+                aria-label="Default select example"
                 value={selectedUser}
                 onChange={(e) => setSelectedUser(e.target.value)}
               >
@@ -189,6 +272,8 @@ function CreateBookings() {
               </select>
               {selectedUser === "admin" && (
                 <select
+                  className="form-select"
+                  aria-label="Default select example"
                   onChange={(e) => {
                     const selectedUsername = e.target.value;
                     const selectedAdmin = isApproved.find(
@@ -212,16 +297,14 @@ function CreateBookings() {
 
               {selectedUser === "officer" && (
                 <select
+                  className="form-select"
+                  aria-label="Default select example"
                   onChange={(e) => {
                     const selectedUsername = e.target.value;
-                    // const selectedEmail = e.target.value;
-                    // Assuming isOfficer is the list of officer users
+
                     const selectedOfficer = isOfficer.find(
                       (officer) => officer.username === selectedUsername
                     );
-                    // const selectedUser = isOfficer.find(
-                    //   (User) => User.email === selectedEmail
-                    // );
                     setValues({
                       ...values,
                       username: selectedUsername,
@@ -240,10 +323,68 @@ function CreateBookings() {
               )}
             </div>
             <div className="d-flex justify-content-center ">
-              <button type="submit">Submit</button>
+              <button type="submit" className="btn btn-dark w16">
+                Submit
+              </button>
             </div>
           </div>
         </form>
+        <div className="shadow p-3 mb-5 bg-white rounded b">
+          <h2>Booking Summary</h2>
+          <div className="d-flex flex-column">
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="basic-addon1">
+                  Facility
+                </span>
+              </div>
+              <input
+                type="text"
+                value={values.event_facility}
+                className="form-control"
+                placeholder="Username"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="basic-addon1">
+                  Username
+                </span>
+              </div>
+              <input
+                type="text"
+                value={values.username}
+                className="form-control"
+                placeholder="Username"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+              />
+            </div>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="basic-addon1">
+                  Event Name
+                </span>
+              </div>
+              <input
+                type="text"
+                value={values.eventname}
+                className="form-control"
+                placeholder="Username"
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+              />
+              {/* GROW GREEN WHEN ITS NOT EMPTY OR DEFAULT */}
+            </div>
+            <div>wew</div>
+            <div>wew</div>
+            <div>wew</div>
+          </div>
+          <div>{values.event_facility}</div>
+          <div>{values.username}</div>
+        </div>
       </div>
     </div>
   );

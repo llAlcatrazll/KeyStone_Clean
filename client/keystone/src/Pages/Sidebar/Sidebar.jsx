@@ -157,7 +157,9 @@ const Sidebar = () => {
                   padding: "20px 5px",
                 }}
               >
-                <button onClick={handleLogOut}>Log Out</button>
+                <button onClick={handleLogOut} className="btn btn-dark">
+                  Log Out
+                </button>
               </div>
             </CDBSidebarFooter>
           </CDBSidebar>

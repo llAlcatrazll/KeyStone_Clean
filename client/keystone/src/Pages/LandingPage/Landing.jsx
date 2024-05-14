@@ -3,7 +3,7 @@ import "./landing.css";
 import Logo from "../../assets/logo.png";
 // import BookingsPage from "../SidebarPages/BookingsPage";
 
-import PFP from "../../assets/temp_profile.jpg";
+// import PFP from "../../assets/temp_profile.jpg";
 import Sidebar from "../Sidebar/Sidebar";
 // import { BrowserRouter as Router } from "react-router-dom";
 function Landing() {
@@ -54,9 +54,9 @@ function Landing() {
           {/* --this */}
 
           <div className="d-flex flex-row align-items-end mb-3 align-items-center justify-content-center  pt-3 pe-2">
-            <i className="bi bi-bell-fill"></i>
-            <div>wew</div>
-            <div
+            {/* <i className="bi bi-bell-fill"></i>
+            <div>wew</div> */}
+            {/* <div
               className="mt-auto p-2 align-self-end"
               style={{
                 height: "65px",
@@ -76,7 +76,7 @@ function Landing() {
                   borderRadius: "100%", // Ensure the image is also circular
                 }}
               />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
