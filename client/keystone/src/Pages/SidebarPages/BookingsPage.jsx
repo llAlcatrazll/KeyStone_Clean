@@ -11,9 +11,9 @@ function BookingsPage() {
         style={{ minHeight: "800px" }}
       >
         <BookingsApproved />
-        <hr />
+        {/* <hr /> */}
         <BookingsPending />
-        <hr />
+        {/* <hr /> */}
         <BookingsDenied />
       </div>
     </div>

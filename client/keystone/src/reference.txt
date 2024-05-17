@@ -63,3 +63,10 @@ Yellow #EEF296
 
 SECRET TO CENTER HORIZONTALLY
 d-flex bg-danger text-center align-items-center justify-content-center
+
+t- top
+b- bottom
+s- left
+e- right
+x- left right
+y- top bottom

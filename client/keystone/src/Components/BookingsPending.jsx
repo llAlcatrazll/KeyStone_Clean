@@ -4,6 +4,7 @@ import { IconTrash, IconEdit } from "@tabler/icons-react";
 function BookingsPending() {
   const [isPending, setIsPending] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [deleted, setDeleted] = useState(true);
   const itemsPerPage = 5;
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -37,7 +38,18 @@ function BookingsPending() {
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [deleted]);
+  function handleDelete(booking_id) {
+    axios
+      .post(`http://localhost:5000/delete_booking/${booking_id}`)
+      .then((res) => {
+        console.log(res.data);
+        // Toggle the 'deleted' state to trigger a re-fetch of the data
+        setDeleted((prevDeleted) => !prevDeleted);
+        // window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  }
 
   // Logic to slice data based on current page
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -60,7 +72,7 @@ function BookingsPending() {
           alignContent: "center",
           height: "60px",
           width: "70%",
-          position: "absolute",
+          // position: "absolute",
           // opacity: "20%",
         }}
       >
@@ -163,7 +175,7 @@ function BookingsPending() {
                     <div className="d-flex  text-center align-items-center justify-content-center">
                       {" "}
                       <button
-                        className="btn btn-dark color-black"
+                        className="btn btn-dark color-black me-2"
                         style={{ backgroundColor: "#EEF296" }}
                       >
                         Approve
@@ -178,7 +190,7 @@ function BookingsPending() {
                     <div className="d-flex  text-center align-items-center justify-content-center">
                       {" "}
                       <IconTrash
-                        onClick={console.log("it works")}
+                        onClick={() => handleDelete(venue.booking_id)}
                         size={22}
                         className="me-3"
                       />
