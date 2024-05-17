@@ -32,43 +32,48 @@ function EventCalendar() {
   ];
 
   return (
-    <Calendar
-      ref={calendarRef}
-      defaultView="month"
-      calendars={[
-        {
-          id: "cal1",
-          name: "Personal",
-          backgroundColor: "#03bd9e",
-        },
-        {
-          id: "cal2",
-          name: "Work",
-          backgroundColor: "#00a9ff",
-        },
-      ]}
-      schedules={events.map((event) => ({
-        id: event.id,
-        calendarId: event.calendarId || event.id, // Assuming calendarId is optional
-        title: event.title,
-        category: event.category,
-        dueDateClass: event.dueDateClass,
-        start: event.start,
-        end: event.end,
-      }))}
-      template={{
-        time(event) {
-          const { start, end, title } = event;
-          return `<span style="color: white;">${formatTime(start)}~${formatTime(
-            end
-          )} ${title}</span>`;
-        },
-        allday(event) {
-          return `<span style="color: gray;">${event.title}</span>`;
-        },
-      }}
-      style={{ height: "800px" }}
-    />
+    <div>
+      <div>
+        <h2>wew</h2>
+      </div>
+      <Calendar
+        ref={calendarRef}
+        defaultView="month"
+        calendars={[
+          {
+            id: "cal1",
+            name: "Personal",
+            backgroundColor: "#03bd9e",
+          },
+          {
+            id: "cal2",
+            name: "Work",
+            backgroundColor: "#00a9ff",
+          },
+        ]}
+        schedules={events.map((event) => ({
+          id: event.id,
+          calendarId: event.calendarId || event.id, // Assuming calendarId is optional
+          title: event.title,
+          category: event.category,
+          dueDateClass: event.dueDateClass,
+          start: event.start,
+          end: event.end,
+        }))}
+        template={{
+          time(event) {
+            const { start, end, title } = event;
+            return `<span style="color: white;">${formatTime(
+              start
+            )}~${formatTime(end)} ${title}</span>`;
+          },
+          allday(event) {
+            return `<span style="color: gray;">${event.title}</span>`;
+          },
+        }}
+        style={{ height: "800px" }}
+      />
+    </div>
   );
 }
 

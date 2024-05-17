@@ -35,13 +35,14 @@ const Sidebar = () => {
       {/* Main Wrapper */}
       <div
         className="d-flex flex-row justify-content-between "
-        style={{ width: "100vw" }}
+        style={{ width: "100vw", backgroundColor: "#F0F8FF" }}
       >
         <div
           style={{
             display: "flex",
             height: "92.6vh",
             overflow: "scroll initial",
+            // Replace with the shade of gray you desire
           }}
         >
           {/* Sidebar Start */}
@@ -132,13 +133,7 @@ const Sidebar = () => {
                     404 page
                   </CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink
-                  exact
-                  activeClassName="activeClicked"
-                  onClick={() => setActivePage("calendar")}
-                >
-                  <CDBSidebarMenuItem icon="user">Calendar</CDBSidebarMenuItem>
-                </NavLink>
+
                 <NavLink
                   exact
                   activeClassName="activeClicked"

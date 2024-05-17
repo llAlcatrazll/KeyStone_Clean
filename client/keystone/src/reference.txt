@@ -13,7 +13,9 @@ Desgin Imports
     Bootstrap
     PrimeReact
     ShadCN UI
-    Mantine Ui
+    Mantine Ui 
+    ClickUp
+    OpenUI.Fly screenshot ui to code
 
 Users can no longer book stuff just view things
 all the booking will be handled by the admin and they can just
@@ -21,3 +23,12 @@ select a profile of who booked the venue on a drop down List
 it will then auto fill the forms
 
 the user can only view they profile page of all their bookings and the calendar with a list view of the bookings nothing else
+
+
+
+ADD A BUTTON TO CLICK THAT WOULD DISPLAY THE POSSIBLE THINGS A USER COULD DO IN A PAGE BASICALLY A WEB TUTORIAL ONLINE LIVE
+
+Dummy Data population for event bookings
+
+
+ADD TOAST FOR IMPORTANT THINGS

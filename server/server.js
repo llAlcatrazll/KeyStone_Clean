@@ -38,6 +38,8 @@ const dropUserRoutes = require("./routes/Archives/dropUsers");
 /*{ PROFILE PAGE }*/
 const userFetchAllRoutes = require("./routes/UserProfiles/userFetchAll");
 const userBookingsRoutes = require("./routes/UserProfiles/userBookingsAll");
+/*{ CALENDAR PAGE } */
+const userBookingsAllFilterRoutes = require("./routes/bookingAllCalendar");
 //
 const { verify } = require("crypto");
 //
@@ -81,7 +83,12 @@ app.use("/", dropUserRoutes);
 app.use("/", userFetchAllRoutes);
 app.use("/", userBookingsRoutes);
 //
-const port = 5000;
+/*{ CALENDAR PAGE } */
+app.use("/api", userBookingsAllFilterRoutes);
+``;
+
+// const port = 5000;
+const port = process.env.PORT || 5000;
 //
 // Verify JWT
 const verifyJwt = (req, res, next) => {
@@ -140,6 +147,15 @@ app.post("/add_newuser", (req, res) => {
     req.body.position,
     req.body.account_type,
   ];
+  /*
+    const minTime = new Date();
+  minTime.setHours(6, 0, 0); // 6 AM
+
+  const maxTime = new Date();
+  maxTime.setHours(21, 0, 0); // 9 PM
+          min={minTime}
+        max={maxTime}
+  */
   console.log(req.body);
   db.query(sql, values, (err, result) => {
     if (err) {

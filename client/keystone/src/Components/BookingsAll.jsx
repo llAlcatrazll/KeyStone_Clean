@@ -73,7 +73,7 @@ function BookingsAll() {
               <Link to={`/read/${venue.booking_id}`}>Read</Link>
               <Link to={`/edit/${venue.booking_id}`}>Edit</Link>
               <button onClick={() => handleDelete(venue.booking_id)}>
-                Delete
+                Deletej
               </button>
             </div>
           </div>

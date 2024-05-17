@@ -70,12 +70,10 @@ function CreateBookings() {
 
   return (
     <div>
-      {/* <h2>Create Bookings</h2> */}
       <div
         className="justify-content-start  p-2 d-flex rounded shadow p-3 mb-5 bg-white rounded"
         style={{ height: "83vh" }}
       >
-        {/* <div className="bg-danger-subtle me-3">User Profiles</div> */}
         <form
           action=""
           onSubmit={handleSubmit}
@@ -126,33 +124,6 @@ function CreateBookings() {
                   }
                 />
               </div>
-              {/* <label htmlFor="">Event Date</label>
-              <input
-                // event_date
-                type="date"
-                name="event_date"
-                onChange={(e) =>
-                  setValues({ ...values, event_date: e.target.value })
-                }
-              />
-              <label htmlFor="">Starting Time</label>
-              <input
-                // starting_time
-                type="time"
-                name="starting_time"
-                onChange={(e) =>
-                  setValues({ ...values, starting_time: e.target.value })
-                }
-              />
-              <label htmlFor="">Ending Time</label>
-              <input
-                // ending_time
-                type="time"
-                name="ending_time"
-                onChange={(e) =>
-                  setValues({ ...values, ending_time: e.target.value })
-                }
-              /> */}
             </div>
             <div className=" d-flex justify-content-around bg-secondary-subtle -subtle w-100 ">
               <div className="input-group">
@@ -169,16 +140,6 @@ function CreateBookings() {
                   }
                 />
               </div>
-              {/* <label htmlFor="">Event Name</label>
-              <input
-                type="text"
-                name="eventname"
-                className="form-control"
-                placeholder="Event Name"
-                onChange={(e) =>
-                  setValues({ ...values, eventname: e.target.value })
-                }
-              /> */}
             </div>
             <div className=" d-flex justify-content-around bg-secondary-subtle -subtle w-100 ">
               <div className="input-group">
@@ -195,16 +156,6 @@ function CreateBookings() {
                   }
                 />
               </div>
-              {/* <label htmlFor="">Event Purpose</label>
-              <input
-                type="text"
-                name="event_purpose"
-                className="form-control"
-                placeholder="Event Purpose"
-                onChange={(e) =>
-                  setValues({ ...values, event_purpose: e.target.value })
-                }
-              /> */}
             </div>
             <div className=" d-flex justify-content-around bg-secondary-subtle -subtle">
               <div className="input-group">
@@ -228,38 +179,9 @@ function CreateBookings() {
                   ))}
                 </select>
               </div>
-
-              {/* <label htmlFor="">Event Facility</label>
-
-              <select
-                name="event_facility"
-                onChange={(e) =>
-                  setValues({ ...values, event_facility: e.target.value })
-                }
-              >
-                {venueData.map((venue) => (
-                  <option key={venue.venue_id}>
-                    <option value={venue.venue_name} className="w-52">
-                      {venue.venue_name}
-                    </option>
-                  </option>
-                ))}
-              </select> */}
             </div>
 
             <div className="mt-2 d-flex justify-content-around bg-dark-subtle -subtle w-100 ">
-              {/* <h2>Select User</h2>
-              <div>autofil</div>
-              <label htmlFor="">Name</label> */}
-
-              {/* <select
-                value={selectedUser}
-                onChange={(e) => setSelectedUser(e.target.value)}
-              >
-                <option value="">Select User</option>
-                <option value="admin">Admin</option>
-                <option value="officer">Officer</option>
-              </select> */}
               <select
                 className="form-select"
                 aria-label="Default select example"

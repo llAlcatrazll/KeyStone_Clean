@@ -5,6 +5,8 @@ import axios from "axios";
 function BookingsPending() {
   const [isPending, setIsPending] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
   useEffect(() => {
     axios
       .get("http://localhost:5000/booking_pending")
@@ -17,14 +19,21 @@ function BookingsPending() {
       })
       .catch((err) => console.log(err));
   }, []);
-
+  // Logic to slice data based on current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = isPending.slice(indexOfFirstItem, indexOfLastItem);
+  // Function to handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <div className="bg-info-subtle p-3">
       <h2>Bookings Pending</h2>
 
       <div>
         <div className="accordion">
-          {isPending.map(
+          {currentItems.map(
             (
               venue,
               index // Added index parameter
@@ -56,6 +65,31 @@ function BookingsPending() {
             )
           )}
         </div>
+      </div>
+      {/* Pagination */}
+      <div className="d-flex justify-content-center mt-3">
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            {Array.from(
+              { length: Math.ceil(isPending.length / itemsPerPage) },
+              (_, i) => (
+                <li
+                  key={i}
+                  className={`page-item ${
+                    currentPage === i + 1 ? "active" : ""
+                  }`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => handlePageChange(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              )
+            )}
+          </ul>
+        </nav>
       </div>
     </div>
   );
