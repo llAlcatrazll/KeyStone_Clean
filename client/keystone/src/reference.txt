@@ -32,3 +32,34 @@ Dummy Data population for event bookings
 
 
 ADD TOAST FOR IMPORTANT THINGS
+
+
+venue_bookings
+
+eventname
+event_facility
+
+event_date
+booking_id
+booker_id
+starting_time
+ending_time
+
+
+
+status
+event_purpose
+username
+email
+deleted
+
+
+Red  #FF8F8F
+
+Green #9ADE7B
+
+Yellow #EEF296
+
+
+SECRET TO CENTER HORIZONTALLY
+d-flex bg-danger text-center align-items-center justify-content-center
