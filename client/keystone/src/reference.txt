@@ -37,7 +37,6 @@ ADD TOAST FOR IMPORTANT THINGS
 venue_bookings
 eventname
 event_facility
-
 event_date
 booking_id
 booker_id
@@ -130,3 +129,5 @@ https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar
 .text-dark
 .text-muted
 .text-white
+
+
