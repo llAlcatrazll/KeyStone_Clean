@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { IconTrash, IconEdit } from "@tabler/icons-react";
+import "../../src/Transition.css";
 function BookingsPending() {
   const [isPending, setIsPending] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,29 +63,28 @@ function BookingsPending() {
   };
 
   return (
-    <div className="">
+    <div className="bg-white rounded">
       {" "}
-      <h4
-        className="text.small rounded align-middle ps-3 shadow-light"
-        style={{
-          backgroundColor: "#FF8F8F",
-          marginLeft: "20px",
-          alignContent: "center",
-          height: "60px",
-          width: "70%",
-          // position: "absolute",
-          // opacity: "20%",
-        }}
-      >
-        Denied Bookings
-      </h4>
       <hr className="bg-white opacity-0" />
       <div
         className="white border-light shadow-lg border-top-0 border rounded-2  p-3"
         // style={{ marginLeft: "20px", marginTop: "20px" }}
       >
         {/* MAIN WRAPPER TO DESGIN */}
+        <h4
+          className="text.small rounded align-middle ps-3 shadow-light"
+          style={{
+            backgroundColor: "#FF8F8F",
 
+            alignContent: "center",
+            height: "60px",
+            width: "70%",
+            // position: "absolute",
+            // opacity: "20%",
+          }}
+        >
+          Denied Bookings
+        </h4>
         <div>
           <div className="accordion mt-5" id="accordionExample">
             {/* <div className="my-4">Headers</div> */}

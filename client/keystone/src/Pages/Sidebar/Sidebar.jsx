@@ -34,7 +34,7 @@ const Sidebar = () => {
     <>
       {/* Main Wrapper */}
       <div
-        className="d-flex flex-row justify-content-between "
+        className="d-flex flex-row justify-content-between bg-secondary-subtle "
         style={{ width: "100vw", backgroundColor: "#F0F8FF" }}
       >
         <div

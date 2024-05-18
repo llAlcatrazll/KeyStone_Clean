@@ -1,11 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Avatar } from "@mantine/core";
+import { useEffect } from "react";
 import axios from "axios";
-
-function BookingsAll() {
+import "../../src/Transition.css";
+//
+export function BookingsAll() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+  const itemsPerPage = 10;
+  const user_picture =
+    "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/";
+  // const profile_cont = "avatar-5.png";
 
   useEffect(() => {
     axios
@@ -19,6 +25,26 @@ function BookingsAll() {
       })
       .catch((err) => console.log(err));
   }, []);
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+  function convertTime24to12(time24) {
+    const [hour, minute] = time24.split(":");
+    const hourInt = parseInt(hour, 10);
+    const period = hourInt >= 12 ? "PM" : "AM";
+    const hour12 = hourInt % 12 || 12; // Convert to 12-hour format and handle midnight (0) case
+    return `${hour12}:${minute} ${period}`;
+  }
+  function formatTimeRange(startTime, endTime) {
+    const start = convertTime24to12(startTime);
+    const end = convertTime24to12(endTime);
+    return `${start} - ${end}`;
+  }
 
   // Logic to slice data based on current page
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -51,34 +77,92 @@ function BookingsAll() {
   }
 
   return (
-    <div className="bg-info-subtle p-3 justify-content-evenly ">
-      <h2>Bookings All Component</h2>
-      <tbody className="grid grid-flow-col justify-content-evenly flex-grow-1 bg-dark-subtle d-flex flex-column">
-        {currentItems.map((venue) => (
-          <div key={venue.id} className=" d-flex justify-content-between ">
-            <div>{venue.booking_id}</div>
-            <div>{venue.booker_id}</div>
-            <div>{venue.username}</div>
-            <div>{venue.eventname}</div>
-            <div>{venue.event_purpose}</div>
-            <div>{venue.event_date}</div>
-            <div>{venue.starting_time}</div>
-            <div>{venue.ending_time}</div>
-            <div>{venue.event_facility}</div>
-            <div>{venue.designation}</div>
-            <div>{venue.college_afiliation}</div>
-            <div className="align-content-center">{venue.status}</div>
-            <div className="align-content-center">{venue.club}</div>
-            <div className="bg-danger-subtle">
-              <Link to={`/read/${venue.booking_id}`}>Read</Link>
-              <Link to={`/edit/${venue.booking_id}`}>Edit</Link>
-              <button onClick={() => handleDelete(venue.booking_id)}>
-                Deletej
-              </button>
-            </div>
+    <div
+      className="bg-info-subtle p-3 d-flex flex-column"
+      style={{ height: "85vh" }}
+    >
+      {/* <h2>Bookings All Component</h2> */}
+      <div className="bg-danger-subtle d-flex flex-grow-1 align-items-center justify-content-start rounded">
+        {/* <div className="input-group">
+          <div className="input-group-prepend">
+            <span className="input-group-text">Event Facility</span>
           </div>
-        ))}
-      </tbody>
+          <select
+            className="form-select"
+            aria-label="Default select example"
+            name="event_facility"
+            // onChange={(e) =>
+            //   setValues({ ...values, event_facility: e.target.value })
+            // }
+          >
+            <option value=""></option>
+          </select>
+        </div> */}
+        {/* <div>Filter By</div> */}
+      </div>
+      <div className="d-flex  flex-column">
+        <table className="table table-default table-striped table-hover ">
+          <thead>
+            <tr>
+              <th className="text-center">Profile</th>
+              <th className="text-center">Username</th>
+              <th className="text-center">Event Name</th>
+              <th className="text-center">Event Date</th>
+              <th className="text-center">Starting Time</th>
+              {/* <th className="text-center">Ending Time</th> */}
+              <th className="text-center">Event Facility</th>
+              <th className="text-center">Status</th>
+              <th className="text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.map((venue) => (
+              <tr key={venue.id}>
+                <td className="text-center">
+                  <Avatar
+                    src={user_picture + venue.profile_pic}
+                    size={35}
+                    radius={35}
+                    mx="auto"
+                  />
+                </td>
+                <td className="text-center">{venue.username}</td>
+                <td className="text-center">{venue.eventname}</td>
+                <td className="text-center"> {formatDate(venue.event_date)}</td>
+                <td className="text-center">
+                  {" "}
+                  {formatTimeRange(venue.starting_time, venue.ending_time)}
+                </td>
+                {/* <td className="text-center">{venue.ending_time}</td> */}
+                <td className="text-center">{venue.event_facility}</td>
+                <td className="text-center">{venue.status}</td>
+                <td className="text-center">
+                  <div className="d-flex justify-content-center gap-2">
+                    <Link
+                      to={`/read/${venue.booking_id}`}
+                      className="btn btn-primary btn-sm"
+                    >
+                      Read
+                    </Link>
+                    <Link
+                      to={`/edit/${venue.booking_id}`}
+                      className="btn btn-secondary btn-sm"
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(venue.booking_id)}
+                      className="btn btn-danger btn-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {/* Pagination */}
       <div className="d-flex justify-content-center mt-3">
         <nav aria-label="Page navigation example">
@@ -107,5 +191,4 @@ function BookingsAll() {
     </div>
   );
 }
-
 export default BookingsAll;

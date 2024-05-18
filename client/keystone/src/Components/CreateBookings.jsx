@@ -83,6 +83,69 @@ function CreateBookings() {
             className=" flex-grow-1 d-flex flex-column rounded justify-content-between p-2 "
             style={{ height: "77vh" }}
           >
+            <div className="mt-2 d-flex justify-content-around bg-dark-subtle -subtle w-100 ">
+              <select
+                className="form-select"
+                aria-label="Default select example"
+                value={selectedUser}
+                onChange={(e) => setSelectedUser(e.target.value)}
+              >
+                <option value="">Select User</option>
+                <option value="admin">Admin</option>
+                <option value="officer">Officer</option>
+              </select>
+              {selectedUser === "admin" && (
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={(e) => {
+                    const selectedUsername = e.target.value;
+                    const selectedAdmin = isApproved.find(
+                      (admin) => admin.username === selectedUsername
+                    );
+                    setValues({
+                      ...values,
+                      username: selectedUsername,
+                      booker_id: selectedAdmin ? selectedAdmin.user_id : "", // Set the booker_id based on selected user
+                    });
+                  }}
+                >
+                  <option value="">Select Admin</option>
+                  {isApproved.map((admin) => (
+                    <option key={admin.user_id} value={admin.username}>
+                      {admin.username}
+                    </option>
+                  ))}
+                </select>
+              )}
+
+              {selectedUser === "officer" && (
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  onChange={(e) => {
+                    const selectedUsername = e.target.value;
+
+                    const selectedOfficer = isOfficer.find(
+                      (officer) => officer.username === selectedUsername
+                    );
+                    setValues({
+                      ...values,
+                      username: selectedUsername,
+                      booker_id: selectedOfficer ? selectedOfficer.user_id : "", // Set the booker_id based on selected user
+                      email: selectedOfficer ? selectedOfficer.email : "",
+                    });
+                  }}
+                >
+                  <option value="">Select Officer</option>
+                  {isOfficer.map((officer) => (
+                    <option key={officer.user_id} value={officer.username}>
+                      {officer.username}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
             <div className="flex-row d-flex justify-content-between w-100 mb-3 p-2 rounded ">
               <div className="input-group">
                 <div className="input-group-prepend">
@@ -181,69 +244,6 @@ function CreateBookings() {
               </div>
             </div>
 
-            <div className="mt-2 d-flex justify-content-around bg-dark-subtle -subtle w-100 ">
-              <select
-                className="form-select"
-                aria-label="Default select example"
-                value={selectedUser}
-                onChange={(e) => setSelectedUser(e.target.value)}
-              >
-                <option value="">Select User</option>
-                <option value="admin">Admin</option>
-                <option value="officer">Officer</option>
-              </select>
-              {selectedUser === "admin" && (
-                <select
-                  className="form-select"
-                  aria-label="Default select example"
-                  onChange={(e) => {
-                    const selectedUsername = e.target.value;
-                    const selectedAdmin = isApproved.find(
-                      (admin) => admin.username === selectedUsername
-                    );
-                    setValues({
-                      ...values,
-                      username: selectedUsername,
-                      booker_id: selectedAdmin ? selectedAdmin.user_id : "", // Set the booker_id based on selected user
-                    });
-                  }}
-                >
-                  <option value="">Select Admin</option>
-                  {isApproved.map((admin) => (
-                    <option key={admin.user_id} value={admin.username}>
-                      {admin.username}
-                    </option>
-                  ))}
-                </select>
-              )}
-
-              {selectedUser === "officer" && (
-                <select
-                  className="form-select"
-                  aria-label="Default select example"
-                  onChange={(e) => {
-                    const selectedUsername = e.target.value;
-
-                    const selectedOfficer = isOfficer.find(
-                      (officer) => officer.username === selectedUsername
-                    );
-                    setValues({
-                      ...values,
-                      username: selectedUsername,
-                      booker_id: selectedOfficer ? selectedOfficer.user_id : "", // Set the booker_id based on selected user
-                      email: selectedOfficer ? selectedOfficer.email : "",
-                    });
-                  }}
-                >
-                  <option value="">Select Officer</option>
-                  {isOfficer.map((officer) => (
-                    <option key={officer.user_id} value={officer.username}>
-                      {officer.username}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
             <div className="d-flex justify-content-center ">
               <button type="submit" className="btn btn-dark w16">
                 Submit

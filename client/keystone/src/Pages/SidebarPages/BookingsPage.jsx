@@ -3,10 +3,10 @@ import BookingsDenied from "../../Components/BookingsDenied";
 import BookingsPending from "../../Components/BookingsPending";
 function BookingsPage() {
   return (
-    <div className="  p-1">
+    <div className="">
       {/* <h1>BookingsPage</h1> */}
       <div
-        className="w-100 justify-content-evenly align-items-center shadow-lg border-top-0 border border-light p-3 mb-5 bg-white rounded"
+        className="w-100 bg-dark-subtle justify-content-evenly align-items-center   p-3 mb-5 bg-white rounded"
         // d-flex
         style={{ minHeight: "800px" }}
       >

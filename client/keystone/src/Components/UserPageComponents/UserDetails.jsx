@@ -19,22 +19,30 @@ function UserDetails() {
       .catch((err) => console.log(err));
   }, [userEmail]);
   return (
-    <div>
-      {" "}
+    <div className="container mt-1">
       {userDetails.map((User) => (
-        <div key={User.user_id} className="bg-white mt-2 h-90 p-3">
-          <h2>User Details</h2>
-          <div className="d-flex flex-row row mb-3">
-            <h5>Email</h5>
-            <div>{User.email}</div>
-          </div>
-          <div className="d-flex flex-row row mb-3">
-            <h5>Phone</h5>
-            <div>{User.user_id}</div>
-          </div>
-          <div className="d-flex flex-row row ">
-            <h5>Password</h5>
-            <div>{User.password}</div>
+        <div key={User.user_id} className="card shadow-sm mb-4">
+          <div className="card-body">
+            <div className="d-flex align-items-center justify-content-center mb-2 ">
+              <div>
+                {" "}
+                <h5 className="card-subtitle me-3 mb-2">Email </h5>
+              </div>
+              <div className="card-text pb-2">{User.email}</div>
+            </div>
+            <div className="mb-3 d-flex flex-grow-1 justify-content-around  ">
+              <div className="d-flex">
+                <h5 className="card-subtitle mb-2 me-3">User ID</h5>
+                <div className="card-text">{User.user_id}</div>
+              </div>
+              <div className="d-flex">
+                <h5 className="card-subtitle mb-2 me-3 align-content-center  justify-content-center text-center ">
+                  Password
+                </h5>
+                <div className="card-text">{User.password}</div>
+              </div>
+            </div>
+            <div></div>
           </div>
         </div>
       ))}

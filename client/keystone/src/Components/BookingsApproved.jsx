@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { IconTrash, IconEdit } from "@tabler/icons-react";
+import "../../src/Transition.css";
 function BookingsApproved() {
   const [isPending, setIsPending] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,29 +63,28 @@ function BookingsApproved() {
   };
 
   return (
-    <div className="">
+    <div className="bg-white rounded">
       {" "}
-      <h4
-        className="text.small rounded align-middle ps-3 shadow-light"
-        style={{
-          backgroundColor: "#9ADE7B",
-          marginLeft: "20px",
-          alignContent: "center",
-          height: "60px",
-          width: "70%",
-          // position: "absolute",
-          // opacity: "20%",
-        }}
-      >
-        Approved Bookings
-      </h4>
       <hr className="bg-white opacity-0" />
       <div
         className="white border-light shadow-lg border-top-0 border rounded-2  p-3"
         // style={{ marginLeft: "20px", marginTop: "20px" }}
       >
         {/* MAIN WRAPPER TO DESGIN */}
+        <h4
+          className="text.small rounded align-middle ps-3 shadow-light"
+          style={{
+            backgroundColor: "#9ADE7B",
 
+            alignContent: "center",
+            height: "60px",
+            width: "70%",
+            // position: "absolute",
+            // opacity: "20%",
+          }}
+        >
+          Approved Bookings
+        </h4>
         <div>
           <div className="accordion mt-5" id="accordionExample">
             {/* <div className="my-4">Headers</div> */}
@@ -117,15 +117,15 @@ function BookingsApproved() {
               </div>
             </div>
             {currentItems.map((venue, index) => (
-              <div key={venue.venue_id} className="accordion-item ">
-                <h2 className="accordion-header " id={`heading${index}`}>
+              <div key={venue.venue_id} className="accordion-item">
+                <h2 className="accordion-header" id={`headingApproved${index}`}>
                   <button
-                    className="accordion-button collapsed" // Ensure the button is collapsed by default
+                    className="accordion-button collapsed"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target={`#collapse${index}`}
-                    aria-expanded="false" // Ensure it is not expanded by default
-                    aria-controls={`collapse${index}`}
+                    data-bs-target={`#collapseApproved${index}`}
+                    aria-expanded="false"
+                    aria-controls={`collapseApproved${index}`}
                   >
                     <div className="flex-grow-1  d-flex">
                       <div className="d-flex   flex-grow-1 ">
@@ -154,9 +154,9 @@ function BookingsApproved() {
                   </button>
                 </h2>
                 <div
-                  id={`collapse${index}`}
-                  className="accordion-collapse collapse" // Ensure it is collapsed by default
-                  aria-labelledby={`heading${index}`}
+                  id={`collapseApproved${index}`} // Ensure unique IDs for approved bookings
+                  className="accordion-collapse collapse"
+                  aria-labelledby={`headingApproved${index}`}
                   data-bs-parent="#accordionExample"
                 >
                   <div className="d-flex  justify-content-between px-5 ">

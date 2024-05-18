@@ -9,7 +9,7 @@ function UserProfiles() {
   return (
     <div className="container-fluid h-100">
       <div className="row mh-100vh h-100">
-        <div className="col-lg-4 bg-danger-subtle p-2 h-100 d-flex flex-column">
+        <div className="col-lg-4 bg-dark-subtle rounded p-2 h-100 d-flex flex-column">
           <div className="rcol-lg-5">
             <UserProfile />
           </div>
@@ -20,7 +20,7 @@ function UserProfiles() {
             <UserNotes />
           </div>
         </div>
-        <div className="col bg-dark-subtle p-2 h-100 d-flex flex-column">
+        <div className="rounded ms-2 col bg-dark-subtle p-2 h-100 d-flex flex-column">
           <div className="flex-grow-1">
             <UserLog />
           </div>
