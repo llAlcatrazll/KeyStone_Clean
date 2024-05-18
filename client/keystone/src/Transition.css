@@ -1,4 +1,18 @@
-@import "~bootstrap/scss/bootstrap";
+.accordion-collapse {
+  transition: height 0.3s ease-in-out;
+}
+th {
+  padding: auto;
+}
+
+.shadow-custom {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-inner {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* @import "~bootstrap/scss/bootstrap";
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -40,4 +54,4 @@
 
 .read-the-docs {
   color: #888;
-}
+} */

@@ -1,5 +1,13 @@
 /* Option 2: Import via CSS */
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
+/* Add this to your CSS file */
+.event-category1 {
+  background-color: blue !important; /* Use!important to override any existing styles */
+}
+
+.event-category2 {
+  background-color: red !important; /* Use!important to override any existing styles */
+}
 
 /* 
 :)

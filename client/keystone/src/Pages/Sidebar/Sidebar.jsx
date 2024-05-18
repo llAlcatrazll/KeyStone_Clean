@@ -18,22 +18,31 @@ import BookingsPage from "../SidebarPages/BookingsPage";
 import AllBookings from "../SidebarPages/AllBookings";
 import Calendar from "../SidebarPages/Calendar";
 import Archive from "../SidebarPages/Archive";
+import BigCalendar from "../SidebarPages/BigCalendar";
 import "./customschollbar.css";
 const Sidebar = () => {
   const [activePage, setActivePage] = useToggle("usermanagement");
+
+  const handleLogOut = () => {
+    // Clear everything in localStorage
+    // and logout
+    localStorage.clear();
+    window.location.href = "/";
+  };
   // Toggle Active Page
   return (
     <>
       {/* Main Wrapper */}
       <div
-        className="d-flex flex-row justify-content-between "
-        style={{ width: "100vw" }}
+        className="d-flex flex-row justify-content-between bg-secondary-subtle "
+        style={{ width: "100vw", backgroundColor: "#F0F8FF" }}
       >
         <div
           style={{
             display: "flex",
             height: "92.6vh",
             overflow: "scroll initial",
+            // Replace with the shade of gray you desire
           }}
         >
           {/* Sidebar Start */}
@@ -124,12 +133,15 @@ const Sidebar = () => {
                     404 page
                   </CDBSidebarMenuItem>
                 </NavLink>
+
                 <NavLink
                   exact
                   activeClassName="activeClicked"
-                  onClick={() => setActivePage("calendar")}
+                  onClick={() => setActivePage("calendar2")}
                 >
-                  <CDBSidebarMenuItem icon="user">Calendar</CDBSidebarMenuItem>
+                  <CDBSidebarMenuItem icon="user">
+                    Calendar 2
+                  </CDBSidebarMenuItem>
                 </NavLink>
               </CDBSidebarMenu>
             </CDBSidebarContent>
@@ -140,7 +152,9 @@ const Sidebar = () => {
                   padding: "20px 5px",
                 }}
               >
-                <button>Log Out</button>
+                <button onClick={handleLogOut} className="btn btn-dark">
+                  Log Out
+                </button>
               </div>
             </CDBSidebarFooter>
           </CDBSidebar>
@@ -165,6 +179,7 @@ const Sidebar = () => {
           {activePage === "allbookings" && <AllBookings />}
           {activePage === "calendar" && <Calendar />}
           {activePage === "archive" && <Archive />}
+          {activePage === "calendar2" && <BigCalendar />}
         </div>
         {/* Content End */}
       </div>

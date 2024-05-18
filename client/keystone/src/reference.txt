@@ -7,7 +7,15 @@ https://prium.github.io/phoenix/v1.16.0/apps/crm/analytics.html
 SIDEBAR
     https://www.devwares.com/blog/create-responsive-sidebar-in-react/
 
+ReactBigCalendar For the Calendar
 
+Desgin Imports
+    Bootstrap
+    PrimeReact
+    ShadCN UI
+    Mantine Ui 
+    ClickUp
+    OpenUI.Fly screenshot ui to code
 
 Users can no longer book stuff just view things
 all the booking will be handled by the admin and they can just
@@ -15,3 +23,111 @@ select a profile of who booked the venue on a drop down List
 it will then auto fill the forms
 
 the user can only view they profile page of all their bookings and the calendar with a list view of the bookings nothing else
+
+
+
+ADD A BUTTON TO CLICK THAT WOULD DISPLAY THE POSSIBLE THINGS A USER COULD DO IN A PAGE BASICALLY A WEB TUTORIAL ONLINE LIVE
+
+Dummy Data population for event bookings
+
+
+ADD TOAST FOR IMPORTANT THINGS
+
+
+venue_bookings
+eventname
+event_facility
+event_date
+booking_id
+booker_id
+starting_time
+ending_time
+username
+email
+profile_pic
+deleted
+
+
+
+status
+event_purpose
+username
+email       
+deleted
+
+
+Red  #FF8F8F
+
+Green #9ADE7B
+
+Yellow #EEF296
+
+
+SECRET TO CENTER HORIZONTALLY
+d-flex bg-danger text-center align-items-center justify-content-center
+
+t- top
+b- bottom
+s- left
+e- right
+x- left right
+y- top bottom
+
+MANTINE AVATAR MAX -10
+
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-10.png
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-9.png
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-7.png
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-6.png
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-4.png
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-3.png
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png
+https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-10.png
+
+
+<table>
+
+
+  <thead>
+    <tr>
+      <th>Month</th>
+
+    </tr>
+  </thead>
+
+
+  <tbody>
+    <tr>
+      <td>January</td>
+    </tr>
+    <tr>
+      <td>February</td>
+    </tr>
+  </tbody>
+
+
+  <tfoot>
+    <tr>
+      <td>Sum</td>
+    </tr>
+  </tfoot>
+
+
+</table>
+
+
+.text-primary
+.text-secondary
+.text-success
+.text-danger
+.text-warning
+.text-info
+.text-light
+.text-dark
+.text-muted
+.text-white
+
+

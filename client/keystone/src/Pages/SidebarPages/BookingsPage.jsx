@@ -3,17 +3,17 @@ import BookingsDenied from "../../Components/BookingsDenied";
 import BookingsPending from "../../Components/BookingsPending";
 function BookingsPage() {
   return (
-    <div>
-      <h1>BookingsPage</h1>
+    <div className="">
+      {/* <h1>BookingsPage</h1> */}
       <div
-        className="w-100 justify-content-evenly align-items-center "
+        className="w-100 bg-dark-subtle justify-content-evenly align-items-center   p-3 mb-5 bg-white rounded"
         // d-flex
-        style={{ height: "auto" }}
+        style={{ minHeight: "800px" }}
       >
         <BookingsApproved />
-        <hr />
+        {/* <hr /> */}
         <BookingsPending />
-        <hr />
+        {/* <hr /> */}
         <BookingsDenied />
       </div>
     </div>

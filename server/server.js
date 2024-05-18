@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const app = express();
+const jwt = require("jsonwebtoken");
 
 //  database connection
 const db = require("./db");
@@ -34,6 +35,13 @@ const restoreVenuesRoutes = require("./routes/Archives/restoreVenues");
 const restoreBookingRoutes = require("./routes/Archives/restoreBookings");
 const dropVenuesRoutes = require("./routes/Archives/dropVenues");
 const dropUserRoutes = require("./routes/Archives/dropUsers");
+/*{ PROFILE PAGE }*/
+const userFetchAllRoutes = require("./routes/UserProfiles/userFetchAll");
+const userBookingsRoutes = require("./routes/UserProfiles/userBookingsAll");
+/*{ CALENDAR PAGE } */
+const userBookingsAllFilterRoutes = require("./routes/bookingAllCalendar");
+//
+const { verify } = require("crypto");
 //
 //
 // handle middleware
@@ -71,8 +79,103 @@ app.use("/", restoreBookingRoutes);
 app.use("/", dropVenuesRoutes);
 app.use("/", dropUserRoutes);
 //
+/*{ PROFILE PAGE }*/
+app.use("/", userFetchAllRoutes);
+app.use("/", userBookingsRoutes);
 //
-const port = 5000;
+/*{ CALENDAR PAGE } */
+app.use("/api", userBookingsAllFilterRoutes);
+``;
+//
+//
+//
+//
+//
+//
+//
+
+// HERERERERER
+app.get("/event_venues_booked", (req, res) => {
+  const venue = req.query.venue || ""; // Default to empty string if not provided
+  const sql = "SELECT * FROM venue_bookings WHERE `event_facility`=?";
+  db.query(sql, [venue], (err, result) => {
+    if (err) {
+      res.status(500).json({ message: "Server error" });
+    } else {
+      res.json(result);
+    }
+  });
+});
+/*
+THIS WORKS
+app.get("/event_venues_booked", (req, res) => {
+  const status = req.query.status || "Active"; // Default to 'Active' if not provided
+  const sql = "SELECT * FROM venue_bookings WHERE `deleted`=?";
+  db.query(sql, [status], (err, result) => {
+    if (err) {
+      res.status(500).json({ message: "Server error" });
+    } else {
+      res.json(result);
+    }
+  });
+});
+*/
+//
+//
+//
+//
+//
+
+// const port = 5000;
+const port = process.env.PORT || 5000;
+//
+// Verify JWT
+const verifyJwt = (req, res, next) => {
+  const token = req.headers["access-token"];
+  if (!token) {
+    return res.json("we need token please provide one");
+  } else {
+    jwt.verify(token, "jwtSecretKey", (err, decoded) => {
+      if (err) {
+        res.json("Not Authenticated");
+      } else {
+        req.userId = decoded.id;
+        next();
+      }
+    });
+  }
+};
+// JWT AUTH
+app.get("/checkauth", verifyJwt, (req, res) => {
+  return res.json("Authenticated");
+});
+//
+
+// Import the database connection
+
+//
+// LOG IN USER
+app.post("/check_user", (req, res) => {
+  const { email, password } = req.body;
+  const sql = "SELECT * FROM user_login WHERE email = ? AND password = ?";
+  // JWT token passed
+  db.query(sql, [email, password], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "Server error" });
+    }
+    if (result.length > 0) {
+      const user_id = result[0].user_id; // Corrected variable name
+      const token = jwt.sign({ user_id }, "jwtSecretKey", { expiresIn: 10 });
+      // User exists and password matches
+      return res.json({ Login: true, token, data: result }); // Corrected variable name
+      // pass to fontend
+    } else {
+      // No user found with the provided email and password
+      return res.json({ success: false, message: "Invalid email or password" });
+    }
+  });
+});
+
 // TRANSER TO INDIVIDUAL
 //  ADD NEW USER
 app.post("/add_newuser", (req, res) => {
@@ -87,6 +190,15 @@ app.post("/add_newuser", (req, res) => {
     req.body.position,
     req.body.account_type,
   ];
+  /*
+    const minTime = new Date();
+  minTime.setHours(6, 0, 0); // 6 AM
+
+  const maxTime = new Date();
+  maxTime.setHours(21, 0, 0); // 9 PM
+          min={minTime}
+        max={maxTime}
+  */
   console.log(req.body);
   db.query(sql, values, (err, result) => {
     if (err) {
@@ -97,7 +209,7 @@ app.post("/add_newuser", (req, res) => {
 }); // CREATE BOOKINGS
 app.post("/create_booking", (req, res) => {
   const sql =
-    "INSERT INTO venue_bookings (`booker_id`,`eventname`,`event_purpose`,`event_date`,`starting_time`,`ending_time`,`event_facility`,`username`)VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO venue_bookings (`booker_id`,`eventname`,`event_purpose`,`event_date`,`starting_time`,`ending_time`,`event_facility`,`username`, `email`)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
   const values = [
     req.body.booker_id,
     req.body.eventname,
@@ -107,6 +219,7 @@ app.post("/create_booking", (req, res) => {
     req.body.ending_time,
     req.body.event_facility,
     req.body.username,
+    req.body.email,
   ];
   console.log(req.body);
   db.query(sql, values, (err, result) => {
@@ -210,24 +323,6 @@ app.post("/edit_user/:id", (req, res) => {
 //
 //
 //
-// LOG IN USER
-app.post("/check_user", (req, res) => {
-  const { email, password } = req.body;
-  const sql = "SELECT * FROM user_login WHERE email = ? AND password = ?";
-
-  db.query(sql, [email, password], (err, result) => {
-    if (err) {
-      return res.status(500).json({ message: "Server error" });
-    }
-    if (result.length > 0) {
-      // User exists and password matches
-      return res.json({ success: true, message: "Login successful" });
-    } else {
-      // No user found with the provided email and password
-      return res.json({ success: false, message: "Invalid email or password" });
-    }
-  });
-});
 
 //
 //
