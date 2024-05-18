@@ -7,9 +7,8 @@ import axios from "axios";
 function ReactBigCalendar() {
   const localizer = momentLocalizer(moment);
   const [events, setEvents] = useState([]);
-  const [venue, setVenue] = useState({
-    event_facility: "Active",
-  });
+  const [venueData, setVenueData] = useState([]);
+  const [selectedVenue, setSelectedVenue] = useState("");
 
   const minTime = new Date();
   minTime.setHours(6, 0, 0); // 6 AM
@@ -19,33 +18,46 @@ function ReactBigCalendar() {
 
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:5000/event_venues_booked?status=${venue.event_facility}`
-      )
+      .get("http://localhost:5000/venues")
       .then((res) => {
         if (Array.isArray(res.data)) {
-          const mappedEvents = res.data.map((venue) => ({
-            start: new Date(venue.event_date + "T" + venue.starting_time),
-            end: new Date(venue.event_date + "T" + venue.ending_time),
-            title: venue.eventname,
-            category: venue.event_facility,
-            bookingId: venue.booking_id,
-            bookerId: venue.booker_id,
-            username: venue.username,
-            eventPurpose: venue.event_purpose,
-            designation: venue.designation,
-            collegeAffiliation: venue.college_afiliation,
-          }));
-          setEvents(mappedEvents);
+          setVenueData(res.data);
         } else {
           console.error("Expected an array but received:", res.data);
         }
       })
       .catch((err) => console.log(err));
-  }, [venue.event_facility]);
+  }, []);
 
-  const handleStatusChange = (e) => {
-    setVenue({ event_facility: e.target.value });
+  useEffect(() => {
+    if (selectedVenue) {
+      axios
+        .get(`http://localhost:5000/event_venues_booked?venue=${selectedVenue}`)
+        .then((res) => {
+          if (Array.isArray(res.data)) {
+            const mappedEvents = res.data.map((venue) => ({
+              start: new Date(venue.event_date + "T" + venue.starting_time),
+              end: new Date(venue.event_date + "T" + venue.ending_time),
+              title: venue.eventname,
+              category: venue.event_facility,
+              bookingId: venue.booking_id,
+              bookerId: venue.booker_id,
+              username: venue.username,
+              eventPurpose: venue.event_purpose,
+              designation: venue.designation,
+              collegeAffiliation: venue.college_afiliation,
+            }));
+            setEvents(mappedEvents);
+          } else {
+            console.error("Expected an array but received:", res.data);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [selectedVenue]);
+
+  const handleVenueChange = (e) => {
+    setSelectedVenue(e.target.value);
   };
 
   return (
@@ -53,21 +65,25 @@ function ReactBigCalendar() {
       <div className="d-flex justify-content-around bg-secondary-subtle">
         <div className="input-group">
           <div className="input-group-prepend">
-            <span className="input-group-text">Status</span>
+            <span className="input-group-text">Venue</span>
           </div>
           <select
             className="form-select"
             aria-label="Default select example"
             name="event_facility"
-            onChange={handleStatusChange}
-            value={venue.event_facility}
+            onChange={handleVenueChange}
+            value={selectedVenue}
           >
-            <option value="Active">Active</option>
-            <option value="Deleted">Deleted</option>
+            <option value="">Select a venue</option>
+            {venueData.map((venue) => (
+              <option key={venue.venue_id} value={venue.venue_name}>
+                {venue.venue_name}
+              </option>
+            ))}
           </select>
         </div>
       </div>
-      <div>{venue.event_facility}</div>
+      <div>{selectedVenue}</div>
       <Calendar
         localizer={localizer}
         events={events}

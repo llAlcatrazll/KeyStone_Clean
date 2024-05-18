@@ -96,6 +96,19 @@ app.use("/api", userBookingsAllFilterRoutes);
 
 // HERERERERER
 app.get("/event_venues_booked", (req, res) => {
+  const venue = req.query.venue || ""; // Default to empty string if not provided
+  const sql = "SELECT * FROM venue_bookings WHERE `event_facility`=?";
+  db.query(sql, [venue], (err, result) => {
+    if (err) {
+      res.status(500).json({ message: "Server error" });
+    } else {
+      res.json(result);
+    }
+  });
+});
+/*
+THIS WORKS
+app.get("/event_venues_booked", (req, res) => {
   const status = req.query.status || "Active"; // Default to 'Active' if not provided
   const sql = "SELECT * FROM venue_bookings WHERE `deleted`=?";
   db.query(sql, [status], (err, result) => {
@@ -106,16 +119,7 @@ app.get("/event_venues_booked", (req, res) => {
     }
   });
 });
-
-/*
-THIS WORKS
-{app.get("/texting", (req, res) => {
-  const sql = "SELECT * FROM venue_bookings WHERE `event_facility`='LIRC'";
-  db.query(sql, (err, result) => {
-    if (err) res.json({ message: "Server error" });
-    return res.json(result);
-  });
-});}*/
+*/
 //
 //
 //
