@@ -7,11 +7,9 @@ import axios from "axios";
 function ReactBigCalendar() {
   const localizer = momentLocalizer(moment);
   const [events, setEvents] = useState([]);
-  const [venueData, setVenueData] = useState([]);
   const [venue, setVenue] = useState({
-    event_facility: "",
+    event_facility: "Active",
   });
-  const venutoFind = venue.event_facility;
 
   const minTime = new Date();
   minTime.setHours(6, 0, 0); // 6 AM
@@ -20,22 +18,9 @@ function ReactBigCalendar() {
   maxTime.setHours(21, 0, 0); // 9 PM
 
   useEffect(() => {
-    // Fetch venues for the dropdown
-    axios
-      .get("http://localhost:5000/venues")
-      .then((res) => {
-        if (Array.isArray(res.data)) {
-          setVenueData(res.data);
-        } else {
-          console.error("Expected an array but received:", res.data);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
-  useEffect(() => {
     axios
       .get(
-        `http://localhost:5000/api/venue_bookings_calendar?event_facility=${venutoFind}`
+        `http://localhost:5000/event_venues_booked?status=${venue.event_facility}`
       )
       .then((res) => {
         if (Array.isArray(res.data)) {
@@ -57,31 +42,28 @@ function ReactBigCalendar() {
         }
       })
       .catch((err) => console.log(err));
-  }, [venutoFind]);
+  }, [venue.event_facility]);
 
-  const handleVenueChange = (e) => {
+  const handleStatusChange = (e) => {
     setVenue({ event_facility: e.target.value });
   };
 
   return (
-    <div style={{ height: "75vh" }}>
+    <div style={{ height: "800px" }} className="bg-dark-subtle">
       <div className="d-flex justify-content-around bg-secondary-subtle">
         <div className="input-group">
           <div className="input-group-prepend">
-            <span className="input-group-text">Event Facility</span>
+            <span className="input-group-text">Status</span>
           </div>
           <select
             className="form-select"
             aria-label="Default select example"
             name="event_facility"
-            onChange={handleVenueChange}
+            onChange={handleStatusChange}
+            value={venue.event_facility}
           >
-            <option value="">Select a venue</option>
-            {venueData.map((venue) => (
-              <option key={venue.venue_id} value={venue.venue_name}>
-                {venue.venue_name}
-              </option>
-            ))}
+            <option value="Active">Active</option>
+            <option value="Deleted">Deleted</option>
           </select>
         </div>
       </div>
@@ -91,7 +73,8 @@ function ReactBigCalendar() {
         events={events}
         startAccessor="start"
         endAccessor="end"
-        style={{ margin: "50px" }}
+        style={{ height: "700px" }}
+        className="bg-white p-3 m-3"
         min={minTime}
         max={maxTime}
       />

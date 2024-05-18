@@ -71,7 +71,7 @@ function EventCalendar() {
             return `<span style="color: gray;">${event.title}</span>`;
           },
         }}
-        style={{ height: "800px" }}
+        style={{ height: "500px" }}
       />
     </div>
   );

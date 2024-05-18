@@ -86,6 +86,41 @@ app.use("/", userBookingsRoutes);
 /*{ CALENDAR PAGE } */
 app.use("/api", userBookingsAllFilterRoutes);
 ``;
+//
+//
+//
+//
+//
+//
+//
+
+// HERERERERER
+app.get("/event_venues_booked", (req, res) => {
+  const status = req.query.status || "Active"; // Default to 'Active' if not provided
+  const sql = "SELECT * FROM venue_bookings WHERE `deleted`=?";
+  db.query(sql, [status], (err, result) => {
+    if (err) {
+      res.status(500).json({ message: "Server error" });
+    } else {
+      res.json(result);
+    }
+  });
+});
+
+/*
+THIS WORKS
+{app.get("/texting", (req, res) => {
+  const sql = "SELECT * FROM venue_bookings WHERE `event_facility`='LIRC'";
+  db.query(sql, (err, result) => {
+    if (err) res.json({ message: "Server error" });
+    return res.json(result);
+  });
+});}*/
+//
+//
+//
+//
+//
 
 // const port = 5000;
 const port = process.env.PORT || 5000;
@@ -110,6 +145,10 @@ const verifyJwt = (req, res, next) => {
 app.get("/checkauth", verifyJwt, (req, res) => {
   return res.json("Authenticated");
 });
+//
+
+// Import the database connection
+
 //
 // LOG IN USER
 app.post("/check_user", (req, res) => {
