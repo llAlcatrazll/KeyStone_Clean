@@ -75,15 +75,44 @@ export function BookingsAll() {
       })
       .catch((err) => console.log(err));
   }
+  function getStatusStyle(status) {
+    switch (status.toLowerCase()) {
+      case "approved":
+        return {
+          backgroundColor: "#9ADE7B",
+          color: "white",
+          borderRadius: "10px",
+        };
+      case "pending":
+        return {
+          backgroundColor: "#EEF296",
+          color: "black",
+          borderRadius: "10px",
+        };
+      case "denied":
+        return {
+          backgroundColor: "#FF8F8F",
+          color: "white",
+          borderRadius: "10px",
+        };
+      default:
+        return {};
+    }
+  }
 
   return (
     <div
-      className="bg-info-subtle p-3 d-flex flex-column"
+      className="bg-dark-subtle rounded p-3 d-flex flex-column"
       style={{ height: "85vh" }}
     >
       {/* <h2>Bookings All Component</h2> */}
-      <div className="bg-danger-subtle d-flex flex-grow-1 align-items-center justify-content-start rounded"></div>
-      <div className="d-flex  flex-column">
+      <div
+        className="d-flex flex-grow-1 align-items-center text-white fw-bold fs-1  text-center justify-content-center rounded"
+        style={{ backgroundColor: "#31375A" }}
+      >
+        All Bookings
+      </div>
+      <div className="d-flex  flex-column p-1 bg-white">
         <table className="table table-default table-striped table-hover ">
           <thead>
             <tr>
@@ -118,7 +147,9 @@ export function BookingsAll() {
                 </td>
                 {/* <td className="text-center">{venue.ending_time}</td> */}
                 <td className="text-center">{venue.event_facility}</td>
-                <td className="text-center">{venue.status}</td>
+                <td className="text-center">
+                  <div style={getStatusStyle(venue.status)}>{venue.status}</div>
+                </td>
                 <td className="text-center">
                   <div className="d-flex justify-content-center gap-2">
                     <Link

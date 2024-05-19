@@ -60,8 +60,9 @@ function CreateBookings() {
         if (
           res.data.message === "There is a conflict with an existing booking."
         ) {
+          const overlapBooking = res.data.overlapBooking;
           alert(
-            "There is a conflict with an existing booking. Please choose a different time."
+            `There is a conflict with an existing booking.\nEvent Name: ${overlapBooking.eventname}\nBooked by: ${overlapBooking.username} \n Starting Time: ${overlapBooking.starting_time} \n Ending Time: ${overlapBooking.ending_time}`
           );
         } else {
           alert("Booking added successfully!");

@@ -287,13 +287,14 @@ app.post("/create_booking", (req, res) => {
       // There is an overlapping booking
       return res.json({
         message: "There is a conflict with an existing booking.",
+        overlapBooking: results[0], // Include the overlapping booking details
       });
     } else {
       // No overlapping bookings, proceed with the insertion
       const insertSql = `
-        INSERT INTO venue_bookings (booker_id, eventname, event_purpose, event_date, starting_time, ending_time, event_facility, username, email)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-      `;
+      INSERT INTO venue_bookings (booker_id, eventname, event_purpose, event_date, starting_time, ending_time, event_facility, username, email)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
       const insertValues = [
         booker_id,
         eventname,

@@ -62,26 +62,39 @@ function ReactBigCalendar() {
 
   return (
     <div style={{ height: "800px" }} className="bg-dark-subtle">
+      <div className=" flex-grow-1  p-2">
+        <div
+          className="flex-grow-1 align-content-center text-center align-items-center justify-content-center d-flex text-white rounded fs-2 fw-bold"
+          style={{ backgroundColor: "#31375A", height: "50px" }}
+        >
+          {" "}
+          Event Calendar
+        </div>
+      </div>
       <div className="d-flex justify-content-around bg-secondary-subtle">
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Venue</span>
+        <div
+          className="input-group align-items-center justify-content-center w-50 p-1 rounded"
+          style={{ backgroundColor: "#31375A" }}
+        >
+          <div className="d-flex  w-100">
+            <div className="input-group-prepend me-1">
+              <span className="input-group-text">Venue</span>
+            </div>
+            <select
+              className="form-select "
+              aria-label="Default select example"
+              name="event_facility"
+              onChange={handleVenueChange}
+              value={selectedVenue}
+            >
+              <option value="">Select a venue</option>
+              {venueData.map((venue) => (
+                <option key={venue.venue_id} value={venue.venue_name}>
+                  {venue.venue_name}
+                </option>
+              ))}
+            </select>
           </div>
-          <select
-            className="form-select"
-            aria-label="Default select example"
-            name="event_facility"
-            onChange={handleVenueChange}
-            value={selectedVenue}
-          >
-            <option value="">Select a venue</option>
-            {venueData.map((venue) => (
-              <option key={venue.venue_id} value={venue.venue_name}>
-                {venue.venue_name}
-              </option>
-            ))}
-          </select>
-          wew
         </div>
       </div>
       <div>{selectedVenue}</div>
