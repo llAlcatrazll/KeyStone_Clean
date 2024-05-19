@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Avatar } from "@mantine/core";
-// import { Calendar } from "primereact/calendar";
+
 function CreateBookings() {
   const [venueData, setVenueData] = useState([]);
   const [isApproved, setIsApproved] = useState([]);
@@ -9,6 +9,7 @@ function CreateBookings() {
   const [selectedUser, setSelectedUser] = useState("");
   const user_picture =
     "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/";
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/admin_users")
@@ -30,7 +31,7 @@ function CreateBookings() {
         }
       })
       .catch((err) => console.log(err));
-  });
+  }, []); // Added empty dependency array to run only once
 
   const [values, setValues] = useState({
     booker_id: "",
@@ -54,14 +55,22 @@ function CreateBookings() {
 
     axios
       .post("http://localhost:5000/create_booking", values)
-
       .then((res) => {
-        // navigate("/");
         console.log(res);
+        if (
+          res.data.message === "There is a conflict with an existing booking."
+        ) {
+          alert(
+            "There is a conflict with an existing booking. Please choose a different time."
+          );
+        } else {
+          alert("Booking added successfully!");
+          // Clear the form or redirect as needed
+        }
       })
       .catch((err) => console.log(err));
-    //   post to database
   }
+
   useEffect(() => {
     // ACTIVE VENUES
     axios
@@ -74,9 +83,31 @@ function CreateBookings() {
         }
       })
       .catch((err) => console.log(err));
-  });
+  }, []); // Added empty dependency array to run only once
+
+  function convertTime24to12(time24) {
+    const [hour, minute] = time24.split(":");
+    const hourInt = parseInt(hour, 10);
+    const period = hourInt >= 12 ? "PM" : "AM";
+    const hour12 = hourInt % 12 || 12; // Convert to 12-hour format and handle midnight (0) case
+    return `${hour12}:${minute} ${period}`;
+  }
+
+  function formatTimeRange(startTime, endTime) {
+    const start = convertTime24to12(startTime);
+    const end = convertTime24to12(endTime);
+    return `${start} - ${end}`;
+  }
 
   return (
+    // function formatDate(dateString) {
+    //   const date = new Date(dateString);
+    //   return date.toLocaleDateString("en-US", {
+    //     year: "numeric",
+    //     month: "long",
+    //     day: "numeric",
+    //   });
+    // }
     <div>
       <div
         className="justify-content-start  p-2 d-flex rounded p-3 mb-5 bg-dark-subtle rounded"
@@ -201,9 +232,18 @@ function CreateBookings() {
                     aria-label="Starting Time"
                     className="form-control"
                     name="starting_time"
-                    onChange={(e) =>
-                      setValues({ ...values, starting_time: e.target.value })
-                    }
+                    min="06:00"
+                    max="20:00"
+                    onChange={(e) => {
+                      const time = e.target.value;
+                      const hour = parseInt(time.split(":")[0], 10);
+                      if (hour < 6 || hour > 20) {
+                        alert("Please select a time between 06:00 and 20:00.");
+                        e.target.value = ""; // Resetting the input field
+                      } else {
+                        setValues({ ...values, starting_time: time });
+                      }
+                    }}
                   />
                   <div className="input-group-prepend">
                     <span className="input-group-text">Ending Time</span>
@@ -213,9 +253,18 @@ function CreateBookings() {
                     aria-label="Ending Time"
                     className="form-control"
                     name="ending_time"
-                    onChange={(e) =>
-                      setValues({ ...values, ending_time: e.target.value })
-                    }
+                    min="06:00"
+                    max="20:00"
+                    onChange={(e) => {
+                      const time = e.target.value;
+                      const hour = parseInt(time.split(":")[0], 10);
+                      if (hour < 6 || hour > 20) {
+                        alert("Please select a time between 06:00 and 20:00.");
+                        e.target.value = ""; // Resetting the input field
+                      } else {
+                        setValues({ ...values, ending_time: time });
+                      }
+                    }}
                   />
                 </div>
               </div>
@@ -272,6 +321,7 @@ function CreateBookings() {
                       setValues({ ...values, event_facility: e.target.value })
                     }
                   >
+                    <option value="">Select Venue</option>
                     {venueData.map((venue) => (
                       <option key={venue.venue_id}>
                         <option value={venue.venue_name} className="w-52">
@@ -329,11 +379,22 @@ function CreateBookings() {
                   <div className="d-flex justify-content-around flex-grow-1 mb-4">
                     <div className="text-center bg-white rounded border p-2">
                       <div className="fw-bold">Starting Time:</div>
-                      <div>{values.starting_time}</div>
+                      <div>
+                        {" "}
+                        {formatTimeRange(
+                          values.ending_time,
+                          values.starting_time
+                        )}
+                      </div>
                     </div>
                     <div className="text-center bg-white rounded border p-2">
                       <div className="fw-bold">Ending Time:</div>
-                      <div>{values.ending_time}</div>
+                      <div>
+                        {formatTimeRange(
+                          values.ending_time,
+                          values.starting_time
+                        )}
+                      </div>
                     </div>
                   </div>
                   {/* END OF TIME AREA */}

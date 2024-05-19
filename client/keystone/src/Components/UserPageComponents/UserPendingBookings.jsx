@@ -5,9 +5,9 @@ import "../../Transition.css";
 function UserPendingBookings() {
   const [isPending, setIsPending] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const userEmail = localStorage.getItem("userEmail");
   const itemsPerPage = 5;
+  const userEmail = localStorage.getItem("userEmail");
+
   function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {

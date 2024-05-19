@@ -93,8 +93,9 @@ app.use("/api", userBookingsAllFilterRoutes);
 //
 //
 //
-
-// HERERERERER
+// CALENDAR
+// CALENDAR
+// CALENDAR
 app.get("/event_venues_booked", (req, res) => {
   const venue = req.query.venue || ""; // Default to empty string if not provided
   const sql = "SELECT * FROM venue_bookings WHERE `event_facility`=?";
@@ -207,28 +208,29 @@ app.post("/add_newuser", (req, res) => {
     return res.json({ success: "Student added successfully" });
   });
 }); // CREATE BOOKINGS
-app.post("/create_booking", (req, res) => {
-  const sql =
-    "INSERT INTO venue_bookings (`booker_id`,`eventname`,`event_purpose`,`event_date`,`starting_time`,`ending_time`,`event_facility`,`username`, `email`)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-  const values = [
-    req.body.booker_id,
-    req.body.eventname,
-    req.body.event_purpose,
-    req.body.event_date,
-    req.body.starting_time,
-    req.body.ending_time,
-    req.body.event_facility,
-    req.body.username,
-    req.body.email,
-  ];
-  console.log(req.body);
-  db.query(sql, values, (err, result) => {
-    if (err) {
-      return res.json({ message: "Something unexpected has occured" + err });
-    }
-    return res.json({ success: "Student added successfully" });
-  });
-});
+// app.post("/create_booking", (req, res) => {
+//   // ALREADY WORKING JUST COMMENTED OUT
+//   const sql =
+//     "INSERT INTO venue_bookings (`booker_id`,`eventname`,`event_purpose`,`event_date`,`starting_time`,`ending_time`,`event_facility`,`username`, `email`)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//   const values = [
+//     req.body.booker_id,
+//     req.body.eventname,
+//     req.body.event_purpose,
+//     req.body.event_date,
+//     req.body.starting_time,
+//     req.body.ending_time,
+//     req.body.event_facility,
+//     req.body.username,
+//     req.body.email,
+//   ];
+//   console.log(req.body);
+//   db.query(sql, values, (err, result) => {
+//     if (err) {
+//       return res.json({ message: "Something unexpected has occured" + err });
+//     }
+//     return res.json({ success: "Student added successfully" });
+//   });
+// });
 //
 // // CONNECT TO PORT NUMBER
 app.listen(port, () => {
@@ -241,6 +243,78 @@ app.listen(port, () => {
 //
 //
 //
+app.post("/create_booking", (req, res) => {
+  const {
+    booker_id,
+    eventname,
+    event_purpose,
+    event_date,
+    starting_time,
+    ending_time,
+    event_facility,
+    username,
+    email,
+  } = req.body;
+
+  // SQL query to check for overlapping bookings
+  const checkOverlapSql = `
+    SELECT * FROM venue_bookings
+    WHERE event_facility = ?
+    AND event_date = ?
+    AND (
+      (starting_time < ? AND ending_time > ?) OR
+      (starting_time >= ? AND starting_time < ?)
+    )
+  `;
+
+  const overlapValues = [
+    event_facility,
+    event_date,
+    ending_time,
+    starting_time,
+    starting_time,
+    ending_time,
+  ];
+
+  db.query(checkOverlapSql, overlapValues, (err, results) => {
+    if (err) {
+      return res.json({
+        message: "Error checking for overlapping bookings: " + err,
+      });
+    }
+
+    if (results.length > 0) {
+      // There is an overlapping booking
+      return res.json({
+        message: "There is a conflict with an existing booking.",
+      });
+    } else {
+      // No overlapping bookings, proceed with the insertion
+      const insertSql = `
+        INSERT INTO venue_bookings (booker_id, eventname, event_purpose, event_date, starting_time, ending_time, event_facility, username, email)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      const insertValues = [
+        booker_id,
+        eventname,
+        event_purpose,
+        event_date,
+        starting_time,
+        ending_time,
+        event_facility,
+        username,
+        email,
+      ];
+
+      db.query(insertSql, insertValues, (err, result) => {
+        if (err) {
+          return res.json({ message: "Error creating booking: " + err });
+        }
+        return res.json({ success: "Booking added successfully" });
+      });
+    }
+  });
+});
 
 // DELETE BOOKING /UPDATE 1 VALUE I-O
 // app.post("/delete_user/:booking_id", (req, res) => {

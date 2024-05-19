@@ -20,26 +20,50 @@ function Venues() {
     //   post to database
   }
   return (
-    <div>
-      <h1>Venues</h1>
-      <button className="bg-primary">Add Venue</button>
-      <form action="" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="">Add Venue</label>
-          <input
-            type="text"
-            name="venue_name"
-            onChange={(e) =>
-              setValues({
-                ...values,
-                venue_name: e.target.value,
-              })
-            }
-          />
+    <div
+      className="bg-dark-subtle p-1 flex-grow-1 rounded"
+      style={{ height: "100%" }}
+    >
+      {/* <button className="bg-primary">Add Venue</button> */}
+      <form
+        className="d-flex flex-columnpy-3 m-2 rounded p-2"
+        onSubmit={handleSubmit}
+        style={{ backgroundColor: "#31375A" }}
+      >
+        {" "}
+        <h2 className="text-white p-2 w-100 ">Venue Management Page</h2>
+        {/* ADD VENUE START */}
+        <div className=" d-flex justify-content-around p-3 w-100 ">
+          <div className=" " style={{ width: "10%" }}></div>
+          <div className="input-group">
+            <div className="input-group-prepend">
+              <span className="input-group-text">Add Venue</span>
+            </div>
+            <input
+              type="text"
+              placeholder="Venue Name"
+              aria-label="First name"
+              name="venue_name"
+              className="form-control"
+              onChange={(e) =>
+                setValues({
+                  ...values,
+                  venue_name: e.target.value,
+                })
+              }
+            />
+          </div>
+          <button type="submit" className="mx-3 w-25 btn btn-light">
+            Submit
+          </button>
+          <div className=" " style={{ width: "20%" }}></div>
         </div>
-        <button type="submit">Submit</button>
+        {/* ADD VENUE END */}
       </form>
-      <div className="d-flex flex-row justify-content-around">
+      <div
+        className="d-flex align-content-start pb-2"
+        style={{ height: "89%" }}
+      >
         {/* Left */}
         <ActiveVenues />
         {/* Right */}

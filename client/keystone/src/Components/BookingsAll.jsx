@@ -9,7 +9,7 @@ export function BookingsAll() {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
-  const user_picture =
+  const user_picture_base_url =
     "https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/";
   // const profile_cont = "avatar-5.png";
 
@@ -82,24 +82,7 @@ export function BookingsAll() {
       style={{ height: "85vh" }}
     >
       {/* <h2>Bookings All Component</h2> */}
-      <div className="bg-danger-subtle d-flex flex-grow-1 align-items-center justify-content-start rounded">
-        {/* <div className="input-group">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Event Facility</span>
-          </div>
-          <select
-            className="form-select"
-            aria-label="Default select example"
-            name="event_facility"
-            // onChange={(e) =>
-            //   setValues({ ...values, event_facility: e.target.value })
-            // }
-          >
-            <option value=""></option>
-          </select>
-        </div> */}
-        {/* <div>Filter By</div> */}
-      </div>
+      <div className="bg-danger-subtle d-flex flex-grow-1 align-items-center justify-content-start rounded"></div>
       <div className="d-flex  flex-column">
         <table className="table table-default table-striped table-hover ">
           <thead>
@@ -120,7 +103,7 @@ export function BookingsAll() {
               <tr key={venue.id}>
                 <td className="text-center">
                   <Avatar
-                    src={user_picture + venue.profile_pic}
+                    src={user_picture_base_url + venue.profile_pic}
                     size={35}
                     radius={35}
                     mx="auto"
