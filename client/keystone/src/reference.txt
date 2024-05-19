@@ -73,6 +73,18 @@ e- right
 x- left right
 y- top bottom
 
+FONT SIZE - fs 1-6
+
+fw-bold
+fw-semibold
+fw-bolder
+fw-medium
+fw-normal
+fw-light
+fw-lighter
+fst-italic
+fst-normal
+
 MANTINE AVATAR MAX -10
 
 https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-10.png
@@ -90,14 +102,12 @@ https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar
 
 <table>
 
-
   <thead>
     <tr>
       <th>Month</th>
 
     </tr>
   </thead>
-
 
   <tbody>
     <tr>
@@ -108,13 +118,11 @@ https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar
     </tr>
   </tbody>
 
-
   <tfoot>
     <tr>
       <td>Sum</td>
     </tr>
   </tfoot>
-
 
 </table>
 

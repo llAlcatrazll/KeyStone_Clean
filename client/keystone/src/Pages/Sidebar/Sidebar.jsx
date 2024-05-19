@@ -63,7 +63,7 @@ const Sidebar = () => {
                   activeClassName="activeClicked"
                   onClick={() => setActivePage("createbooking")}
                 >
-                  <CDBSidebarMenuItem icon="columns">
+                  <CDBSidebarMenuItem icon="plus-square">
                     Create Booking
                   </CDBSidebarMenuItem>
                 </NavLink>
@@ -71,13 +71,15 @@ const Sidebar = () => {
                   activeClassName="activeClicked"
                   onClick={() => setActivePage("bookingspage")}
                 >
-                  <CDBSidebarMenuItem icon="table">Bookings</CDBSidebarMenuItem>
+                  <CDBSidebarMenuItem icon="bookmark">
+                    Bookings
+                  </CDBSidebarMenuItem>
                 </NavLink>
                 <NavLink
                   activeClassName="activeClicked"
                   onClick={() => setActivePage("allbookings")}
                 >
-                  <CDBSidebarMenuItem icon="table">
+                  <CDBSidebarMenuItem icon="book">
                     All Bookings
                   </CDBSidebarMenuItem>
                 </NavLink>
@@ -98,7 +100,7 @@ const Sidebar = () => {
                     Manage Users
                   </CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                   exact
                   activeClassName="activeClicked"
                   onClick={() => setActivePage("bookinganalytics")}
@@ -106,7 +108,7 @@ const Sidebar = () => {
                   <CDBSidebarMenuItem icon="user">
                     Booking Analytics
                   </CDBSidebarMenuItem>
-                </NavLink>
+                </NavLink> */}
                 <NavLink
                   activeClassName="activeClicked"
                   onClick={() => setActivePage("venues")}
@@ -119,11 +121,11 @@ const Sidebar = () => {
                   activeClassName="activeClicked"
                   onClick={() => setActivePage("archive")}
                 >
-                  <CDBSidebarMenuItem icon="chart-line">
+                  <CDBSidebarMenuItem icon="archive">
                     Archive
                   </CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                   exact
                   onClick={() => setActivePage("")}
                   // target="_blank"
@@ -132,14 +134,14 @@ const Sidebar = () => {
                   <CDBSidebarMenuItem icon="exclamation-circle">
                     404 page
                   </CDBSidebarMenuItem>
-                </NavLink>
+                </NavLink> */}
 
                 <NavLink
                   exact
                   activeClassName="activeClicked"
                   onClick={() => setActivePage("calendar2")}
                 >
-                  <CDBSidebarMenuItem icon="user">
+                  <CDBSidebarMenuItem icon="calendar-day">
                     Calendar 2
                   </CDBSidebarMenuItem>
                 </NavLink>
@@ -152,7 +154,7 @@ const Sidebar = () => {
                   padding: "20px 5px",
                 }}
               >
-                <button onClick={handleLogOut} className="btn btn-dark">
+                <button onClick={handleLogOut} className="btn btn-dark ">
                   Log Out
                 </button>
               </div>

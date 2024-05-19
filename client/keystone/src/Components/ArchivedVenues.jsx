@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
+
 function ArchivedVenues() {
   const [archivedVenue, setArchivedVenue] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = archivedVenue.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
+    fetchVenues();
+  }, []);
+  const fetchVenues = () => {
     // ARCHIVED VENUES
     axios
       .get("http://localhost:5000/booking_archived")
@@ -16,39 +29,43 @@ function ArchivedVenues() {
         }
       })
       .catch((err) => console.log(err));
-  });
-  function handleRestore(venue_id) {
+  };
+  const handleRestore = (venue_id) => {
     axios
       .post(`http://localhost:5000/restore_venue/${venue_id}`)
       .then((res) => {
         console.log(res.data);
-        // Reload the page to refresh the data
-        window.location.reload();
+        fetchVenues(); // Re-fetch the venues after deleting
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   return (
-    <div className=" p-3 w-100 h-100 d-inline-block bg-info-subtle d-flex justify-content-evenly align-items-center ">
-      <table>
+    <div className="p-3 w-100 bg-white shadow-lg rounded m-2 flex-grow-1">
+      <div
+        className="w-52 p-2 px-4 text-white rounded"
+        style={{ backgroundColor: "#31375A" }}
+      >
+        <h3>Deleted Venues</h3>
+      </div>
+      <table className="w-100 my-2 rounded p-2 table table-striped">
         <thead>
-          <tr className="w-52">
-            <h3>Archived Venues</h3>
-          </tr>
           <tr>
             <th className="w-72">Venue ID</th>
             <th className="w-72">Venue Name</th>
+            <th className="w-72">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {archivedVenue.map((archived) => (
-            <tr key={archived.venue_id}>
-              booking_approved
-              <td className="w-52">{archived.venue_id}</td>
-              <td className="w-52">{archived.venue_name}</td>
+          {currentItems.map((venue) => (
+            <tr key={venue.venue_id}>
+              <td className="w-52">{venue.venue_id}</td>
+              <td className="w-52">{venue.venue_name}</td>
               <td className="w-52">
-                <Link to={`/edit/${archived.venue_id}`}>Edit</Link>
-                <button onClick={() => handleRestore(archived.venue_id)}>
+                <button
+                  className="btn btn-dark"
+                  onClick={() => handleRestore(venue.venue_id)}
+                >
                   Restore
                 </button>
               </td>
@@ -56,6 +73,30 @@ function ArchivedVenues() {
           ))}
         </tbody>
       </table>
+      <div className="d-flex justify-content-center mt-3 align-items-end">
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            {Array.from(
+              { length: Math.ceil(archivedVenue.length / itemsPerPage) },
+              (_, i) => (
+                <li
+                  key={i}
+                  className={`page-item ${
+                    currentPage === i + 1 ? "active" : ""
+                  }`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => handlePageChange(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              )
+            )}
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 }

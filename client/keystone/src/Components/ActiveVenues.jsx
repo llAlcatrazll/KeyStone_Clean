@@ -1,11 +1,24 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
+
 function ActiveVenues() {
   const [venueData, setVenueData] = useState([]);
-  const [deleted, setDeleted] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = venueData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   useEffect(() => {
-    // ACTIVE VENUES
+    fetchVenues();
+  }, []);
+
+  const fetchVenues = () => {
     axios
       .get("http://localhost:5000/venues")
       .then((res) => {
@@ -16,43 +29,44 @@ function ActiveVenues() {
         }
       })
       .catch((err) => console.log(err));
-  }, [deleted]);
-  function handleDelete(venue_id) {
+  };
+
+  const handleDelete = (venue_id) => {
     axios
       .post(`http://localhost:5000/delete_venu/${venue_id}`)
       .then((res) => {
         console.log(res.data);
-        // Toggle the 'deleted' state to trigger a re-fetch of the data
-        setDeleted((prevDeleted) => !prevDeleted);
-        window.location.reload();
+        fetchVenues(); // Re-fetch the venues after deleting
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   return (
-    <div
-      className=" p-3 w-100 bg-info-subtle d-flex justify-content-evenly align-items-center"
-      style={{ height: "100%" }}
-    >
-      <table>
+    <div className="p-3 w-100 bg-white shadow-lg rounded m-2 flex-grow-1">
+      <div
+        className="w-52 p-2 px-4 text-white rounded"
+        style={{ backgroundColor: "#31375A" }}
+      >
+        <h3>Active Venues</h3>
+      </div>
+      <table className="w-100 my-2 rounded p-2 table table-striped">
         <thead>
-          <tr className="w-52">
-            <h3>Active Venues</h3>
-          </tr>
           <tr>
             <th className="w-72">Venue ID</th>
             <th className="w-72">Venue Name</th>
+            <th className="w-72">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {venueData.map((venue) => (
+          {currentItems.map((venue) => (
             <tr key={venue.venue_id}>
-              booking_approved
               <td className="w-52">{venue.venue_id}</td>
               <td className="w-52">{venue.venue_name}</td>
               <td className="w-52">
-                <Link to={`/edit/${venue.venue_id}`}>Edit</Link>
-                <button onClick={() => handleDelete(venue.venue_id)}>
+                <button
+                  className="btn btn-dark"
+                  onClick={() => handleDelete(venue.venue_id)}
+                >
                   Delete
                 </button>
               </td>
@@ -60,6 +74,30 @@ function ActiveVenues() {
           ))}
         </tbody>
       </table>
+      <div className="d-flex justify-content-center mt-3 align-items-end">
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            {Array.from(
+              { length: Math.ceil(venueData.length / itemsPerPage) },
+              (_, i) => (
+                <li
+                  key={i}
+                  className={`page-item ${
+                    currentPage === i + 1 ? "active" : ""
+                  }`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => handlePageChange(i + 1)}
+                  >
+                    {i + 1}
+                  </button>
+                </li>
+              )
+            )}
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 }
