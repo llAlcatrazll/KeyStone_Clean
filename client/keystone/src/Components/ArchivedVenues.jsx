@@ -15,7 +15,12 @@ function ArchivedVenues() {
   };
 
   useEffect(() => {
-    fetchVenues();
+    fetchVenues(); // Initial fetch
+    const interval = setInterval(() => {
+      fetchVenues();
+    }, 2000); // Fetch every few seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
   }, []);
   const fetchVenues = () => {
     // ARCHIVED VENUES

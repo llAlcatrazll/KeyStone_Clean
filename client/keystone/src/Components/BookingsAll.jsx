@@ -105,6 +105,7 @@ export function BookingsAll() {
       className="bg-dark-subtle rounded p-3 d-flex flex-column"
       style={{ height: "85vh" }}
     >
+      gg
       {/* <h2>Bookings All Component</h2> */}
       <div
         className="d-flex flex-grow-1 align-items-center text-white fw-bold fs-1  text-center justify-content-center rounded"

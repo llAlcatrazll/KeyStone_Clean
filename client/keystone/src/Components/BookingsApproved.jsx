@@ -5,7 +5,6 @@ import "../../src/Transition.css";
 function BookingsApproved() {
   const [isPending, setIsPending] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [deleted, setDeleted] = useState(true);
   const itemsPerPage = 5;
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -27,8 +26,23 @@ function BookingsApproved() {
     const end = convertTime24to12(endTime);
     return `${start} - ${end}`;
   }
+  // Logic to slice data based on current page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = isPending.slice(indexOfFirstItem, indexOfLastItem);
 
+  // Function to handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   useEffect(() => {
+    fetchApproved();
+    const interval = setInterval(() => {
+      fetchApproved();
+    }, 1000);
+    return () => clearInterval(interval);
+  });
+  const fetchApproved = () => {
     axios
       .get("http://localhost:5000/booking_approved")
       .then((res) => {
@@ -39,28 +53,36 @@ function BookingsApproved() {
         }
       })
       .catch((err) => console.log(err));
-  }, [deleted]);
+  };
   function handleDelete(booking_id) {
     axios
       .post(`http://localhost:5000/delete_booking/${booking_id}`)
       .then((res) => {
         console.log(res.data);
         // Toggle the 'deleted' state to trigger a re-fetch of the data
-        setDeleted((prevDeleted) => !prevDeleted);
+        fetchApproved();
         // window.location.reload();
       })
       .catch((err) => console.log(err));
   }
-
-  // Logic to slice data based on current page
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = isPending.slice(indexOfFirstItem, indexOfLastItem);
-
-  // Function to handle page change
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+  function handlePending(booking_id) {
+    axios
+      .post(`http://localhost:5000/pending_booking/${booking_id}`)
+      .then((res) => {
+        console.log(res.data);
+        fetchApproved();
+      })
+      .catch((err) => console.log(err));
+  }
+  function handleDeny(booking_id) {
+    axios
+      .post(`http://localhost:5000/booking_denied/${booking_id}`)
+      .then((res) => {
+        console.log(res.data);
+        fetchApproved();
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <div className="bg-white rounded">
@@ -175,14 +197,16 @@ function BookingsApproved() {
                     <div className="d-flex  text-center align-items-center justify-content-center">
                       {" "}
                       <button
-                        className="btn btn-dark color-black me-2"
+                        className="btn   me-2 text-dark fw-semibold"
                         style={{ backgroundColor: "#EEF296" }}
+                        onClick={() => handlePending(venue.booking_id)}
                       >
-                        Approve
+                        Pending
                       </button>
                       <button
-                        className="btn btn-dark "
+                        className="btn   me-2 text-dark fw-semibold"
                         style={{ backgroundColor: "#FF8F8F" }}
+                        onClick={() => handleDeny(venue.booking_id)}
                       >
                         Deny
                       </button>
