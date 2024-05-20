@@ -40,6 +40,10 @@ const userFetchAllRoutes = require("./routes/UserProfiles/userFetchAll");
 const userBookingsRoutes = require("./routes/UserProfiles/userBookingsAll");
 /*{ CALENDAR PAGE } */
 const userBookingsAllFilterRoutes = require("./routes/bookingAllCalendar");
+/*{ CHAGNGE BOOKING STATUS } */
+const updatetoPendingRoutes = require("./routes/booking_status/pendingBooking");
+const updatetoDeniedRoutes = require("./routes/booking_status/denyBooking");
+const updatetoApprovedRoutes = require("./routes/booking_status/approveBooking");
 //
 const { verify } = require("crypto");
 //
@@ -87,6 +91,10 @@ app.use("/", userBookingsRoutes);
 app.use("/api", userBookingsAllFilterRoutes);
 ``;
 //
+/*{ CHAGNGE BOOKING STATUS } */
+app.use("/", updatetoPendingRoutes);
+app.use("/", updatetoDeniedRoutes);
+app.use("/", updatetoApprovedRoutes);
 //
 //
 //

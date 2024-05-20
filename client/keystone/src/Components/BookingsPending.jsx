@@ -5,7 +5,7 @@ import "../../src/Transition.css";
 function BookingsPending() {
   const [isPending, setIsPending] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [deleted, setDeleted] = useState(true);
+
   const itemsPerPage = 5;
 
   function formatDate(dateString) {
@@ -30,8 +30,21 @@ function BookingsPending() {
     const end = convertTime24to12(endTime);
     return `${start} - ${end}`;
   }
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = isPending.slice(indexOfFirstItem, indexOfLastItem);
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   useEffect(() => {
+    fetchPending();
+    const interval = setInterval(() => {
+      fetchPending();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  const fetchPending = () => {
     axios
       .get("http://localhost:5000/booking_pending")
       .then((res) => {
@@ -42,26 +55,36 @@ function BookingsPending() {
         }
       })
       .catch((err) => console.log(err));
-  }, [deleted]);
+  };
 
   function handleDelete(booking_id) {
     axios
       .post(`http://localhost:5000/delete_booking/${booking_id}`)
       .then((res) => {
         console.log(res.data);
-        setDeleted((prevDeleted) => !prevDeleted);
+        fetchPending();
       })
       .catch((err) => console.log(err));
   }
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = isPending.slice(indexOfFirstItem, indexOfLastItem);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
+  function handleDeny(booking_id) {
+    axios
+      .post(`http://localhost:5000/booking_denied/${booking_id}`)
+      .then((res) => {
+        console.log(res.data);
+        fetchPending();
+      })
+      .catch((err) => console.log(err));
+  }
+  function handleApprove(booking_id) {
+    axios
+      .post(`http://localhost:5000/approve_booking/${booking_id}`)
+      .then((res) => {
+        console.log(res.data);
+        fetchPending();
+      })
+      .catch((err) => console.log(err));
+  }
   return (
     <div className="bg-white rounded">
       <hr className="bg-white opacity-0" />
@@ -163,12 +186,14 @@ function BookingsPending() {
                       <button
                         className="btn btn-dark color-black me-2"
                         style={{ backgroundColor: "#EEF296" }}
+                        onClick={() => handleApprove(venue.booking_id)}
                       >
                         Approve
                       </button>
                       <button
                         className="btn btn-dark"
                         style={{ backgroundColor: "#FF8F8F" }}
+                        onClick={() => handleDeny(venue.booking_id)}
                       >
                         Deny
                       </button>

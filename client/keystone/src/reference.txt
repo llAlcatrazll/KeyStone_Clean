@@ -34,6 +34,18 @@ Dummy Data population for event bookings
 ADD TOAST FOR IMPORTANT THINGS
 
 
+user_id
+email
+password
+username
+user_profile_pic
+college_affiliation
+club
+position
+account_type
+deleted
+
+
 venue_bookings
 eventname
 event_facility

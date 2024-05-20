@@ -58,7 +58,7 @@ function UserProfile() {
       {/* <hr /> */}
       <div className="rounded p-4 d-flex flex-row justify-content-between bg-white rounded shadow-inner">
         <div className="text-center justify-content-center">
-          <div className="fw-bold fs-5">{userEmail}</div>
+          <div className="fw-bold fs-5">User Bookings</div>
           <div className="fs-6">871</div>
         </div>
         <div className="text-center justify-content-center">
