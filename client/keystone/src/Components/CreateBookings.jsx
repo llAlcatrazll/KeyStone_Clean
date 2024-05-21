@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Avatar } from "@mantine/core";
-
+import { UserLink } from "../App";
 function CreateBookings() {
   const [venueData, setVenueData] = useState([]);
   const [isApproved, setIsApproved] = useState([]);
@@ -12,7 +12,7 @@ function CreateBookings() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/admin_users")
+      .get(`${UserLink}/admin_users`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setIsApproved(res.data);
@@ -22,7 +22,7 @@ function CreateBookings() {
       })
       .catch((err) => console.log(err));
     axios
-      .get("http://localhost:5000/registered_user")
+      .get(`${UserLink}/registered_user`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setisOfficer(res.data);
@@ -37,9 +37,9 @@ function CreateBookings() {
     booker_id: "",
     eventname: "",
     event_purpose: "",
-    event_date: "",
-    starting_time: "",
-    ending_time: "",
+    event_date: "--:--:----",
+    starting_time: "-----",
+    ending_time: "-----",
     event_facility: "",
     username: "",
     email: "",
@@ -54,7 +54,7 @@ function CreateBookings() {
     e.preventDefault();
 
     axios
-      .post("http://localhost:5000/create_booking", values)
+      .post(`${UserLink}/create_booking`, values)
       .then((res) => {
         console.log(res);
         if (
@@ -75,7 +75,7 @@ function CreateBookings() {
   useEffect(() => {
     // ACTIVE VENUES
     axios
-      .get("http://localhost:5000/venues")
+      .get(`${UserLink}/venues`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setVenueData(res.data);
@@ -93,11 +93,35 @@ function CreateBookings() {
     const hour12 = hourInt % 12 || 12; // Convert to 12-hour format and handle midnight (0) case
     return `${hour12}:${minute} ${period}`;
   }
-
-  function formatTimeRange(startTime, endTime) {
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    if (dateString === "--:--:----") {
+      return dateString;
+    }
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+  // function formatTimeRange(startTime, endTime) {
+  //   const start = convertTime24to12(startTime);
+  //   const end = convertTime24to12(endTime);
+  //   return `${start} - ${end}`;
+  // } CONCATENATED
+  function formatStartingTime(startTime) {
+    if (startTime === "-----" || startTime === "--:--") {
+      return startTime; // Return the default value as is
+    }
     const start = convertTime24to12(startTime);
+    return `${start}`;
+  }
+  function formatEndingTime(endTime) {
+    if (endTime === "-----" || endTime === "--:--") {
+      return endTime; // Return the default value as is
+    }
     const end = convertTime24to12(endTime);
-    return `${start} - ${end}`;
+    return `${end}`;
   }
 
   return (
@@ -105,7 +129,8 @@ function CreateBookings() {
     //   const date = new Date(dateString);
     //   return date.toLocaleDateString("en-US", {
     //     year: "numeric",
-    //     month: "long",
+    //     month: "long"
+
     //     day: "numeric",
     //   });
     // }
@@ -344,8 +369,8 @@ function CreateBookings() {
               <div className="col  d-flex align-items-center p-3 flex-column text-center">
                 <Avatar
                   src={user_picture + values.profile_pic}
-                  size={200}
-                  radius={200}
+                  size={150}
+                  radius={150}
                   mx="auto"
                 />
                 <div className="fw-bold fs-3 mt-3">{values.username}</div>
@@ -370,6 +395,10 @@ function CreateBookings() {
                     <div>{values.eventname}</div>
                   </div>
                   {/* END EVENT NAME AREA */}
+                  <div className="p-2 d-flex mb-2 bg-white rounded border">
+                    <div className="fw-bold me-3">Date of Event:</div>
+                    <div>{formatDate(values.event_date)}</div>
+                  </div>
                   {/* START OF EVENT PURPOSE */}
                   <div className="flex-grow-1 p-2 d-flex mb-4 bg-white rounded border">
                     <div className="fw-bold me-3">Event Description:</div>
@@ -380,39 +409,31 @@ function CreateBookings() {
                   <div className="d-flex justify-content-around flex-grow-1 mb-4">
                     <div className="text-center bg-white rounded border p-2">
                       <div className="fw-bold">Starting Time:</div>
-                      <div>
+                      <div defaultValue={0}>
                         {" "}
-                        {formatTimeRange(
-                          values.ending_time,
-                          values.starting_time
-                        )}
+                        {formatStartingTime(values.starting_time)}
                       </div>
                     </div>
                     <div className="text-center bg-white rounded border p-2">
                       <div className="fw-bold">Ending Time:</div>
-                      <div>
-                        {formatTimeRange(
-                          values.ending_time,
-                          values.starting_time
-                        )}
-                      </div>
+                      <div>{formatEndingTime(values.ending_time)}</div>
                     </div>
                   </div>
                   {/* END OF TIME AREA */}
                   {/* START OF VENUE */}
-                  <div className="d-flex flex-column text-center bg-white rounded border p-2">
+                  <div className="d-flex flex-column text-center bg-white rounded mb-4 border p-2">
                     <div className="fw-bold">Event Venue:</div>
                     <div>{values.event_facility}</div>
                   </div>
                   {/* END OF VENUE */}
+                  <button type="submit" className="btn btn-dark w16 w-100">
+                    Submit
+                  </button>
                 </div>
               </div>
               {/* GROW GREEN WHEN ITS NOT EMPTY OR DEFAULT */}
               {/* <div>{values.event_facility}</div> */}
               {/* <div>{values.username}</div> */}
-              <button type="submit" className="btn btn-dark w16 w-100">
-                Submit
-              </button>
             </div>
           </div>
         </form>

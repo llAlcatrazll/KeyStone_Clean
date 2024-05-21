@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { UserLink } from "../../App";
 function Admins() {
   const [isPending, setIsPending] = useState([]);
   const [restore, setRestored] = useState(true);
   const [dropped, setDropped] = useState([]);
+
   useEffect(() => {
     axios
-      .get("http://localhost:5000/deleted_admins")
+      .get(`${UserLink}/deleted_admins`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setIsPending(res.data);
@@ -20,7 +21,7 @@ function Admins() {
   }, [restore, dropped]);
   function handleRestore(user_id) {
     axios
-      .post(`http://localhost:5000/restore_user/${user_id}`)
+      .post(`${UserLink}/restore_user/${user_id}`)
       .then((res) => {
         console.log(res.data);
         // Toggle the 'deleted' state to trigger a re-fetch of the data
@@ -31,7 +32,7 @@ function Admins() {
   }
   function handleDrop(user_id) {
     axios
-      .post(`http://localhost:5000/drop_users/${user_id}`)
+      .post(`${UserLink}/drop_users/${user_id}`)
       .then((res) => {
         console.log(res.data);
         setDropped((prevDropped) => !prevDropped);

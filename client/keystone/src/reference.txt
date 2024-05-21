@@ -35,12 +35,14 @@ ADD TOAST FOR IMPORTANT THINGS
 
 
 user_id
-email
-password
-username
 user_profile_pic
-college_affiliation
+username
+email
 club
+college_affiliation
+
+
+password
 position
 account_type
 deleted
@@ -68,12 +70,13 @@ email
 deleted
 
 
-Red  #FF8F8F
+Red    #FF8F8F
 
-Green #9ADE7B
+Green  #9ADE7B
 
 Yellow #EEF296
 
+Blue   #31375A
 
 SECRET TO CENTER HORIZONTALLY
 d-flex bg-danger text-center align-items-center justify-content-center

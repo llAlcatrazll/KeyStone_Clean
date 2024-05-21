@@ -4,6 +4,7 @@ import { Avatar } from "@mantine/core";
 import { useEffect } from "react";
 import axios from "axios";
 import "../../src/Transition.css";
+import { UserLink } from "../App";
 //
 export function BookingsAll() {
   const [data, setData] = useState([]);
@@ -15,7 +16,7 @@ export function BookingsAll() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/venue_bookings")
+      .get(`${UserLink}/venue_bookings`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setData(res.data);
@@ -58,12 +59,12 @@ export function BookingsAll() {
 
   function handleDelete(booking_id) {
     axios
-      .post(`http://localhost:5000/delete_booking/${booking_id}`)
+      .post(`${UserLink}delete_booking/${booking_id}`)
       .then((res) => {
         console.log(res.data);
         // Refresh the data by fetching it again
         axios
-          .get("http://localhost:5000/venue_bookings")
+          .get(`${UserLink}/venue_bookings`)
           .then((res) => {
             if (Array.isArray(res.data)) {
               setData(res.data);
@@ -105,7 +106,6 @@ export function BookingsAll() {
       className="bg-dark-subtle rounded p-3 d-flex flex-column"
       style={{ height: "85vh" }}
     >
-      gg
       {/* <h2>Bookings All Component</h2> */}
       <div
         className="d-flex flex-grow-1 align-items-center text-white fw-bold fs-1  text-center justify-content-center rounded"

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 // import { IconTrash, IconEdit } from "@tabler/icons-react";
 import "../../Transition.css";
+import { UserLink } from "../../App";
 function UserPendingBookings() {
   const [isPending, setIsPending] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,7 +44,7 @@ function UserPendingBookings() {
   useEffect(() => {
     // Fetch user data based on userEmail
     axios
-      .get(`http://localhost:5000/user_bookingsall?email=${userEmail}`)
+      .get(`${UserLink}/user_bookingsall?email=${userEmail}`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setIsPending(res.data);

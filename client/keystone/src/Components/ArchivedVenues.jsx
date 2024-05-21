@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { UserLink } from "../App";
 function ArchivedVenues() {
   const [archivedVenue, setArchivedVenue] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,7 +25,7 @@ function ArchivedVenues() {
   const fetchVenues = () => {
     // ARCHIVED VENUES
     axios
-      .get("http://localhost:5000/booking_archived")
+      .get(`${UserLink}/booking_archived`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setArchivedVenue(res.data);
@@ -37,7 +37,7 @@ function ArchivedVenues() {
   };
   const handleRestore = (venue_id) => {
     axios
-      .post(`http://localhost:5000/restore_venue/${venue_id}`)
+      .post(`${UserLink}/restore_venue/${venue_id}`)
       .then((res) => {
         console.log(res.data);
         fetchVenues(); // Re-fetch the venues after deleting

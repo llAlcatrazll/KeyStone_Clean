@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import ArchivedVenues from "../../Components/ArchivedVenues";
 import ActiveVenues from "../../Components/ActiveVenues";
+import { UserLink } from "../../App";
 function Venues() {
   //
   const [values, setValues] = useState({
@@ -12,7 +13,7 @@ function Venues() {
 
     console.log(values);
     axios
-      .post("http://localhost:5000/add_venue", values)
+      .post(`${UserLink}/add_venue`, values)
       .then((res) => {
         console.log(res);
       })

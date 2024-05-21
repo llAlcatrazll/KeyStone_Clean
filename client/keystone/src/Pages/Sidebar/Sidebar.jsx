@@ -19,6 +19,7 @@ import AllBookings from "../SidebarPages/AllBookings";
 import Calendar from "../SidebarPages/Calendar";
 import Archive from "../SidebarPages/Archive";
 import BigCalendar from "../SidebarPages/BigCalendar";
+import UserSelect from "../SidebarPages/UserSelect";
 import "./customschollbar.css";
 const Sidebar = () => {
   const [activePage, setActivePage] = useToggle("usermanagement");
@@ -91,6 +92,14 @@ const Sidebar = () => {
                     User Profile
                   </CDBSidebarMenuItem>
                 </NavLink>
+                {/* <NavLink
+                  activeClassName="activeClicked"
+                  onClick={() => setActivePage("userselect")}
+                >
+                  <CDBSidebarMenuItem icon="user">
+                    User Select
+                  </CDBSidebarMenuItem>
+                </NavLink> */}
                 <NavLink
                   exact
                   activeClassName="activeClicked"
@@ -117,14 +126,14 @@ const Sidebar = () => {
                     Manage Venues
                   </CDBSidebarMenuItem>
                 </NavLink>
-                <NavLink
+                {/* <NavLink
                   activeClassName="activeClicked"
                   onClick={() => setActivePage("archive")}
                 >
                   <CDBSidebarMenuItem icon="archive">
                     Archive
                   </CDBSidebarMenuItem>
-                </NavLink>
+                </NavLink> */}
                 {/* <NavLink
                   exact
                   onClick={() => setActivePage("")}
@@ -182,6 +191,7 @@ const Sidebar = () => {
           {activePage === "calendar" && <Calendar />}
           {activePage === "archive" && <Archive />}
           {activePage === "calendar2" && <BigCalendar />}
+          {activePage === "userselect" && <UserSelect />}
         </div>
         {/* Content End */}
       </div>

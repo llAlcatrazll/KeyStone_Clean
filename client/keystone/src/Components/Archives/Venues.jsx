@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { UserLink } from "../../App";
 function Venues() {
   const [isPending, setIsPending] = useState([]);
   const [restore, setRestored] = useState(true);
   const [dropped, setDropped] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/deleted_venues")
+      .get(`${UserLink}/deleted_venues`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setIsPending(res.data);
@@ -20,7 +20,7 @@ function Venues() {
   }, [restore, dropped]);
   function handleRestore(venue_id) {
     axios
-      .post(`http://localhost:5000/restore_venues/${venue_id}`)
+      .post(`${UserLink}/restore_venues/${venue_id}`)
       .then((res) => {
         console.log(res.data);
         // Toggle the 'deleted' state to trigger a re-fetch of the data
@@ -31,7 +31,7 @@ function Venues() {
   }
   function handleDrop(venue_id) {
     axios
-      .post(`http://localhost:5000/drop_venues/${venue_id}`)
+      .post(`${UserLink}/drop_venues/${venue_id}`)
       .then((res) => {
         console.log(res.data);
         setDropped((prevDropped) => !prevDropped);

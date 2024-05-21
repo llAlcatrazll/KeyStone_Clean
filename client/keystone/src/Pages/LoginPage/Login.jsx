@@ -1,12 +1,11 @@
-// import loginpic from "/loginpic.svg";
 import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-// import loginpic from "../../assets/loginpic.svg";
 import "./login.css";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Box, Title, Text, Button } from "@mantine/core";
-
+import Background from "../../assets/Encode _Officers/login_bg.svg"; // Make sure the path is correct
+import Logo from "../../assets/dark-logo.png";
+import { UserLink } from "../../App";
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +15,7 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/check_user", {
+      const response = await axios.post(`${UserLink}/check_user`, {
         email,
         password,
       });
@@ -34,106 +33,76 @@ function LoginPage() {
       setErrorMessage("An error occurred. Please try again.");
     }
   };
+
   return (
-    <>
-      <div className="container py-5 p-0  h-100">
-        <div className="d-flex flex-row align-items-center  flex-grow-1">
-          <div className="">
-            {/* <img src={loginpic} alt="" /> */}
-            <Box>
-              <Title>Nice Title</Title>
-              <Text>Hellow world</Text>
-              <Button>Click Here!</Button>
-            </Box>
+    <div
+      className="d-flex justify-content-center align-items-center "
+      style={{
+        height: "100vh",
+        backgroundColor: "#dddddd",
+        backgroundImage: `url(${Background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="w-25 bg-white shadow-lg  p-3 rounded">
+        <div>
+          <div className=" justify-content-center  align-items-center text-center my-2 py-5 ">
+            <img src={Logo} alt="" />
           </div>
-          <div>
-            <div className="">
-              <div style={{ color: "white" }}>
-                wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-              </div>
-              <form action="" onSubmit={handleSubmit}>
-                {/* <!-- Email input --> */}
-                CONVERT TO CENTER UI WITH LOGO BLACK BG
-                <div data-mdb-input-init className="form-outline mb-4 ">
-                  <input
-                    type="email"
-                    id="form1Example13"
-                    className="form-control form-control-lg vw100"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                {/* <!-- Password input --> */}
-                <div data-mdb-input-init className="form-outline mb-4">
-                  <input
-                    type="password"
-                    id="form1Example23"
-                    placeholder="Password"
-                    className="form-control form-control-lg"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <div className="d-flex justify-content-around align-items-center mb-4">
-                  {/* <!-- Checkbox --> */}
-                  {/* TO BE CONFIGURED */}
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="form1Example3"
-                      checked
-                    />
-                    <label className="form-check-label" htmlFor="form1Example3">
-                      {" "}
-                      Remember me{" "}
-                    </label>
-                  </div>
-                  <a href="#!">Forgot password?</a>
-                </div>
-                {/* <!-- Submit button --> */}
-                <button
-                  type="submit"
-                  data-mdb-ripple-init
-                  className="btn btn-primary btn-lg btn-block"
-                  style={{ width: "100%" }}
-                >
-                  Sign in
-                </button>
-                {errorMessage && <p>{errorMessage}</p>}
-                {/* Boundary */}
-                <div className="divider d-flex align-items-center my-4">
-                  <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-                </div>
-                <div className="row d-flex">
-                  <a
-                    data-mdb-ripple-init
-                    className="btn btn-primary btn-lg btn-block"
-                    style={{ backgroundColor: "#3b5998", marginBottom: "5px" }}
-                    href="#!"
-                    role="button"
-                  >
-                    <i className="fab fa-facebook-f me-2"></i>Continue with
-                    Facebook
-                  </a>
-                  <a
-                    data-mdb-ripple-init
-                    className="btn btn-primary btn-lg btn-block"
-                    style={{ backgroundColor: "#55acee" }}
-                    href="#!"
-                    role="button"
-                  >
-                    <i className="fab fa-twitter me-2"></i>Continue with Twitter
-                  </a>
-                </div>
-              </form>
+          <form action="" onSubmit={handleSubmit}>
+            {/* Email input */}
+            <div data-mdb-input-init className="form-outline mb-4">
+              <input
+                type="email"
+                id="form1Example13"
+                className="form-control form-control-lg"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
-          </div>
+            {/* Password input */}
+            <div data-mdb-input-init className="form-outline mb-4">
+              <input
+                type="password"
+                id="form1Example23"
+                placeholder="Password"
+                className="form-control form-control-lg"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="d-flex justify-content-around align-items-center mb-4">
+              {/* Checkbox */}
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="form1Example3"
+                  checked
+                />
+                <label className="form-check-label" htmlFor="form1Example3">
+                  Remember me
+                </label>
+              </div>
+              <a href="#!">Forgot password?</a>
+            </div>
+            {/* Submit button */}
+            <button
+              type="submit"
+              data-mdb-ripple-init
+              className="btn btn-primary btn-lg btn-block"
+              style={{ width: "100%" }}
+            >
+              Sign in
+            </button>
+            {errorMessage && <p>{errorMessage}</p>}
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

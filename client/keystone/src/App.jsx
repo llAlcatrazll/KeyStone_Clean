@@ -3,6 +3,7 @@ import LoginPage from "./Pages/LoginPage/Login";
 import Landing from "./Pages/LandingPage/Landing";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+export const UserLink = "http://localhost:5000";
 function App() {
   return (
     <MantineProvider>

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { UserLink } from "../App";
 function RegisteredClubs() {
   const [isApproved, setIsApproved] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:5000/all_clubs")
+      .get(`${UserLink}/all_clubs`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setIsApproved(res.data);

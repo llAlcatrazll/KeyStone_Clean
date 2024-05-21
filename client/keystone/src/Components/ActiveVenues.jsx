@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { UserLink } from "../App";
 function ActiveVenues() {
   const [venueData, setVenueData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +20,7 @@ function ActiveVenues() {
 
   const fetchVenues = () => {
     axios
-      .get("http://localhost:5000/venues")
+      .get(`${UserLink}/venues`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setVenueData(res.data);
@@ -33,7 +33,7 @@ function ActiveVenues() {
 
   const handleDelete = (venue_id) => {
     axios
-      .post(`http://localhost:5000/delete_venu/${venue_id}`)
+      .post(`${UserLink}/delete_venu/${venue_id}`)
       .then((res) => {
         console.log(res.data);
         fetchVenues(); // Re-fetch the venues after deleting

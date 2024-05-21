@@ -38,6 +38,8 @@ const dropUserRoutes = require("./routes/Archives/dropUsers");
 /*{ PROFILE PAGE }*/
 const userFetchAllRoutes = require("./routes/UserProfiles/userFetchAll");
 const userBookingsRoutes = require("./routes/UserProfiles/userBookingsAll");
+const fetchAllUsersRoutes = require("./routes/UserProfiles/userFetchAll");
+const fetchAllUserEmalRoutes = require("./routes/UserProfiles/userFetchAllEmail");
 /*{ CALENDAR PAGE } */
 const userBookingsAllFilterRoutes = require("./routes/bookingAllCalendar");
 /*{ CHAGNGE BOOKING STATUS } */
@@ -86,6 +88,8 @@ app.use("/", dropUserRoutes);
 /*{ PROFILE PAGE }*/
 app.use("/", userFetchAllRoutes);
 app.use("/", userBookingsRoutes);
+app.use("/", fetchAllUsersRoutes);
+app.use("/", fetchAllUserEmalRoutes);
 //
 /*{ CALENDAR PAGE } */
 app.use("/api", userBookingsAllFilterRoutes);

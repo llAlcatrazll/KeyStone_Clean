@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { IconTrash, IconEdit } from "@tabler/icons-react";
 import "../../src/Transition.css";
+import { UserLink } from "../App";
 function BookingsPending() {
   const [isPending, setIsPending] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,7 +47,7 @@ function BookingsPending() {
   }, []);
   const fetchPending = () => {
     axios
-      .get("http://localhost:5000/booking_pending")
+      .get(`${UserLink}/booking_pending`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setIsPending(res.data);
@@ -59,7 +60,7 @@ function BookingsPending() {
 
   function handleDelete(booking_id) {
     axios
-      .post(`http://localhost:5000/delete_booking/${booking_id}`)
+      .post(`${UserLink}/delete_booking/${booking_id}`)
       .then((res) => {
         console.log(res.data);
         fetchPending();
@@ -69,7 +70,7 @@ function BookingsPending() {
 
   function handleDeny(booking_id) {
     axios
-      .post(`http://localhost:5000/booking_denied/${booking_id}`)
+      .post(`${UserLink}/booking_denied/${booking_id}`)
       .then((res) => {
         console.log(res.data);
         fetchPending();
@@ -78,7 +79,7 @@ function BookingsPending() {
   }
   function handleApprove(booking_id) {
     axios
-      .post(`http://localhost:5000/approve_booking/${booking_id}`)
+      .post(`${UserLink}/approve_booking/${booking_id}`)
       .then((res) => {
         console.log(res.data);
         fetchPending();

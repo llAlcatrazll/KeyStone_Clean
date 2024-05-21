@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Avatar } from "@mantine/core";
 import "../../Transition.css";
+import { UserLink } from "../../App";
 function UserProfile() {
   const [userDetails, setUserDetails] = useState([]);
   const userEmail = localStorage.getItem("userEmail");
@@ -12,7 +13,7 @@ function UserProfile() {
   useEffect(() => {
     // Fetch user data based on userEmail
     axios
-      .get(`http://localhost:5000/user_fetchall?email=${userEmail}`)
+      .get(`${UserLink}/user_fetchall?email=${userEmail}`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setUserDetails(res.data);

@@ -3,7 +3,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import { UserLink } from "../App";
 function ReactBigCalendar() {
   const localizer = momentLocalizer(moment);
   const [events, setEvents] = useState([]);
@@ -18,7 +18,7 @@ function ReactBigCalendar() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/venues")
+      .get(`${UserLink}/venues`)
       .then((res) => {
         if (Array.isArray(res.data)) {
           setVenueData(res.data);
@@ -32,7 +32,7 @@ function ReactBigCalendar() {
   useEffect(() => {
     if (selectedVenue) {
       axios
-        .get(`http://localhost:5000/event_venues_booked?venue=${selectedVenue}`)
+        .get(`${UserLink}/event_venues_booked?venue=${selectedVenue}`)
         .then((res) => {
           if (Array.isArray(res.data)) {
             const mappedEvents = res.data.map((venue) => ({
