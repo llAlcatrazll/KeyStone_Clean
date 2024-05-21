@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-
+import { BackendUserLink } from "../server";
 // Import the database connection
 const db = require("../db"); // Adjust the path as necessary
 
 // DELETE VENUE
-router.post("/delete_booking/:booking_id", (req, res) => {
+router.post(`${BackendUserLink}/delete_booking/:booking_id`, (req, res) => {
   const booking_id = req.params.booking_id;
   const sql =
     "UPDATE venue_bookings SET `deleted`='Deleted' WHERE booking_id=?";

@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-
+import { BackendUserLink } from "../server";
 // Import the database connection
 const db = require("../db"); // Adjust the path as necessary
 
 // Fetch active venues
-router.get("/all_clubs", (req, res) => {
+router.get(`${BackendUserLink}/all_clubs`, (req, res) => {
   const sql = "SELECT DISTINCT `club` FROM user_login ";
   db.query(sql, (err, result) => {
     if (err) {

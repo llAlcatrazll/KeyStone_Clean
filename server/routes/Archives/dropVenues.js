@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../db"); // Adjust the path as necessary
-
+import { BackendUserLink } from "../../server";
 // DELETE VENUE
-router.post("/drop_venues/:venue_id", (req, res) => {
+router.post(`${BackendUserLink}/drop_venues/:venue_id`, (req, res) => {
   const venue_id = req.params.venue_id;
   const sql = "DELETE FROM event_venues  WHERE venue_id=?";
   db.query(sql, [venue_id], (err, result) => {
