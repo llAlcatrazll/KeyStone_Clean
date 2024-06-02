@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./Pages/LoginPage/Login";
-import Landing from "./Pages/LandingPage/Landing";
+// import Landing from "./Pages/LandingPage/Landing";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/landing" element={<Landing />} />
+          {/* <Route path="/landing" element={<Landing />} /> */}
         </Routes>
       </BrowserRouter>
     </MantineProvider>
