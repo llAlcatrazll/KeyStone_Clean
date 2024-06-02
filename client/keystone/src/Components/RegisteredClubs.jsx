@@ -16,13 +16,16 @@ function RegisteredClubs() {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <div className="bg-info-subtle p-3">
-      <h3>Registered Clubs</h3>
-      <div className="justify-content-evenly align-content-center bg-body-tertiary d-flex w-100 flex-row">
+    <div className="p-3" style={{ backgroundColor: "#31375A" }}>
+      <h3 className="text-white">Registered Clubs</h3>
+      <div className="justify-content-evenly align-content-center  d-flex w-100 flex-row">
         {" "}
         {isApproved.map((club) => (
           <div key={club.id}>
-            <div className="w-auto text-xs badge badge-pill bg-dark-subtle">
+            <div
+              className="w-auto text-xs badge badge-pill bg-dark justfy-content-center text-center align-items-center pt-2"
+              style={{ height: "28px" }}
+            >
               {club.club}
             </div>
           </div>

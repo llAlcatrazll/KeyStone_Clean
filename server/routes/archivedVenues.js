@@ -5,7 +5,7 @@ const router = express.Router();
 const db = require("../db"); // Adjust the path as necessary
 
 // Fetch active venues
-router.get("/booking_archived", (req, res) => {
+router.get(`/booking_archived`, (req, res) => {
   const sql = "SELECT * FROM event_venues WHERE `deleted`='Deleted'";
   db.query(sql, (err, result) => {
     if (err) {

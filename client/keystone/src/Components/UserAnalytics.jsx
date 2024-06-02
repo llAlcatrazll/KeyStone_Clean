@@ -46,7 +46,7 @@ function UserAnalytics() {
             <div className="vr bg-white"></div>
             <div>18</div>
             <div className="vr bg-white"></div>
-            <div>sdad</div>
+            <div>36</div>
           </div>
         </div>
       </div>

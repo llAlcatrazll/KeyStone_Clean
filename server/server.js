@@ -26,33 +26,34 @@ const deleteUsersRoutes = require("./routes/deleteUser");
 const adminUserRoutes = require("./routes/adminUsers");
 const allClubsRoutes = require("./routes/allclubs");
 /*{ ARCHIVE } */
-const deletedAdminsRoutes = require("./routes/Archives/deletedAdmins");
+
 const deletedBookingRoutes = require("./routes/Archives/deletedBookings");
 const deletedOfficerRoutes = require("./routes/Archives/deletedOfficers");
-const deletedVenuesRoutes = require("./routes/Archives/deletedVenues");
-const restoreUserRoutes = require("./routes/Archives/restoreUser");
-const restoreVenuesRoutes = require("./routes/Archives/restoreVenues");
 const restoreBookingRoutes = require("./routes/Archives/restoreBookings");
+const deletedVenuesRoutes = require("./routes/Archives/deletedVenues");
+const restoreVenuesRoutes = require("./routes/Archives/restoreVenues");
+const deletedAdminsRoutes = require("./routes/Archives/deletedAdmins");
+const restoreUserRoutes = require("./routes/Archives/restoreUser");
 const dropVenuesRoutes = require("./routes/Archives/dropVenues");
 const dropUserRoutes = require("./routes/Archives/dropUsers");
 /*{ PROFILE PAGE }*/
-const userFetchAllRoutes = require("./routes/UserProfiles/userFetchAll");
 const userBookingsRoutes = require("./routes/UserProfiles/userBookingsAll");
 const fetchAllUsersRoutes = require("./routes/UserProfiles/userFetchAll");
+const userFetchAllRoutes = require("./routes/UserProfiles/userFetchAll");
 const fetchAllUserEmalRoutes = require("./routes/UserProfiles/userFetchAllEmail");
 /*{ CALENDAR PAGE } */
 const userBookingsAllFilterRoutes = require("./routes/bookingAllCalendar");
 /*{ CHAGNGE BOOKING STATUS } */
+const updatetoApprovedRoutes = require("./routes/booking_status/approveBooking");
 const updatetoPendingRoutes = require("./routes/booking_status/pendingBooking");
 const updatetoDeniedRoutes = require("./routes/booking_status/denyBooking");
-const updatetoApprovedRoutes = require("./routes/booking_status/approveBooking");
 //
 const { verify } = require("crypto");
 //
 //
 // handle middleware
 app.use(express.static(path.join(__dirname, "public")));
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 // Use the route handlers
 /*{ VENUE PAGE}*/
@@ -245,9 +246,9 @@ app.post("/add_newuser", (req, res) => {
 // });
 //
 // // CONNECT TO PORT NUMBER
-app.listen(port, () => {
-  console.log("listening");
-});
+// app.listen(port, "0.0.0.0", () => {
+//   console.log("listening");
+// });
 //
 //
 //
@@ -420,4 +421,8 @@ app.get("/users", (req, res) => {
     if (err) res.json({ message: "Server error" });
     return res.json(result);
   });
+});
+
+app.listen(port, "0.0.0.0", () => {
+  console.log("listening");
 });
