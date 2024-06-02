@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser"); // Required for parsing JSON bodies
 const router = express.Router();
 const db = require("../db"); // Adjust the path as necessary
-import { BackendUserLink } from "../server";
+const { BackendUserLink } = require("../server");
 // Middleware to parse JSON bodies
 router.use(bodyParser.json());
 

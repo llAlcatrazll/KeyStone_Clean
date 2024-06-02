@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../db"); // Adjust the path as necessary
-import { BackendUserLink } from "../../server";
+const { BackendUserLink } = require("../../server");
 // DELETE VENUE
 router.post(`${BackendUserLink}/drop_users/:user_id`, (req, res) => {
   const user_id = req.params.user_id;

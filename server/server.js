@@ -3,10 +3,11 @@ const cors = require("cors");
 const path = require("path");
 const app = express();
 const jwt = require("jsonwebtoken");
-export const BackendUserLink = "http//localhost:5000";
+const BackendUserLink = "http://localhost:5000"; // Note the correction of URL
+
+module.exports = { BackendUserLink };
 //  database connection
 const db = require("./db");
-
 //  route handlers
 /*{ VENUE PAGE}*/
 const archiveVenueRoutes = require("./routes/archivedVenues");
@@ -26,7 +27,6 @@ const deleteUsersRoutes = require("./routes/deleteUser");
 const adminUserRoutes = require("./routes/adminUsers");
 const allClubsRoutes = require("./routes/allclubs");
 /*{ ARCHIVE } */
-// <<<<<<< HEAD
 
 const deletedBookingRoutes = require("./routes/Archives/deletedBookings");
 const deletedOfficerRoutes = require("./routes/Archives/deletedOfficers");
@@ -34,29 +34,14 @@ const restoreBookingRoutes = require("./routes/Archives/restoreBookings");
 const deletedVenuesRoutes = require("./routes/Archives/deletedVenues");
 const restoreVenuesRoutes = require("./routes/Archives/restoreVenues");
 const deletedAdminsRoutes = require("./routes/Archives/deletedAdmins");
-// =======
-const restoreBookingRoutes = require("./routes/Archives/restoreBookings");
-const deletedBookingRoutes = require("./routes/Archives/deletedBookings");
-const deletedOfficerRoutes = require("./routes/Archives/deletedOfficers");
-const restoreVenuesRoutes = require("./routes/Archives/restoreVenues");
-const deletedAdminsRoutes = require("./routes/Archives/deletedAdmins");
-const deletedVenuesRoutes = require("./routes/Archives/deletedVenues");
-// >>>>>>> 0ec0e45960f533ba33883485febbb0ef33a63f02
 const restoreUserRoutes = require("./routes/Archives/restoreUser");
 const dropVenuesRoutes = require("./routes/Archives/dropVenues");
 const dropUserRoutes = require("./routes/Archives/dropUsers");
 /*{ PROFILE PAGE }*/
-// <<<<<<< HEAD
 const userBookingsRoutes = require("./routes/UserProfiles/userBookingsAll");
 const fetchAllUsersRoutes = require("./routes/UserProfiles/userFetchAll");
 const userFetchAllRoutes = require("./routes/UserProfiles/userFetchAll");
 const fetchAllUserEmalRoutes = require("./routes/UserProfiles/userFetchAllEmail");
-// =======
-const fetchAllUserEmalRoutes = require("./routes/UserProfiles/userFetchAllEmail");
-const userBookingsRoutes = require("./routes/UserProfiles/userBookingsAll");
-const fetchAllUsersRoutes = require("./routes/UserProfiles/userFetchAll");
-const userFetchAllRoutes = require("./routes/UserProfiles/userFetchAll");
-// >>>>>>> 0ec0e45960f533ba33883485febbb0ef33a63f02
 /*{ CALENDAR PAGE } */
 const userBookingsAllFilterRoutes = require("./routes/bookingAllCalendar");
 /*{ CHAGNGE BOOKING STATUS } */
@@ -125,7 +110,7 @@ app.use("/", updatetoApprovedRoutes);
 // CALENDAR
 // CALENDAR
 // CALENDAR
-app.get("http//localhost:5000/event_venues_booked", (req, res) => {
+app.get("/event_venues_booked", (req, res) => {
   const venue = req.query.venue || ""; // Default to empty string if not provided
   const sql = "SELECT * FROM venue_bookings WHERE `event_facility`=?";
   db.query(sql, [venue], (err, result) => {
@@ -176,7 +161,7 @@ const verifyJwt = (req, res, next) => {
   }
 };
 // JWT AUTH
-app.get("http//localhost:5000/checkauth", verifyJwt, (req, res) => {
+app.get("/checkauth", verifyJwt, (req, res) => {
   return res.json("Authenticated");
 });
 //
@@ -185,7 +170,7 @@ app.get("http//localhost:5000/checkauth", verifyJwt, (req, res) => {
 
 //
 // LOG IN USER
-app.post("http//localhost:5000/check_user", (req, res) => {
+app.post("/check_user", (req, res) => {
   const { email, password } = req.body;
   const sql = "SELECT * FROM user_login WHERE email = ? AND password = ?";
   // JWT token passed
@@ -208,7 +193,7 @@ app.post("http//localhost:5000/check_user", (req, res) => {
 
 // TRANSER TO INDIVIDUAL
 //  ADD NEW USER
-app.post("http//localhost:5000/add_newuser", (req, res) => {
+app.post("/add_newuser", (req, res) => {
   const sql =
     "INSERT INTO user_login (`email`,`password`,`username`,`college_affiliation`,`club`,`position`,`account_type`)VALUES (?, ?, ?, ?, ?, ?, ?)";
   const values = [
@@ -272,7 +257,7 @@ app.post("http//localhost:5000/add_newuser", (req, res) => {
 //
 //
 //
-app.post("http//localhost:5000/create_booking", (req, res) => {
+app.post("/create_booking", (req, res) => {
   const {
     booker_id,
     eventname,
@@ -322,7 +307,7 @@ app.post("http//localhost:5000/create_booking", (req, res) => {
       // No overlapping bookings, proceed with the insertion
       const insertSql = `
       INSERT INTO venue_bookings (booker_id, eventname, event_purpose, event_date, starting_time, ending_time, event_facility, username, email)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?,x1 ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
       const insertValues = [
         booker_id,
@@ -364,7 +349,7 @@ app.post("http//localhost:5000/create_booking", (req, res) => {
 //
 //
 //
-app.get("http//localhost:5000/all_admins", (req, res) => {
+app.get("/all_admins", (req, res) => {
   const sql =
     "SELECT COUNT(*) AS admin_count FROM user_login WHERE `account_type` = 'Admin';";
   db.query(sql, (err, result) => {
@@ -379,7 +364,7 @@ app.get("http//localhost:5000/all_admins", (req, res) => {
 
 //       /students
 //  DISPLAY ALL BOOKINGS
-app.get("http//localhost:5000/booking", (req, res) => {
+app.get("/booking", (req, res) => {
   const sql = "SELECT * FROM user_details WHERE `Deleted`='Active'";
   db.query(sql, (err, result) => {
     if (err) res.json({ message: "Server error" });
@@ -391,7 +376,7 @@ app.get("http//localhost:5000/booking", (req, res) => {
 //
 //       /get_student
 //  DISPLAY BOOKING DETAILS
-app.get("http//localhost:5000/get_booking/:id", (req, res) => {
+app.get("/get_booking/:id", (req, res) => {
   const id = req.params.id;
   const sql = "SELECT * FROM user_details WHERE `id`= ?";
   db.query(sql, [id], (err, result) => {
@@ -403,7 +388,7 @@ app.get("http//localhost:5000/get_booking/:id", (req, res) => {
 //
 //
 //   EDIT BOOKING DETAILS - ADMIN ONLY
-app.post("http//localhost:5000/edit_user/:id", (req, res) => {
+app.post("/edit_user/:id", (req, res) => {
   const id = req.params.id;
   const sql =
     "UPDATE user_details SET `name`=?, `email`=?, `age`=?, `gender`=? WHERE id=?";
@@ -431,7 +416,7 @@ app.post("http//localhost:5000/edit_user/:id", (req, res) => {
 //
 //
 // DISPLAY LISTED USERS
-app.get("http//localhost:5000/users", (req, res) => {
+app.get("/users", (req, res) => {
   const sql = "SELECT * FROM user_login WHERE `Deleted`='Active'";
   db.query(sql, (err, result) => {
     if (err) res.json({ message: "Server error" });

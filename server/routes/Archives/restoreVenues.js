@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-import { BackendUserLink } from "../../server";
-// Import the database connection
+const { BackendUserLink } = require("../../server");
 const db = require("../../db"); // Adjust the path as necessary
 
 // DELETE VENUE

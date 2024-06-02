@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-import { BackendUserLink } from "../../server";
+const { BackendUserLink } = require("../../server");
 // Import the database connection
 const db = require("../../db");
 //const db = require("../../db"); // Adjust the path as necessary
