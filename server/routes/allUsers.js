@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-
+import { BackendUserLink } from "../server";
 // Import the database connection
 const db = require("../db"); // Adjust the path as necessary
 
 // ADMIN USERS
-router.get("/all_users", (req, res) => {
+router.get(`${BackendUserLink}/all_users`, (req, res) => {
   const sql = "SELECT * FROM user_login WHERE `deleted`='Active'";
 
   db.query(sql, (err, result) => {

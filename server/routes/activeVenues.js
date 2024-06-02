@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-
+import { BackendUserLink } from "../server";
 // Import the database connection
 const db = require("../db"); // Adjust the path as necessary
 
 // Fetch active venues
-router.get("/venues", (req, res) => {
+router.get(`${BackendUserLink}/venues`, (req, res) => {
   const sql = "SELECT * FROM event_venues WHERE `deleted`='Active'";
   db.query(sql, (err, result) => {
     if (err) {

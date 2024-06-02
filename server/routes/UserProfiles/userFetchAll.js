@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../db");
-
-router.get("/user_fetchall", (req, res) => {
+import { BackendUserLink } from "../../server";
+router.get(`${BackendUserLink}/user_fetchall`, (req, res) => {
   // const userEmail = req.query.email; // Get userEmail from query parameters
   const sql =
     "SELECT * FROM user_login WHERE deleted = 'Active' AND `account_type` = 'Admin'";
